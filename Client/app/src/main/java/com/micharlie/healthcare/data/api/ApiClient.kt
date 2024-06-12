@@ -25,9 +25,9 @@ object RetrfitClient {
     }
 }
 
-object ApiClient {
+/*object ApiClient {
 
-    val apiService : ApiService by lazy {
+ val apiService : ApiService by lazy {
         RetrfitClient.retrofit.create(ApiService::class.java)
     }
-}
+}*/
