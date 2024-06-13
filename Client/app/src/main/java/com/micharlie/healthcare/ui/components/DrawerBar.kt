@@ -1,6 +1,8 @@
 package com.micharlie.healthcare.ui.components
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
@@ -21,11 +23,8 @@ import androidx.compose.ui.graphics.RectangleShape
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-import com.micharlie.healthcare.ui.theme.primary
-import com.micharlie.healthcare.ui.theme.secondary
-import com.micharlie.healthcare.ui.theme.tertiary
-import com.micharlie.healthcare.ui.theme.white
+import androidx.compose.ui.unit.sp
+import com.micharlie.healthcare.ui.theme.*
 import com.micharlie.healthcare.utils.NoSessionItems
 import com.micharlie.healthcare.utils.SessionItems
 import kotlinx.coroutines.launch
@@ -41,7 +40,7 @@ fun DrawerBar( drawerState: DrawerState,sessionState: Boolean, content: @Composa
  *     :todo: falta extreaer la informacion de usuari, actualmente esta con placeholder
  *   */
     var selectedItemIndex by remember {
-        mutableIntStateOf(0)
+        mutableIntStateOf(5)
     }
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -66,19 +65,23 @@ fun DrawerBar( drawerState: DrawerState,sessionState: Boolean, content: @Composa
                 SessionItems.forEachIndexed {
                     index, item ->
                     NavigationDrawerItem(
-                        label = { Text(item.title) },
+                        label = { Text(item.title,fontSize = 20.sp) },
                         shape =  RectangleShape,
-                        modifier = Modifier.padding(0.dp,0.dp,0.dp,4.dp),
+                        modifier = Modifier.padding(0.dp,0.dp,0.dp,4.dp).height(80.dp),
                         onClick = {selectedItemIndex = index
                                   scope.launch { drawerState.close() }},
                         selected = index == selectedItemIndex,
-                        icon = { Icon(imageVector = item.icon, contentDescription = "$item" ) },
+                        icon = { Icon(imageVector = item.icon, contentDescription = "$item",
+                            Modifier.size(32.dp) ) },
                         colors = NavigationDrawerItemDefaults.colors(
                             unselectedContainerColor = secondary,
                             selectedContainerColor = tertiary,
-                            selectedIconColor = primary,
+                            selectedIconColor = white,
                             unselectedIconColor = white,
-                        )
+                            selectedTextColor = white,
+                            unselectedTextColor = white,
+                        ),
+
                     )
 
 
@@ -96,12 +99,15 @@ fun DrawerBar( drawerState: DrawerState,sessionState: Boolean, content: @Composa
                         onClick = {selectedItemIndex = index
                             scope.launch { drawerState.close() }},
                         selected = index == selectedItemIndex,
-                        icon = { Icon(imageVector = item.icon, contentDescription = "$item" ) },
+                        icon = { Icon(imageVector = item.icon, contentDescription = "$item",
+                            Modifier.size(32.dp)
+                        ) },
                         colors = NavigationDrawerItemDefaults.colors(
                             unselectedContainerColor = secondary,
                             selectedContainerColor = tertiary,
                             selectedIconColor = primary,
                             unselectedIconColor = white,
+
                         )
                     )
 

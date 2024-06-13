@@ -41,6 +41,11 @@ data object ExerciseItem: ItemsDrawer(
     title = "Ejercicios",
     route = ""
 )
+data object LogOutItem: ItemsDrawer(
+    icon = Icons.Default.Close,
+    title = "Log Out",
+    route = ""
+)
 val NoSessionItems = listOf(
     RegisterItem,
     LoginItem
@@ -49,5 +54,6 @@ val SessionItems = listOf(
     HomeItem,
     HealthItem,
     ContactItem,
-    ExerciseItem
+    ExerciseItem,
+    LogOutItem
 )

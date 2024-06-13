@@ -13,7 +13,7 @@ import com.micharlie.healthcare.ui.components.TopBar
 @Composable
 fun HomeScreen() {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
- DrawerBar(drawerState = drawerState, sessionState = true )
+ DrawerBar(drawerState = drawerState, sessionState = false )
  {
      Scaffold {
             TopBar(drawerState = drawerState)
