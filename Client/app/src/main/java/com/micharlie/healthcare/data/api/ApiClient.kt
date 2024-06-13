@@ -6,7 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrfitClient {
+object RetrofitClient {
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -25,9 +25,9 @@ object RetrfitClient {
     }
 }
 
-/*object ApiClient {
+object ApiClient {
 
  val apiService : ApiService by lazy {
-        RetrfitClient.retrofit.create(ApiService::class.java)
+        RetrofitClient.retrofit.create(ApiService::class.java)
     }
-}*/
+}

@@ -18,13 +18,13 @@ data class UserApi(
     val gender: String? = "",
 
     @SerializedName(value = Constants.AGE)
-    val age: Int? = 0,
+    val age: String? = "",
 
     @SerializedName(value = Constants.HEIGHT)
-    val height: Float? = 0f,
+    val height: String? = "",
 
     @SerializedName(value = Constants.WEIGHT)
-    val weight: Float? = 0f,
+    val weight: String? = "",
 
     @SerializedName(value = Constants.PHYSICAL)
     val physical: String? = ""
