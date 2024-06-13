@@ -26,17 +26,29 @@ import com.micharlie.healthcare.ui.theme.white
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(){
-    TopAppBar(title = { Image(painter = painterResource(R.drawable.logo_blue), contentDescription
-    = "logo", contentScale = ContentScale.FillBounds) }, colors
+    TopAppBar(
+        //agregando al titulo la imagen de la aplicacion
+        title = { Image(painter = painterResource(R.drawable.logo_blue), contentDescription
+    = "logo", contentScale = ContentScale.FillBounds) },
+        //cambiando los colores de la barra
+        colors
     = TopAppBarDefaults
         .topAppBarColors
         (containerColor = primary), actions = {IconButton(onClick = { /*TODO*/ },
+            //agregando el contenido del topbar
         content = {
-        Icon(
-        imageVector = Icons.Default.Menu,
-        contentDescription = "menu",
-        tint = white
-    )})})
+            //boton para desplegar el menu
+        IconButton(
+            onClick = { /*TODO*/ },
+            content = {
+                Icon(
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = "Menu",
+                    tint = white
+                )
+            }
+    )
+        })})
 }
 
 
