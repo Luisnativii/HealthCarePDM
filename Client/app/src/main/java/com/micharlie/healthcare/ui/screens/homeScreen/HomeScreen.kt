@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
-import com.micharlie.healthcare.util.ItemsDrawer
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

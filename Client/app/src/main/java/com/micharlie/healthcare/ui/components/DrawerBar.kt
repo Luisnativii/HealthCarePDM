@@ -26,9 +26,8 @@ import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.secondary
 import com.micharlie.healthcare.ui.theme.tertiary
 import com.micharlie.healthcare.ui.theme.white
-import com.micharlie.healthcare.util.ItemsDrawer
-import com.micharlie.healthcare.util.NoSessionItems
-import com.micharlie.healthcare.util.SessionItems
+import com.micharlie.healthcare.utils.NoSessionItems
+import com.micharlie.healthcare.utils.SessionItems
 import kotlinx.coroutines.launch
 
 
