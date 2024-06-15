@@ -40,7 +40,7 @@ fun HomeScreenCard(text1: String, text2: String, imageId: Int){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text(text = text1, color = white,fontSize = 25.sp, fontWeight = FontWeight.Bold)
+            Text(text = text1, color = white,fontSize = 25.sp, fontWeight = FontWeight.Bold )
             Text(text = text2, color = white,fontSize = 20.sp,
                 fontWeight = FontWeight.Light, modifier = Modifier.padding(10.dp))
         }
@@ -64,7 +64,7 @@ fun HomeScreenCard(text1: String, text2: String, imageId: Int){
                 Text(text = "Sign Up", color = black)
 
             }
-            Image(painter = painterResource(id = R.drawable.placeholder), contentDescription =
+            Image(painter = painterResource(id = imageId), contentDescription =
             "placeholder", contentScale = ContentScale.FillHeight, modifier = Modifier.padding(0
                 .dp,20.dp,0.dp,0.dp))
         }
