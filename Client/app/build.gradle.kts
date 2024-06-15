@@ -51,6 +51,27 @@ android {
 
 dependencies {
 
+    //versions
+    val lifecycle_version = "2.8.1"
+    val retrofit_vercion = "2.11.0"
+
+
+    
+    //Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:$retrofit_vercion")
+    //Gson
+    implementation ("com.squareup.retrofit2:converter-gson:$retrofit_vercion")
+    //Lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    // para la funcion china de imprimir el Gson despues de convertirlo en logcat
+    implementation ("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
