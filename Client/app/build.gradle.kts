@@ -51,6 +51,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.navigation.compose)
     //versions
     val lifecycle_version = "2.8.1"
     val retrofit_vercion = "2.11.0"

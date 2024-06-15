@@ -24,6 +24,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.ui.theme.*
 import com.micharlie.healthcare.utils.NoSessionItems
 import com.micharlie.healthcare.utils.SessionItems
@@ -31,11 +33,11 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun DrawerBar( drawerState: DrawerState,sessionState: Boolean, content: @Composable () -> Unit) {
+fun DrawerBar( drawerState: DrawerState,sessionState: Boolean, content: @Composable () -> Unit,
+               navController: NavController) {
     /*
  * Drawer state maneja el estado de la barra lateral
  * sessioState define si esta cerrado o abierto
- * :Todo: se le agregaria el navCOntroller cuando ya tengamos el navigation implementado
  *   :Todo: la ruta se agrega en el list y agregar el onclick para cambiar de pantalla
  *     :todo: falta extreaer la informacion de usuari, actualmente esta con placeholder
  *   */
@@ -67,9 +69,12 @@ fun DrawerBar( drawerState: DrawerState,sessionState: Boolean, content: @Composa
                     NavigationDrawerItem(
                         label = { Text(item.title,fontSize = 20.sp) },
                         shape =  RectangleShape,
-                        modifier = Modifier.padding(0.dp,0.dp,0.dp,4.dp).height(80.dp),
+                        modifier = Modifier
+                            .padding(0.dp, 0.dp, 0.dp, 4.dp)
+                            .height(80.dp),
                         onClick = {selectedItemIndex = index
-                                  scope.launch { drawerState.close() }},
+                                  scope.launch { drawerState.close() }
+                                  navController.navigate(item.route)},
                         selected = index == selectedItemIndex,
                         icon = { Icon(imageVector = item.icon, contentDescription = "$item",
                             Modifier.size(32.dp) ) },
@@ -128,5 +133,6 @@ fun DrawerBar( drawerState: DrawerState,sessionState: Boolean, content: @Composa
 @Preview
 fun DrawerBarPreview()
 {
-    DrawerBar( rememberDrawerState(initialValue = DrawerValue.Open),true,{})
+    DrawerBar( rememberDrawerState(initialValue = DrawerValue.Open),true, navController = rememberNavController(),
+        content = {})
 }
