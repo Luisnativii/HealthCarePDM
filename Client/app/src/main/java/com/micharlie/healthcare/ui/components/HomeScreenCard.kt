@@ -40,7 +40,7 @@ fun HomeScreenCard(text1: String, text2: String, imageId: Int){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text(text = text1, color = white,fontSize = 80.sp, fontWeight = FontWeight.Bold)
+            Text(text = text1, color = white,fontSize = 25.sp, fontWeight = FontWeight.Bold)
             Text(text = text2, color = white,fontSize = 20.sp,
                 fontWeight = FontWeight.Light, modifier = Modifier.padding(10.dp))
         }
@@ -73,3 +73,4 @@ fun HomeScreenCard(text1: String, text2: String, imageId: Int){
     }
 
 }
+

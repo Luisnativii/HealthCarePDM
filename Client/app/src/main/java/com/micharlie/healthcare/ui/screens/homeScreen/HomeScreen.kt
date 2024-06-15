@@ -44,7 +44,7 @@ import com.micharlie.healthcare.ui.theme.white
 @Composable
 fun HomeScreen() {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
- DrawerBar(drawerState = drawerState, sessionState = false )
+ DrawerBar(drawerState = drawerState, sessionState = true )
  {
      Scaffold (topBar = {TopBar(drawerState = drawerState) }){
            Column(modifier = Modifier
