@@ -20,30 +20,34 @@ import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
 
 @Composable
-fun UserCardDrawer(firstText: String, secondText: String)
-{
+fun UserCardDrawer(firstText: String, secondText: String) {
     //Card para mostrar el usuario
-    Card(modifier = Modifier.fillMaxWidth().height(100.dp),
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp),
         colors = CardDefaults.cardColors(containerColor = primary),
-    )
-    {
-       Column(modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-           horizontalAlignment = Alignment.CenterHorizontally,
-           verticalArrangement = Arrangement.Center
-       ) {
-           //se usan las vcariables en los argumentos para mostrar el nombre y el correo del usuario
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            //se usan las vcariables en los argumentos para mostrar el nombre y el correo del usuario
 
-              Text(text = firstText,
-                  modifier = Modifier.padding(5.dp),
-                  color = white,
-                  fontSize = 25.sp,
-                  fontWeight = FontWeight.Bold
-              )
-              Text(text = secondText,
-                  color = white,
-                  fontSize = 15.sp,
-                  fontWeight = FontWeight.Light)
-       }
+            Text(
+                text = firstText,
+                modifier = Modifier.padding(5.dp),
+                color = white,
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = secondText, color = white, fontSize = 15.sp, fontWeight = FontWeight.Light
+            )
+        }
 
 
     }
@@ -51,7 +55,6 @@ fun UserCardDrawer(firstText: String, secondText: String)
 
 @Composable
 @Preview
-fun UserCardDrawerPreview()
-{
+fun UserCardDrawerPreview() {
     UserCardDrawer("Prueba", "Prueba2")
 }

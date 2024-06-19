@@ -28,29 +28,32 @@ fun HomeScreen(navController: NavController) {
     //Se importa la funcion de drawer bar y se le pasan los parametros, el argumento session
     // state es si esta iniciada la funcion para mostrar los diferentes apartados para la
     // navegaciond e la app, dentro de el drawerBar se crea el scaffold
- DrawerBar(drawerState = drawerState,
-     sessionState = true,
-     navController = navController,
-     content = {
-     Scaffold (topBar = {TopBar(drawerState = drawerState) },
-         bottomBar = { BottomBar()})
-     {
-           Column(modifier = Modifier
-               .padding(it)
-               .fillMaxWidth()
-               .fillMaxHeight()
-               .background(color = primary))
-           {
-               HomeScreenContent()
+    DrawerBar(drawerState = drawerState,
+        sessionState = true,
+        navController = navController,
+        content = {
+            Scaffold(topBar = { TopBar(drawerState = drawerState) },
+                bottomBar = { BottomBar() })
+            {
+                Column(
+                    modifier = Modifier
+                        .padding(it)
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .background(color = primary)
+                )
+                {
+                    HomeScreenContent()
 
 
-           }
+                }
 
-     }
- })
+            }
+        })
 }
+
 @Composable
-fun HomeScreenContent(){
+fun HomeScreenContent() {
     HomeScreenSelector()
 
 }
@@ -58,7 +61,6 @@ fun HomeScreenContent(){
 
 @Composable
 @Preview
-fun HomeScreenPreview()
-{
+fun HomeScreenPreview() {
     HomeScreen(navController = rememberNavController())
 }
