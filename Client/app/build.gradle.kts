@@ -52,6 +52,11 @@ android {
 dependencies {
 
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.webkit)
+    implementation(libs.core)
+    implementation(libs.glide)
+    implementation(libs.coil.compose)
     //versions
     val lifecycle_version = "2.8.1"
     val retrofit_vercion = "2.11.0"

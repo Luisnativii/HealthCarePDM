@@ -17,16 +17,20 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.theme.primary
 
 @Composable
-fun BottomBar (){
+fun BottomBar() {
 
     BottomAppBar(containerColor = primary) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Image(painter = painterResource(id = R.drawable.logo_blue), contentDescription = "logo_blue")
+            Image(
+                painter = painterResource(id = R.drawable.logo_blue),
+                contentDescription = "logo_blue"
+            )
             Text(text = "© MiCharlieDevs. All Rights Reserved.", color = Color.Gray)
         }
 
@@ -35,7 +39,6 @@ fun BottomBar (){
 
 @Composable
 @Preview
-fun BottomBarPreview()
-{
+fun BottomBarPreview() {
     BottomBar()
 }
