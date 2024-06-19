@@ -1,5 +1,6 @@
 package com.micharlie.healthcare.ui.components
 
+import android.provider.MediaStore.Video
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

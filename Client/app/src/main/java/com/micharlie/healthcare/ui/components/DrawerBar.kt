@@ -73,8 +73,8 @@ fun DrawerBar( drawerState: DrawerState,sessionState: Boolean, content: @Composa
                             .padding(0.dp, 0.dp, 0.dp, 4.dp)
                             .height(80.dp),
                         onClick = {selectedItemIndex = index
-                                  scope.launch { drawerState.close() }
-                                  navController.navigate(item.route)},
+                                  scope.launch { drawerState.close() }},
+                                  //navController.navigate(item.route)},
                         selected = index == selectedItemIndex,
                         icon = { Icon(imageVector = item.icon, contentDescription = "$item",
                             Modifier.size(32.dp) ) },

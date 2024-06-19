@@ -1,0 +1,49 @@
+package com.micharlie.healthcare.ui.components
+
+import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.theme.primary
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun Prueba(navController: NavController) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+
+    DrawerBar(drawerState = drawerState, sessionState = true , content = {
+                                                                          Scaffold(
+                                                                                bottomBar = { BottomBar() },
+                                                                                topBar = { TopBar(drawerState = drawerState) }
+                                                                          ) {
+                                                                              Column(modifier = Modifier.padding(it).background(
+                                                                                  primary)) {
+                                                                                    // Content of the screen
+                                                                                  Image(
+                                                                                      painter = painterResource(
+                                                                                          id = R.drawable.corazon
+                                                                                      ),
+                                                                                      contentDescription ="Corazon"
+                                                                                  )
+
+                                                                              }
+
+                                                                          }
+    }, navController = navController  )
+}
+@Composable
+@Preview
+fun PruebaPreview() {
+    Prueba(navController = rememberNavController())
+}
