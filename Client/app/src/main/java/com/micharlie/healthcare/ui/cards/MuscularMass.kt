@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,9 +29,11 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.muscularMassProgress
 import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
 import com.micharlie.healthcare.ui.theme.seeMore
-import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 
+// Agregar el Onclick para redirigir a la pantalla de Muscular Mass
+// Para agregar el onClick colocar esto en el modifier despues de height quedaria:
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de Muscular Mass  */ },
 @Composable
 fun MuscularMass(){
     ElevatedCard(
@@ -125,13 +126,13 @@ fun MuscularMass(){
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(16.dp) // Increase the height here
-                    .clip(RoundedCornerShape(8.dp)) // Set rounded corners here
+                    .clip(RoundedCornerShape(8.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Change this value
+                    progress = 0.5f, // Cambiar esto por el valor para hacer el calculo del porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(16.dp), // Ensure the height matches the Box
+                        .height(16.dp),
                     color = muscularMassProgress,
                     trackColor = muscularMassProgressBackground
                 )

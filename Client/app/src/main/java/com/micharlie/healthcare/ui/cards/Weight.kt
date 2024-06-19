@@ -26,16 +26,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.micharlie.healthcare.R
-import com.micharlie.healthcare.ui.theme.PressurecolorBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
-import com.micharlie.healthcare.ui.theme.heightBackground
-import com.micharlie.healthcare.ui.theme.muscularMassProgress
-import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
 import com.micharlie.healthcare.ui.theme.seeMore
 import com.micharlie.healthcare.ui.theme.weightProgress
 import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 
+// Agregar el Onclick para redirigir a la pantalla de Weight
+// Para agregar el onClick colocar esto en el modifier despues de height quedaria:
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de Weight */ },
 
 @Composable
 fun WeightCard(){
@@ -129,14 +128,14 @@ fun WeightCard(){
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(16.dp) // Increase the height here
-                    .clip(RoundedCornerShape(8.dp)) // Set rounded corners here
+                    .height(16.dp)
+                    .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Change this value
+                    progress = 0.5f, // Cambiar esto por el calculo del porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(16.dp), // Ensure the height matches the Box
+                        .height(16.dp),
                     color = weightProgress,
                     trackColor = weightProgressBackground
                 )

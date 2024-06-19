@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,6 +29,9 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.seeMore
 import com.micharlie.healthcare.ui.theme.white
 
+// Agregar el Onclick para redirigir a la pantalla de Blood Pressure
+// Para agregar el onClick colocar esto en el modifier despues de height quedaria:
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de BloodPressure () */ },
 @Composable
 fun BloodPressure() {
     ElevatedCard (
@@ -96,13 +98,13 @@ fun BloodPressure() {
                 verticalArrangement = Arrangement.Center
             ){
                 Text(
-                    text ="110", // Change this value
+                    text ="110", // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 30.sp,
                     color = Color.White
                 )
                 Text(
-                    text ="74", // Change this value
+                    text ="74", // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 20.sp,
                     color = Color.White,

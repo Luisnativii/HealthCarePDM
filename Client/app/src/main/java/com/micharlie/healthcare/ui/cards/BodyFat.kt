@@ -33,6 +33,9 @@ import com.micharlie.healthcare.ui.theme.seeMore
 import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 
+// Agregar el Onclick para redirigir a la pantalla de Body Fat
+// Para agregar el onClick colocar esto en el modifier despues de height
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de Body Fat */ }
 @Composable
 fun BodyFat() {
     ElevatedCard (
@@ -94,7 +97,7 @@ fun BodyFat() {
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "10", // Change this value
+                text = "10", // Cambiar esto por lo que se debe recibir de la base de datos o del usuario
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 30.sp,
                 color = white
@@ -125,14 +128,14 @@ fun BodyFat() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(16.dp) // Increase the height here
-                    .clip(RoundedCornerShape(8.dp)) // Set rounded corners here
+                    .height(16.dp)
+                    .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Change this value
+                    progress = 0.5f, // Cambiar esto por lo que se debe recibir de la base de datos o del usuario para el porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(16.dp), // Ensure the height matches the Box
+                        .height(16.dp),
                     color = bodyFatProgress,
                     trackColor = bodyFatProgressBackground
                 )

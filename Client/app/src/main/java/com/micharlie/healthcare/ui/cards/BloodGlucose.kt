@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,9 +29,11 @@ import com.micharlie.healthcare.ui.theme.bloodGlucoseProgress
 import com.micharlie.healthcare.ui.theme.bloodGlucoseProgressBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.seeMore
-import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 
+// Agregar el Onclick para redirigir a la pantalla de Blood Glucose
+// Para agregar el onClick colocar esto en el modifier despues de height
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de BloodGlucose */ }
 @Composable
 fun BloodGlucose() {
     ElevatedCard (
@@ -94,7 +95,7 @@ fun BloodGlucose() {
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "90", // Change this value
+                text = "90", // Cambiar esto por el que debe recibir de la base de datos o del usuario
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 30.sp,
                 color = white
@@ -126,10 +127,10 @@ fun BloodGlucose() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(16.dp) // Increase the height here
-                    .clip(RoundedCornerShape(8.dp)) // Set rounded corners here
+                    .clip(RoundedCornerShape(10.dp)) // Set rounded corners here
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Change this value
+                    progress = 0.5f, // Hacer la consulta para obtener el valor, este es otro valor que se debe cambiar
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp), // Ensure the height matches the Box

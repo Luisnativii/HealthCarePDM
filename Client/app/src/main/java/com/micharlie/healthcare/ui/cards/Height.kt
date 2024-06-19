@@ -27,9 +27,11 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.heightBackground
 import com.micharlie.healthcare.ui.theme.seeMore
-import com.micharlie.healthcare.ui.theme.weightProgressBackground
 
 
+// Agregar el Onclick para redirigir a la pantalla de Height
+// Para agregar el onClick colocar esto en el modifier despues de height
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de Height */ }
 @Composable
 fun HeightCard(){
     ElevatedCard (
