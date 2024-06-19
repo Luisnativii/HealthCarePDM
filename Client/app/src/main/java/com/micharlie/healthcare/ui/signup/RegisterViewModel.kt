@@ -12,7 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RegisterViewModel(private val apiService: ApiService) : ViewModel() {
-    /*fun register(user: RegisterRequest) {
+    fun register(user: RegisterRequest) {
         viewModelScope.launch {
             try {
                 val response = apiService.register(user)
@@ -21,5 +21,5 @@ class RegisterViewModel(private val apiService: ApiService) : ViewModel() {
                 // manejar el error
             }
         }
-    }*/
+    }
 }

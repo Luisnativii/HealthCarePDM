@@ -1,75 +1,132 @@
 package com.micharlie.healthcare.ui.signup
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.micharlie.healthcare.data.model.RegisterRequest
+import com.micharlie.healthcare.ui.theme.HealthCareTheme
+import com.micharlie.healthcare.ui.theme.black
+import com.micharlie.healthcare.ui.theme.contrasPrimary
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
-    var age by remember { mutableStateOf("") }
-    var height by remember { mutableStateOf("") }
-    var weight by remember { mutableStateOf("") }
-    var physical by remember { mutableStateOf("") }
+    var dateBirth by remember { mutableStateOf("") }
 
     // UI para registro
-    /*LazyColumn {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center
+    ) {
         item {
             Column {
                 TextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") }
+                    label = { Text("Name") },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
                 )
+                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     value = email,
                     onValueChange = { email = it },
-                    label = { Text("Email") }
+                    label = { Text("Email") },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
                 )
+                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     value = password,
                     onValueChange = { password = it },
-                    label = { Text("Password") }
+                    label = { Text("Password") },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
                 )
+                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     value = gender,
                     onValueChange = { gender = it },
-                    label = { Text("Gender") }
+                    label = { Text("Gender") },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
                 )
+                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
-                    value = age,
-                    onValueChange = { age = it },
-                    label = { Text("Age") }
+                    value = dateBirth,
+                    onValueChange = { dateBirth = it },
+                    label = { Text("Date of Birth (YYYY-MM-DD)") },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
                 )
-                TextField(
-                    value = height,
-                    onValueChange = { height = it },
-                    label = { Text("Height") }
-                )
-                TextField(
-                    value = weight,
-                    onValueChange = { weight = it },
-                    label = { Text("Weight") }
-                )
-                TextField(
-                    value = physical,
-                    onValueChange = { physical = it },
-                    label = { Text("Physical") }
-                )
-                Button(onClick = {
-                    val user = RegisterRequest(name, email, password, gender, age, height, weight, physical)
-                    registerViewModel.register(user)
-                }) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(
+                    onClick = {
+                        val user = RegisterRequest(name, email, gender, dateBirth, password)
+                        registerViewModel.register(user)
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = contrasPrimary,
+                        contentColor = black
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Text("Register")
                 }
             }
         }
-    }*/
+    }
+}
+
+@Preview
+@Composable
+fun PreviewRegisterScreen() {
+    HealthCareTheme {
+        RegisterScreen()
+    }
 }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 
 class LoginViewModel(private val apiService: ApiService) : ViewModel() {
-    /*fun login(email: String, password: String) {
+    fun login(email: String, password: String) {
         val request = LoginRequest(email, password)
         viewModelScope.launch {
             try {
@@ -18,5 +18,5 @@ class LoginViewModel(private val apiService: ApiService) : ViewModel() {
                 // manejar el error
             }
         }
-    }*/
+    }
 }
