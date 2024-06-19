@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 
 val primary = Color(0xFF142D4C)
-val secondary = Color(0xff385170)
+val secondary = Color(0xff385170) // Mismo que el CardsBackgroud
 val tertiary = Color(0xff9FD3C7)
 val white = Color(0xffECECEC)
 val black = Color(0xff3F464A)
@@ -44,4 +44,4 @@ val bloodGlucoseProgress = Color(0xffFF3737)
 val bloodGlucoseProgressBackground = Color(0xffFFA0A0)
 
 // Blood Pressure Card Colors
-val colorBackground = Color(0xffE8C3FF)
+val PressurecolorBackground = Color(0xffE8C3FF)

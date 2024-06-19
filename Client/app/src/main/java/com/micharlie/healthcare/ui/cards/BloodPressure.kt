@@ -1,6 +1,7 @@
 package com.micharlie.healthcare.ui.cards
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,12 +17,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.theme.PressurecolorBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.seeMore
 import com.micharlie.healthcare.ui.theme.white
@@ -50,9 +54,12 @@ fun BloodPressure() {
             verticalAlignment = Alignment.CenterVertically
         ){
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = "Blood Glucose Icon",
-                modifier = Modifier.size(40.dp)
+                painter = painterResource(id = R.drawable.materialsymbolsbloodpressureoutline),
+                contentDescription = "Blood Pressure Icon",
+                modifier = Modifier
+                    .size(40.dp)
+                    .background( color = PressurecolorBackground, shape = RoundedCornerShape(10.dp))
+                    .clip(RoundedCornerShape(15.dp))
             )
 
             Column (

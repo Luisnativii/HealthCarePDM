@@ -1,7 +1,9 @@
 package com.micharlie.healthcare.ui.cards
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +30,7 @@ import com.micharlie.healthcare.ui.theme.bodyFatProgress
 import com.micharlie.healthcare.ui.theme.bodyFatProgressBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.seeMore
+import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 
 @Composable
@@ -53,9 +57,12 @@ fun BodyFat() {
             verticalAlignment = Alignment.CenterVertically
         ){
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
+                painter = painterResource(id = R.drawable.materialsymbolsbodyfat),
                 contentDescription = "Body Fat Icon",
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier
+                    .size(40.dp)
+                    .background( color = bodyFatProgressBackground, shape = RoundedCornerShape(10.dp))
+                    .clip(RoundedCornerShape(15.dp))
             )
 
             Column (
@@ -115,12 +122,21 @@ fun BodyFat() {
                 .fillMaxWidth()
                 .padding(16.dp)
         ){
-            LinearProgressIndicator(
-                progress = 0.5f, // Change this value -> Variable / 100
-                modifier = Modifier.fillMaxWidth(),
-                color = bodyFatProgress,
-                trackColor = bodyFatProgressBackground
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(16.dp) // Increase the height here
+                    .clip(RoundedCornerShape(8.dp)) // Set rounded corners here
+            ) {
+                LinearProgressIndicator(
+                    progress = 0.5f, // Change this value
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(16.dp), // Ensure the height matches the Box
+                    color = bodyFatProgress,
+                    trackColor = bodyFatProgressBackground
+                )
+            }
         }
 
         // Low and High
