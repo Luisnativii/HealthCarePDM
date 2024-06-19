@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">HealthCare</string>
+    <string name="home_title1">HEALTH</string>
+    <string name="home_title2">HEALTH \n METRICS</string>
+    <string name="home_title3">CHOOSE WHAT TO DO</string>
+    <string name="home_content1">Transform Your Health, Elevate Your Fitness: Your Personal Journey Starts Here!</string>
+    <string name="home_content2">Stay on Track, Monitor Your Health: Your Personal Wellness
+    hub.</string>
+    <string name="home_content3">Choose your Path,Guided by Experts: Tailor your Journey
+        with our VideoLibrary</string>
 </resources>

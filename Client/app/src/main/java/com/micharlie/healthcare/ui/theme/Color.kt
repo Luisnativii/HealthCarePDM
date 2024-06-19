@@ -2,10 +2,14 @@ package com.micharlie.healthcare.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val primary = Color(0xFF142D4C)
+val secondary = Color(0xff385170)
+val tertiary = Color(0xff9FD3C7)
+val white = Color(0xffECECEC)
+val black = Color(0xff3F464A)
+//para resaltar titulos y otras cosas
+val contrast1 = Color(0xffD7DF71)
+val contrast2 = Color(0xffF9A828)
+//Principalmente para botones principales
+val contrasPrimary = Color(0xff85FF91)
