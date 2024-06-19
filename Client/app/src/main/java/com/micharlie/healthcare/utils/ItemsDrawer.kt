@@ -53,7 +53,7 @@ data object ContactItem: ItemsDrawer(
 data object ExerciseItem: ItemsDrawer(
     icon = Icons.Rounded.FitnessCenter,
     title = "Ejercicios",
-    route = ""
+    route = "exerciseScreen"
 )
 data object LogOutItem: ItemsDrawer(
     icon = Icons.AutoMirrored.Rounded.Logout,

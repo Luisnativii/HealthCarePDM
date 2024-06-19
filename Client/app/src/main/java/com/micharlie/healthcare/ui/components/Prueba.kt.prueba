@@ -47,3 +47,5 @@ fun Prueba(navController: NavController) {
 fun PruebaPreview() {
     Prueba(navController = rememberNavController())
 }
+
+
