@@ -46,6 +46,7 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.historyCards.HistoryWeightCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast2
@@ -188,7 +189,7 @@ fun WeightScreen(navController: NavController, sessionState: Boolean = true, get
                                         horizontalAlignment = Alignment.CenterHorizontally
                                     ){
                                         Text(
-                                            text = "65", // Cambiar por una variable de usuario o db
+                                            text = weightInput, // Cambiar por una variable de usuario o db
                                             style = MaterialTheme.typography.bodyLarge,
                                             color = white
                                         )
@@ -230,7 +231,7 @@ fun WeightScreen(navController: NavController, sessionState: Boolean = true, get
                                         Spacer(modifier = Modifier.height(8.dp))
 
                                         LinearProgressIndicator(
-                                            progress = 0.5f,
+                                            progress = 65 / 100f,
                                             color = weightProgress,
                                             trackColor = weightProgressBackground,
                                             modifier = Modifier
@@ -256,47 +257,80 @@ fun WeightScreen(navController: NavController, sessionState: Boolean = true, get
                         }
 
                         // History Card
-                        Card (
+                        Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
                                 .height(100.dp),
                             colors = CardDefaults.cardColors(
                                 containerColor = primary
-                            )
-                        ){
-                            Row (
+                            ),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Box(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(20.dp),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ){
-                                Image(
-                                    painter = painterResource(id = R.drawable.materialsymbolshistory),
-                                    contentDescription = "History Icon",
+                                    .fillMaxSize(),
+                                contentAlignment = Alignment.Center // Centrar el contenido del Box
+                            ) {
+                                Row(
                                     modifier = Modifier
-                                        .size(60.dp)
-                                        .background(
-                                            color = weightProgressBackground,
-                                            shape = RoundedCornerShape(10.dp)
-                                        )
-                                        .clip(RoundedCornerShape(15.dp))
-                                )
+                                        .fillMaxWidth()
+                                        .padding(20.dp),
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.materialsymbolshistory),
+                                        contentDescription = "History Icon",
+                                        modifier = Modifier
+                                            .size(60.dp)
+                                            .background(
+                                                color = weightProgressBackground,
+                                                shape = RoundedCornerShape(10.dp)
+                                            )
+                                            .clip(RoundedCornerShape(15.dp))
+                                    )
 
-                                Spacer(modifier = Modifier.width(16.dp))
+                                    Spacer(modifier = Modifier.width(16.dp))
 
-                                Text(
-                                    text = "History",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    fontSize = 20.sp,
-                                    color = white,
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(all = 16.dp)
-                                )
+                                    Text(
+                                        text = "History",
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontSize = 20.sp,
+                                        color = white,
+                                        modifier = Modifier
+                                            .padding(all = 16.dp)
+                                    )
+                                }
                             }
                         }
+
+                        // History cards sera Dinamicos para que sea la cantidad de registros hechos
+                        Box(
+                            modifier = Modifier
+                                .padding(10.dp)
+                        ){
+                            HistoryWeightCard()
+                        }
+                        Box(
+                            modifier = Modifier
+                                .padding(10.dp)
+                        ){
+                            HistoryWeightCard()
+                        }
+                        Box(
+                            modifier = Modifier
+                                .padding(10.dp)
+                        ){
+                            HistoryWeightCard()
+                        }
+                        Box(
+                            modifier = Modifier
+                                .padding(10.dp)
+                        ){
+                            HistoryWeightCard()
+                        }
+
                     }
                 }
             }
