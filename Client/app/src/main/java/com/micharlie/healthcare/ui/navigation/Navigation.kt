@@ -25,20 +25,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
-fun Navigation(sessionState: Boolean = true) {
+fun Navigation() {
     val navController = rememberNavController()
     val retrofit = Retrofit.Builder().baseUrl(Constants.VIDEOBACEURLGET)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory()) // Añade el adaptador de llamadas de corutinas
         .build()
-
+    val sessionState = true
     val apiService =
         retrofit.create(ApiService::class.java) // Replace this with the actual initialization of your ApiService
     val getVideoViewModel = GetVideoViewModel(apiService)
     //val viewmodel: MainViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = if (sessionState) ScreenRoute.HomeSession.route else ScreenRoute.HomeNoSession.route
+        startDestination = if (sessionState) ScreenRoute.HomeSession.route else ScreenRoute.HomeNoSession
+            .route
     ) {
         //Se crean las rutas para cada pantalla y tambien aqui se pasan los argumentos
         /*
@@ -91,12 +92,12 @@ fun Navigation(sessionState: Boolean = true) {
             CholesterolScreen(navController = navController, getVideoViewModel = getVideoViewModel)
         }
         composable(route = ScreenRoute.HeightScreen.route) {
-            HeightScreen(navController = navController, getVideoViewModel =getVideoViewModel )
+            HeightScreen(navController = navController, getVideoViewModel = getVideoViewModel)
         }
-        composable (route = ScreenRoute.WeightScreen.route){
+        composable(route = ScreenRoute.WeightScreen.route) {
             WeightScreen(navController = navController, getVideoViewModel = getVideoViewModel)
         }
-        composable (route = ScreenRoute.MuscularMassScreen.route){
+        composable(route = ScreenRoute.MuscularMassScreen.route) {
             MuscularMassScreen(navController = navController, getVideoViewModel = getVideoViewModel)
         }
 
