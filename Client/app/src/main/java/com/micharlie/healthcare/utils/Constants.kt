@@ -8,6 +8,13 @@ object Constants {
 
     //post
     const val POST_USER_PATH = "/"
+
+    //URL completa para hacer registro
+    const val POSTUSERBACEURL = "http://192.168.31.58:3500/api/auth/"
+
+    //URL completa para ahcer login
+
+    const val POSTLOGINBACEURL = "http://192.168.31.58:3500/api/auth/login/"
     const val NAME = "name"
     const val EMAIL = "email"
     const val PASSWORD = "password"
