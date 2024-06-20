@@ -44,6 +44,7 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.historyCards.HistoryHeightCard
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast1
 import com.micharlie.healthcare.ui.theme.contrast2
@@ -212,46 +213,78 @@ fun HeightScreen(navController: NavController) {
                         }
 
                         // History Card
-                        Card (
+                        Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
                                 .height(100.dp),
                             colors = CardDefaults.cardColors(
                                 containerColor = primary
-                            )
-                        ){
-                            Row (
+                            ),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Box(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(20.dp),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ){
-                                Image(
-                                    painter = painterResource(id = R.drawable.materialsymbolshistory__1_),
-                                    contentDescription = "History Icon",
+                                    .fillMaxSize(),
+                                contentAlignment = Alignment.Center // Centrar el contenido del Box
+                            ) {
+                                Row(
                                     modifier = Modifier
-                                        .size(60.dp)
-                                        .background(
-                                            color = heightBackground,
-                                            shape = RoundedCornerShape(10.dp)
-                                        )
-                                        .clip(RoundedCornerShape(15.dp))
-                                )
+                                        .fillMaxWidth()
+                                        .padding(20.dp),
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.materialsymbolshistory__1_),
+                                        contentDescription = "History Icon",
+                                        modifier = Modifier
+                                            .size(60.dp)
+                                            .background(
+                                                color = heightBackground,
+                                                shape = RoundedCornerShape(10.dp)
+                                            )
+                                            .clip(RoundedCornerShape(15.dp))
+                                    )
 
-                                Spacer(modifier = Modifier.width(16.dp))
+                                    Spacer(modifier = Modifier.width(16.dp))
 
-                                Text(
-                                    text = "History",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    fontSize = 20.sp,
-                                    color = white,
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(all = 16.dp)
-                                )
+                                    Text(
+                                        text = "History",
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontSize = 20.sp,
+                                        color = white,
+                                        modifier = Modifier
+                                            .padding(all = 16.dp)
+                                    )
+                                }
                             }
+                        }
+
+                        // History Cards despues se cambiara por una lista de cosas que traera de la API
+                        Box(
+                            modifier = Modifier
+                                .padding(10.dp)
+                        ){
+                            HistoryHeightCard()
+                        }
+                        Box(
+                            modifier = Modifier
+                                .padding(10.dp)
+                        ){
+                            HistoryHeightCard()
+                        }
+                        Box(
+                            modifier = Modifier
+                                .padding(10.dp)
+                        ){
+                            HistoryHeightCard()
+                        }
+                        Box(
+                            modifier = Modifier
+                                .padding(10.dp)
+                        ){
+                            HistoryHeightCard()
                         }
                     }
                 }
