@@ -62,7 +62,7 @@ dependencies {
     val retrofit_vercion = "2.11.0"
 
 
-    
+    implementation ("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
     //Retrofit
     implementation ("com.squareup.retrofit2:retrofit:$retrofit_vercion")
     //Gson
