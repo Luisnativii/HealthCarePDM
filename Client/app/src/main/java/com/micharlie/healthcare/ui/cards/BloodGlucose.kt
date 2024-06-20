@@ -35,7 +35,7 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de BloodGlucose */ }
 @Composable
-fun BloodGlucose() {
+fun BloodGlucoseCard() {
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
@@ -171,6 +171,6 @@ fun BloodGlucose() {
 
 @Preview
 @Composable
-fun BloodGlucosePreview() {
-    BloodGlucose()
+fun BloodGlucoseCardPreview() {
+    BloodGlucoseCard()
 }
