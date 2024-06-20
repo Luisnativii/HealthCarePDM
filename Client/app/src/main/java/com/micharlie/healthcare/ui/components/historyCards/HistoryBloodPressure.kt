@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.historyCards
+package com.micharlie.healthcare.ui.components.historyCards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,17 +28,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.micharlie.healthcare.R
-import com.micharlie.healthcare.ui.theme.bloodGlucoseProgressBackground
+import com.micharlie.healthcare.ui.theme.PressurecolorBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 
 
 @Composable
-fun HistoryBloodGlucoseCard(){
+fun HistoryBloodPressureCard(){
     Card (
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .height(100.dp),
+            .height(120.dp),
         colors = CardDefaults.elevatedCardColors(
             containerColor = cardsBackgroud
         ),
@@ -57,11 +57,14 @@ fun HistoryBloodGlucoseCard(){
                 horizontalArrangement = Arrangement.Center // Centrar el contenido de la Row
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.materialsymbolsglucoseoutlinerounded),
-                    contentDescription = "Blood Glucose Icon",
+                    painter = painterResource(id = R.drawable.materialsymbolsbloodpressureoutline),
+                    contentDescription = "Blood Pressure Icon",
                     modifier = Modifier
-                        .size(40.dp)
-                        .background(color = bloodGlucoseProgressBackground, shape = RoundedCornerShape(10.dp))
+                        .size(50.dp)
+                        .background(
+                            color = PressurecolorBackground,
+                            shape = RoundedCornerShape(10.dp)
+                        )
                         .clip(RoundedCornerShape(15.dp))
                 )
 
@@ -75,17 +78,28 @@ fun HistoryBloodGlucoseCard(){
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
-                        Text(
-                            text = "80", // lo que tenga la api
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontSize = 25.sp,
-                            color = Color.White
-                        )
+
+                        Column (
+                            horizontalAlignment = Alignment.End
+                        ){
+                            Text(
+                                text = "110",
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontSize = 23.sp,
+                                color = Color.White
+                            )
+                            Text(
+                                text = "75",
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontSize = 15.sp,
+                                color = Color.White
+                            )
+                        }
 
                         Spacer(modifier = Modifier.width(10.dp))
 
                         Text(
-                            text = "mg/dL",
+                            text = "mmHg",
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 15.sp,
                             color = Color.White
@@ -105,6 +119,6 @@ fun HistoryBloodGlucoseCard(){
 
 @Preview
 @Composable
-fun HistoryBloodGlucoseCardPreview(){
-    HistoryBloodGlucoseCard()
+fun HistoryBloodPressureCardPreview(){
+    HistoryBloodPressureCard()
 }

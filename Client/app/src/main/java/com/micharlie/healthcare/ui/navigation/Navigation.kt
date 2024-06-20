@@ -12,12 +12,13 @@ import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.screens.ExerciseScreen.ExerciseScreen
 import com.micharlie.healthcare.ui.screens.VideoScreen.VideoScreen
 import com.micharlie.healthcare.ui.screens.homeScreen.HomeScreen
+import com.micharlie.healthcare.ui.screens.mainScreen.MainScreen
 import com.micharlie.healthcare.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
-fun Navigation() {
+fun Navigation(sessionState: Boolean = true) {
     val navController = rememberNavController()
     val retrofit = Retrofit.Builder()
         .baseUrl(Constants.VIDEOBACEURLGET)
@@ -30,7 +31,7 @@ fun Navigation() {
     //val viewmodel: MainViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = ScreenRoute.HomeNoSession.route)
+        startDestination = if(sessionState)ScreenRoute.HomeSession.route else ScreenRoute.HomeNoSession.route)
     {
         //Se crean las rutas para cada pantalla y tambien aqui se pasan los argumentos
         /*
@@ -54,6 +55,10 @@ fun Navigation() {
             val url = it.arguments?.getString("url") ?: ""
             VideoScreen(navController, url, true, getVideoViewModel)
         }
+        composable(route = ScreenRoute.HomeSession.route) {
+            MainScreen(getVideoViewModel = getVideoViewModel, navController = navController, sessionState = true)
+        }
 
     }
 }
+

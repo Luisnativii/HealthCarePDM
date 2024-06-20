@@ -1,5 +1,4 @@
-package com.micharlie.healthcare.ui.cards
-
+package com.micharlie.healthcare.ui.components.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,27 +25,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.theme.bodyFatProgress
+import com.micharlie.healthcare.ui.theme.bodyFatProgressBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.seeMore
-import com.micharlie.healthcare.ui.theme.weightProgress
-import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 
-// Agregar el Onclick para redirigir a la pantalla de Weight
-// Para agregar el onClick colocar esto en el modifier despues de height quedaria:
-// .clickable { /* la direccion para ir en este caso seria a la pantalla de Weight */ },
-
+// Agregar el Onclick para redirigir a la pantalla de Body Fat
+// Para agregar el onClick colocar esto en el modifier despues de height
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de Body Fat */ }
 @Composable
-fun WeightCard(navController: NavHostController){
+fun BodyFatCard(navController: NavController) {
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable { navController.navigate("WeightScreen") },
+            .clickable { navController.navigate("BodyFatScreen") },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -56,21 +54,19 @@ fun WeightCard(navController: NavHostController){
         shape = RoundedCornerShape(10.dp)
 
     ){
-
-        // Icon and Tittle
-        Row (
+       // Icon and Tittle
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
-
             Image(
-                painter = painterResource(id = R.drawable.hugeiconsweightscale__1_),
-                contentDescription = "Weight Icon",
+                painter = painterResource(id = R.drawable.materialsymbolsbodyfat),
+                contentDescription = "Body Fat Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .background( color = weightProgressBackground, shape = RoundedCornerShape(10.dp))
+                    .background( color = bodyFatProgressBackground, shape = RoundedCornerShape(10.dp))
                     .clip(RoundedCornerShape(15.dp))
             )
 
@@ -81,7 +77,7 @@ fun WeightCard(navController: NavHostController){
                 horizontalAlignment = Alignment.Start
             ){
                 Text(
-                    text = "Weight",
+                    text = "Body Fat",
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 20.sp,
                     color = white
@@ -95,7 +91,7 @@ fun WeightCard(navController: NavHostController){
             }
         }
 
-        // Weight
+        // Body Fat
         Row (
             modifier = Modifier
                 .fillMaxWidth()
@@ -103,11 +99,12 @@ fun WeightCard(navController: NavHostController){
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "70", // Aqui debemos de pasar una varible para poder cambiar el valor
+                text = "10", // Cambiar esto por lo que se debe recibir de la base de datos o del usuario
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 30.sp,
                 color = white
             )
+
             Column (
                 modifier = Modifier
                     .weight(1f)
@@ -115,13 +112,14 @@ fun WeightCard(navController: NavHostController){
                 horizontalAlignment = Alignment.Start
             ){
                 Text(
-                    text = "kg",
+                    text = "%",
                     style = MaterialTheme.typography.bodyMedium,
                     fontSize = 16.sp,
                     color = white
                 )
             }
         }
+
 
         // Progress Bar
         Row (
@@ -136,18 +134,18 @@ fun WeightCard(navController: NavHostController){
                     .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Cambiar esto por el calculo del porcentaje
+                    progress = 0.5f, // Cambiar esto por lo que se debe recibir de la base de datos o del usuario para el porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),
-                    color = weightProgress,
-                    trackColor = weightProgressBackground
+                    color = bodyFatProgress,
+                    trackColor = bodyFatProgressBackground
                 )
             }
         }
 
         // Low and High
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
@@ -155,7 +153,7 @@ fun WeightCard(navController: NavHostController){
         ){
             Column {
                 Text(
-                    text = "low",
+                    text = "Low",
                     style = MaterialTheme.typography.bodyMedium,
                     fontSize = 14.sp,
                     color = white
@@ -164,7 +162,7 @@ fun WeightCard(navController: NavHostController){
 
             Column {
                 Text(
-                    text = "high",
+                    text = "High",
                     style = MaterialTheme.typography.bodyMedium,
                     fontSize = 14.sp,
                     color = white
@@ -177,7 +175,7 @@ fun WeightCard(navController: NavHostController){
 
 @Preview
 @Composable
-fun WeightCardPreview(){
+fun BodyFatCardPreview() {
     val navController = rememberNavController()
-    WeightCard(navController = navController)
+    BodyFatCard(navController = navController)
 }

@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.historyCards
+package com.micharlie.healthcare.ui.components.historyCards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,11 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
-import com.micharlie.healthcare.ui.theme.cholesterolProgressBackground
-import com.micharlie.healthcare.ui.theme.weightProgressBackground
+import com.micharlie.healthcare.ui.theme.heightBackground
+
 
 @Composable
-fun HistoryCholesterolCard(){
+fun HistoryHeightCard(){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -57,11 +57,11 @@ fun HistoryCholesterolCard(){
                 horizontalArrangement = Arrangement.Center // Centrar el contenido de la Row
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.healthiconsgallbladderoutline),
-                    contentDescription = "Cholesterol Icon",
+                    painter = painterResource(id = R.drawable.materialsymbolsheight),
+                    contentDescription = "Height Icon",
                     modifier = Modifier
                         .size(40.dp)
-                        .background(color = cholesterolProgressBackground, shape = RoundedCornerShape(10.dp))
+                        .background(color = heightBackground, shape = RoundedCornerShape(10.dp))
                         .clip(RoundedCornerShape(15.dp))
                 )
 
@@ -76,7 +76,7 @@ fun HistoryCholesterolCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "90",
+                            text = "170",
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -85,7 +85,7 @@ fun HistoryCholesterolCard(){
                         Spacer(modifier = Modifier.width(10.dp))
 
                         Text(
-                            text = "mg/dL",
+                            text = "cm",
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 15.sp,
                             color = Color.White
@@ -105,6 +105,6 @@ fun HistoryCholesterolCard(){
 
 @Preview
 @Composable
-fun HistoryCholesterolCardPreview(){
-    HistoryCholesterolCard()
+fun HistoryHeightCardPreview(){
+    HistoryHeightCard()
 }

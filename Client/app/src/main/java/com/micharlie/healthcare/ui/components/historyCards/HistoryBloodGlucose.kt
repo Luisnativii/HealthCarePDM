@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.historyCards
+package com.micharlie.healthcare.ui.components.historyCards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,11 +28,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.theme.bloodGlucoseProgressBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
-import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
+
 
 @Composable
-fun HistoryMuscularMassCard(){
+fun HistoryBloodGlucoseCard(){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -56,11 +57,11 @@ fun HistoryMuscularMassCard(){
                 horizontalArrangement = Arrangement.Center // Centrar el contenido de la Row
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.iconparkoutlinemuscle),
-                    contentDescription = "Muscular Mass Icon",
+                    painter = painterResource(id = R.drawable.materialsymbolsglucoseoutlinerounded),
+                    contentDescription = "Blood Glucose Icon",
                     modifier = Modifier
                         .size(40.dp)
-                        .background(color = muscularMassProgressBackground, shape = RoundedCornerShape(10.dp))
+                        .background(color = bloodGlucoseProgressBackground, shape = RoundedCornerShape(10.dp))
                         .clip(RoundedCornerShape(15.dp))
                 )
 
@@ -75,7 +76,7 @@ fun HistoryMuscularMassCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "20",
+                            text = "80", // lo que tenga la api
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -84,7 +85,7 @@ fun HistoryMuscularMassCard(){
                         Spacer(modifier = Modifier.width(10.dp))
 
                         Text(
-                            text = "kg",
+                            text = "mg/dL",
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 15.sp,
                             color = Color.White
@@ -104,6 +105,6 @@ fun HistoryMuscularMassCard(){
 
 @Preview
 @Composable
-fun HistoryMuscularMassCardPreview(){
-    HistoryMuscularMassCard()
+fun HistoryBloodGlucoseCardPreview(){
+    HistoryBloodGlucoseCard()
 }

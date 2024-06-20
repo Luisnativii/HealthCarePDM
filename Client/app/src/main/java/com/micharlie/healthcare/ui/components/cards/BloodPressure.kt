@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.cards
+package com.micharlie.healthcare.ui.components.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,25 +24,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.theme.PressurecolorBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
-import com.micharlie.healthcare.ui.theme.heightBackground
 import com.micharlie.healthcare.ui.theme.seeMore
+import com.micharlie.healthcare.ui.theme.white
 
-
-// Agregar el Onclick para redirigir a la pantalla de Height
-// Para agregar el onClick colocar esto en el modifier despues de height
-// .clickable { /* la direccion para ir en este caso seria a la pantalla de Height */ }
+// Agregar el Onclick para redirigir a la pantalla de Blood Pressure
+// Para agregar el onClick colocar esto en el modifier despues de height quedaria:
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de BloodPressure () */ },
 @Composable
-fun HeightCard(navController: NavHostController){
+fun BloodPressureCard(navController: NavController) {
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .height(150.dp)
-            .clickable { navController.navigate("HeightScreen") },
+            .height(200.dp)
+            .clickable { navController.navigate("BloodPressureScreen") },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -52,21 +52,19 @@ fun HeightCard(navController: NavHostController){
         shape = RoundedCornerShape(10.dp)
 
     ){
-
         // Icon and Tittle
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
-
             Image(
-                painter = painterResource(id = R.drawable.materialsymbolsheight),
-                contentDescription = "Weight Icon",
+                painter = painterResource(id = R.drawable.materialsymbolsbloodpressureoutline),
+                contentDescription = "Blood Pressure Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .background(color = heightBackground, shape = RoundedCornerShape(10.dp))
+                    .background( color = PressurecolorBackground, shape = RoundedCornerShape(10.dp))
                     .clip(RoundedCornerShape(15.dp))
             )
 
@@ -77,10 +75,10 @@ fun HeightCard(navController: NavHostController){
                 horizontalAlignment = Alignment.Start
             ){
                 Text(
-                    text = "Height",
-                    style = MaterialTheme.typography.bodyLarge,
+                    text = "Blood Pressure",
+                    style = MaterialTheme.typography.bodyMedium,
                     fontSize = 20.sp,
-                    color = Color.White
+                    color = white
                 )
                 Text(
                     text = "See more",
@@ -91,33 +89,48 @@ fun HeightCard(navController: NavHostController){
             }
         }
 
-        // Weight
+        // Blood Pressure Values
         Row (
             modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ){
+            Column(
+                modifier = Modifier
+                    .padding(start = 56.dp),
+                verticalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text ="110", // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontSize = 30.sp,
+                    color = Color.White
+                )
+                Text(
+                    text ="74", // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontSize = 20.sp,
+                    color = Color.White,
+                    modifier = Modifier.padding(start = 28.dp)
+                )
+            }
             Text(
-                text = "70", // Aquí debemos de pasar una variable para cambiar el valor
+                text = "mmHg",
                 style = MaterialTheme.typography.bodyLarge,
-                fontSize = 30.sp,
-                color = Color.White
-            )
-            Text(
-                text = " kg",
-                style = MaterialTheme.typography.bodyMedium,
-                fontSize = 16.sp,
-                color = Color.White
+                fontSize = 15.sp,
+                color = Color.White,
+                modifier = Modifier.padding(start = 16.dp)
             )
         }
+
     }
 }
 
 
 @Preview
 @Composable
-fun HeightPreview(){
+fun BloodPressureCardPreview() {
     val navController = rememberNavController()
-    HeightCard(navController = navController)
+    BloodPressureCard(navController = navController)
 }

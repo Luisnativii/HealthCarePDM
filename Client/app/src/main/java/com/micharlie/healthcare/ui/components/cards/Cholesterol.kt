@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.cards
+package com.micharlie.healthcare.ui.components.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,26 +25,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
-import com.micharlie.healthcare.ui.theme.bloodGlucoseProgress
-import com.micharlie.healthcare.ui.theme.bloodGlucoseProgressBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
+import com.micharlie.healthcare.ui.theme.cholesterolProgress
+import com.micharlie.healthcare.ui.theme.cholesterolProgressBackground
 import com.micharlie.healthcare.ui.theme.seeMore
 import com.micharlie.healthcare.ui.theme.white
 
-// Agregar el Onclick para redirigir a la pantalla de Blood Glucose
+// Agregar el Onclick para redirigir a la pantalla de Cholesterol
 // Para agregar el onClick colocar esto en el modifier despues de height
-// .clickable { /* la direccion para ir en este caso seria a la pantalla de BloodGlucose */ }
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de Cholesterol */ }
 @Composable
-fun BloodGlucoseCard(navController: NavHostController) {
+fun CholesterolCard(navController: NavController) {
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable { navController.navigate("BloodGlucoseScreen") },
+            .clickable { navController.navigate("CholesterolScreen") },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -62,11 +62,11 @@ fun BloodGlucoseCard(navController: NavHostController) {
             verticalAlignment = Alignment.CenterVertically
         ){
             Image(
-                painter = painterResource(id = R.drawable.materialsymbolsglucoseoutlinerounded),
-                contentDescription = "Blood Glucose Icon",
+                painter = painterResource(id = R.drawable.healthiconsgallbladderoutline),
+                contentDescription = "Cholesterol Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .background( color = bloodGlucoseProgressBackground, shape = RoundedCornerShape(10.dp))
+                    .background( color = cholesterolProgressBackground, shape = RoundedCornerShape(10.dp))
                     .clip(RoundedCornerShape(15.dp))
             )
 
@@ -77,7 +77,7 @@ fun BloodGlucoseCard(navController: NavHostController) {
                 horizontalAlignment = Alignment.Start
             ){
                 Text(
-                    text = "Blood Glucose",
+                    text = "Cholesterol",
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 20.sp,
                     color = white
@@ -120,7 +120,6 @@ fun BloodGlucoseCard(navController: NavHostController) {
             }
         }
 
-
         // Progress Bar
         Row (
             modifier = Modifier
@@ -130,16 +129,16 @@ fun BloodGlucoseCard(navController: NavHostController) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(16.dp) // Increase the height here
-                    .clip(RoundedCornerShape(10.dp)) // Set rounded corners here
+                    .height(16.dp)
+                    .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Hacer la consulta para obtener el valor, este es otro valor que se debe cambiar
+                    progress = 0.5f, // Cambiar esto para hacer el calculo de porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(16.dp), // Ensure the height matches the Box
-                    color = bloodGlucoseProgress,
-                    trackColor = bloodGlucoseProgressBackground
+                        .height(16.dp),
+                    color = cholesterolProgress,
+                    trackColor = cholesterolProgressBackground
                 )
             }
         }
@@ -175,7 +174,7 @@ fun BloodGlucoseCard(navController: NavHostController) {
 
 @Preview
 @Composable
-fun BloodGlucoseCardPreview() {
+fun CholesterolCardPreview() {
     val navController = rememberNavController()
-    BloodGlucoseCard(navController = navController)
+    CholesterolCard(navController = navController)
 }

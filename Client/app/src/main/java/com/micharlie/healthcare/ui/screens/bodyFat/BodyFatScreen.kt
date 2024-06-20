@@ -47,7 +47,7 @@ import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
 
-import com.micharlie.healthcare.ui.historyCards.HistoryBodyFatCard
+import com.micharlie.healthcare.ui.components.historyCards.HistoryBodyFatCard
 
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 

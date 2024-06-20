@@ -19,14 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
-import com.micharlie.healthcare.ui.cards.BloodGlucoseCard
-import com.micharlie.healthcare.ui.cards.BloodPressureCard
-import com.micharlie.healthcare.ui.cards.BodyFatCard
-import com.micharlie.healthcare.ui.cards.CholesterolCard
-import com.micharlie.healthcare.ui.cards.HeightCard
-import com.micharlie.healthcare.ui.cards.MuscularMassCard
-import com.micharlie.healthcare.ui.cards.WeightCard
+import androidx.navigation.NavController
+import com.micharlie.healthcare.ui.components.cards.BloodGlucoseCard
+import com.micharlie.healthcare.ui.components.cards.BloodPressureCard
+import com.micharlie.healthcare.ui.components.cards.BodyFatCard
+import com.micharlie.healthcare.ui.components.cards.CholesterolCard
+import com.micharlie.healthcare.ui.components.cards.HeightCard
+import com.micharlie.healthcare.ui.components.cards.MuscularMassCard
+import com.micharlie.healthcare.ui.components.cards.WeightCard
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
@@ -37,27 +37,21 @@ import com.micharlie.healthcare.ui.theme.white
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 
-fun MainScreen(sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
-    val navController = rememberNavController()
-
+fun MainScreen(sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel, navController: NavController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-    DrawerBar(drawerState = drawerState, sessionState = true , content = {
-        Scaffold(
-            bottomBar = { BottomBar() },
-            topBar = { TopBar(drawerState = drawerState) }
-        ) {
-            Column (
+    DrawerBar(drawerState = drawerState, sessionState = true, content = {
+        Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
+            Column(
                 modifier = Modifier
                     .padding(it)
                     .background(primary)
-            ){
-                LazyColumn (
-                    modifier = Modifier
-                        .fillMaxWidth(),
+            ) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
-                ){
+                ) {
                     item {
                         Text(
                             text = "Check your health metrics!",
@@ -68,52 +62,45 @@ fun MainScreen(sessionState: Boolean = true, getVideoViewModel: GetVideoViewMode
                         )
 
                         Box(
-                            modifier = Modifier
-                                .padding(16.dp)
-                        ){
+                            modifier = Modifier.padding(16.dp)
+                        ) {
                             HeightCard(navController = navController)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(16.dp)
-                        ){
+                            modifier = Modifier.padding(16.dp)
+                        ) {
                             WeightCard(navController = navController)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(16.dp)
-                        ){
+                            modifier = Modifier.padding(16.dp)
+                        ) {
                             MuscularMassCard(navController = navController)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(16.dp)
-                        ){
+                            modifier = Modifier.padding(16.dp)
+                        ) {
                             BodyFatCard(navController = navController)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(16.dp)
-                        ){
+                            modifier = Modifier.padding(16.dp)
+                        ) {
                             CholesterolCard(navController = navController)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(16.dp)
-                        ){
+                            modifier = Modifier.padding(16.dp)
+                        ) {
                             BloodGlucoseCard(navController = navController)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(16.dp)
-                        ){
+                            modifier = Modifier.padding(16.dp)
+                        ) {
                             BloodPressureCard(navController = navController)
                         }
                     }
                 }
             }
         }
-    }, navController = navController,getVideoViewModel)
+    }, navController = navController, getVideoViewModel)
 }
 
 

@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.historyCards
+package com.micharlie.healthcare.ui.components.historyCards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,11 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
-import com.micharlie.healthcare.ui.theme.heightBackground
-
+import com.micharlie.healthcare.ui.theme.weightProgressBackground
 
 @Composable
-fun HistoryHeightCard(){
+fun HistoryWeightCard(){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -57,11 +56,11 @@ fun HistoryHeightCard(){
                 horizontalArrangement = Arrangement.Center // Centrar el contenido de la Row
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.materialsymbolsheight),
-                    contentDescription = "Height Icon",
+                    painter = painterResource(id = R.drawable.hugeiconsweightscale__1_),
+                    contentDescription = "Weight Icon",
                     modifier = Modifier
                         .size(40.dp)
-                        .background(color = heightBackground, shape = RoundedCornerShape(10.dp))
+                        .background(color = weightProgressBackground, shape = RoundedCornerShape(10.dp))
                         .clip(RoundedCornerShape(15.dp))
                 )
 
@@ -76,7 +75,7 @@ fun HistoryHeightCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "170",
+                            text = "65",
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -85,7 +84,7 @@ fun HistoryHeightCard(){
                         Spacer(modifier = Modifier.width(10.dp))
 
                         Text(
-                            text = "cm",
+                            text = "kg",
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 15.sp,
                             color = Color.White
@@ -105,6 +104,6 @@ fun HistoryHeightCard(){
 
 @Preview
 @Composable
-fun HistoryHeightCardPreview(){
-    HistoryHeightCard()
+fun HistoryWeightCardPreview(){
+    HistoryWeightCard()
 }

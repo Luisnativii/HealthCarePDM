@@ -44,7 +44,7 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
-import com.micharlie.healthcare.ui.historyCards.HistoryHeightCard
+import com.micharlie.healthcare.ui.components.historyCards.HistoryHeightCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast1

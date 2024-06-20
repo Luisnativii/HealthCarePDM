@@ -1,4 +1,5 @@
-package com.micharlie.healthcare.ui.cards
+package com.micharlie.healthcare.ui.components.cards
+
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,26 +26,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
-import com.micharlie.healthcare.ui.theme.muscularMassProgress
-import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
 import com.micharlie.healthcare.ui.theme.seeMore
+import com.micharlie.healthcare.ui.theme.weightProgress
+import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 
-// Agregar el Onclick para redirigir a la pantalla de Muscular Mass
+// Agregar el Onclick para redirigir a la pantalla de Weight
 // Para agregar el onClick colocar esto en el modifier despues de height quedaria:
-// .clickable { /* la direccion para ir en este caso seria a la pantalla de Muscular Mass  */ },
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de Weight */ },
+
 @Composable
-fun MuscularMassCard(navController: NavHostController){
-    ElevatedCard(
+fun WeightCard(navController: NavController){
+    ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable { navController.navigate("MuscularMassScreen") },
+            .clickable { navController.navigate("WeightScreen") },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -53,7 +55,8 @@ fun MuscularMassCard(navController: NavHostController){
         ),
         shape = RoundedCornerShape(10.dp)
 
-    ) {
+    ){
+
         // Icon and Tittle
         Row (
             modifier = Modifier
@@ -61,12 +64,13 @@ fun MuscularMassCard(navController: NavHostController){
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
+
             Image(
-                painter = painterResource(id = R.drawable.iconparkoutlinemuscle),
+                painter = painterResource(id = R.drawable.hugeiconsweightscale__1_),
                 contentDescription = "Weight Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .background( color = muscularMassProgressBackground, shape = RoundedCornerShape(10.dp))
+                    .background( color = weightProgressBackground, shape = RoundedCornerShape(10.dp))
                     .clip(RoundedCornerShape(15.dp))
             )
 
@@ -77,7 +81,7 @@ fun MuscularMassCard(navController: NavHostController){
                 horizontalAlignment = Alignment.Start
             ){
                 Text(
-                    text = "Muscular Mass",
+                    text = "Weight",
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 20.sp,
                     color = white
@@ -91,7 +95,7 @@ fun MuscularMassCard(navController: NavHostController){
             }
         }
 
-        // Muscular Mass
+        // Weight
         Row (
             modifier = Modifier
                 .fillMaxWidth()
@@ -99,12 +103,11 @@ fun MuscularMassCard(navController: NavHostController){
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "20", // Change this value
+                text = "70", // Aqui debemos de pasar una varible para poder cambiar el valor
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 30.sp,
                 color = white
             )
-
             Column (
                 modifier = Modifier
                     .weight(1f)
@@ -112,7 +115,7 @@ fun MuscularMassCard(navController: NavHostController){
                 horizontalAlignment = Alignment.Start
             ){
                 Text(
-                    text ="kg",
+                    text = "kg",
                     style = MaterialTheme.typography.bodyMedium,
                     fontSize = 16.sp,
                     color = white
@@ -129,16 +132,16 @@ fun MuscularMassCard(navController: NavHostController){
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(16.dp) // Increase the height here
-                    .clip(RoundedCornerShape(8.dp))
+                    .height(16.dp)
+                    .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Cambiar esto por el valor para hacer el calculo del porcentaje
+                    progress = 0.5f, // Cambiar esto por el calculo del porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),
-                    color = muscularMassProgress,
-                    trackColor = muscularMassProgressBackground
+                    color = weightProgress,
+                    trackColor = weightProgressBackground
                 )
             }
         }
@@ -152,7 +155,7 @@ fun MuscularMassCard(navController: NavHostController){
         ){
             Column {
                 Text(
-                    text = "Low",
+                    text = "low",
                     style = MaterialTheme.typography.bodyMedium,
                     fontSize = 14.sp,
                     color = white
@@ -161,7 +164,7 @@ fun MuscularMassCard(navController: NavHostController){
 
             Column {
                 Text(
-                    text = "High",
+                    text = "high",
                     style = MaterialTheme.typography.bodyMedium,
                     fontSize = 14.sp,
                     color = white
@@ -171,9 +174,10 @@ fun MuscularMassCard(navController: NavHostController){
     }
 }
 
+
 @Preview
 @Composable
-fun MuscularMassCardPreview(){
+fun WeightCardPreview(){
     val navController = rememberNavController()
-    MuscularMassCard(navController = navController)
+    WeightCard(navController = navController)
 }

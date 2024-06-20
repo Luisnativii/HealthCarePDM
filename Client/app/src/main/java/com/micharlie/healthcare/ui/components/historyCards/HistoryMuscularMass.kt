@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.historyCards
+package com.micharlie.healthcare.ui.components.historyCards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,12 +28,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.micharlie.healthcare.R
-import com.micharlie.healthcare.ui.theme.bodyFatProgressBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
-
+import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
 
 @Composable
-fun HistoryBodyFatCard(){
+fun HistoryMuscularMassCard(){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -57,11 +56,11 @@ fun HistoryBodyFatCard(){
                 horizontalArrangement = Arrangement.Center // Centrar el contenido de la Row
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.materialsymbolsbodyfat),
-                    contentDescription = "Body Fat Icon",
+                    painter = painterResource(id = R.drawable.iconparkoutlinemuscle),
+                    contentDescription = "Muscular Mass Icon",
                     modifier = Modifier
                         .size(40.dp)
-                        .background(color = bodyFatProgressBackground, shape = RoundedCornerShape(10.dp))
+                        .background(color = muscularMassProgressBackground, shape = RoundedCornerShape(10.dp))
                         .clip(RoundedCornerShape(15.dp))
                 )
 
@@ -76,7 +75,7 @@ fun HistoryBodyFatCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "10",
+                            text = "20",
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -85,7 +84,7 @@ fun HistoryBodyFatCard(){
                         Spacer(modifier = Modifier.width(10.dp))
 
                         Text(
-                            text = "%",
+                            text = "kg",
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 15.sp,
                             color = Color.White
@@ -105,6 +104,6 @@ fun HistoryBodyFatCard(){
 
 @Preview
 @Composable
-fun HistoryBodyFatCardPreview(){
-    HistoryBodyFatCard()
+fun HistoryMuscularMassCardPreview(){
+    HistoryMuscularMassCard()
 }

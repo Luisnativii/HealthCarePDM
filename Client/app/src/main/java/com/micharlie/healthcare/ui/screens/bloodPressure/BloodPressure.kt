@@ -46,7 +46,7 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
-import com.micharlie.healthcare.ui.historyCards.HistoryBloodPressureCard
+import com.micharlie.healthcare.ui.components.historyCards.HistoryBloodPressureCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.PressurecolorBackground
 import com.micharlie.healthcare.ui.theme.bloodPressureColor
