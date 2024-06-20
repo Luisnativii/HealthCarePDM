@@ -3,6 +3,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,8 +21,9 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
     var password by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
     var dateBirth by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
+    val registerState by registerViewModel.registerState.collectAsState()
 
-    // UI para registro
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -105,6 +107,10 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                if (errorMessage.isNotEmpty()) {
+                    Text(errorMessage, color = MaterialTheme.colorScheme.error)
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
                 Button(
                     onClick = {
                         val user = RegisterRequest(name, email, gender, dateBirth, password)
@@ -117,6 +123,15 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Register")
+                }
+                when (registerState) {
+                    is RegisterState.Loading -> CircularProgressIndicator(modifier = Modifier.align(
+                        Alignment.CenterHorizontally))
+                    is RegisterState.Success -> Text("Registration successful!", color = MaterialTheme.colorScheme.primary)
+                    is RegisterState.Error -> {
+                        errorMessage = (registerState as RegisterState.Error).message
+                    }
+                    RegisterState.Idle -> Unit // No action for Idle state
                 }
             }
         }

@@ -4,19 +4,35 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.micharlie.healthcare.data.api.ApiService
 import com.micharlie.healthcare.data.model.LoginRequest
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
+sealed class LoginState {
+    object Loading : LoginState()
+    object Success : LoginState()
+    data class Error(val message: String) : LoginState()
+}
+
 class LoginViewModel(private val apiService: ApiService) : ViewModel() {
-    fun login(email: String, password: String) {
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Success)
+    val loginState: StateFlow<LoginState> = _loginState
+
+    /*fun login(email: String, password: String) {
         val request = LoginRequest(email, password)
         viewModelScope.launch {
+            _loginState.value = LoginState.Loading
             try {
                 val response = apiService.login(request)
-                // manejar la respuesta exitosa
+                if (response.isSuccessful) {
+                    _loginState.value = LoginState.Success
+                } else {
+                    _loginState.value = LoginState.Error("Invalid credentials")
+                }
             } catch (e: Exception) {
-                // manejar el error
+                _loginState.value = LoginState.Error("Login failed")
             }
         }
-    }
+    }*/
 }
