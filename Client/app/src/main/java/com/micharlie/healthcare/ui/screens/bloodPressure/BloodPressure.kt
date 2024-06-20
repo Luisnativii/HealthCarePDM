@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.screens.WeightScreen
+package com.micharlie.healthcare.ui.screens.bloodPressure
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,16 +46,16 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.theme.PressurecolorBackground
+import com.micharlie.healthcare.ui.theme.bloodPressureColor
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
-import com.micharlie.healthcare.ui.theme.weightProgress
-import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WeightScreen(navController: NavController) {
+fun BloodPressureScreen(navController: NavController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -70,7 +71,7 @@ fun WeightScreen(navController: NavController) {
                 // Content of the screen
                 LazyColumn {
                     item {
-                        // Card Icon and Tittle Weight
+                        // Card Icon and Tittle Blood Pressure
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -87,12 +88,12 @@ fun WeightScreen(navController: NavController) {
                                 verticalAlignment = Alignment.CenterVertically
                             ){
                                 Image(
-                                    painter = painterResource(id = R.drawable.hugeiconsweightscale__1_),
-                                    contentDescription = "Weight Icon",
+                                    painter = painterResource(id = R.drawable.materialsymbolsbloodpressureoutline),
+                                    contentDescription = "Blood Pressure Icon",
                                     modifier = Modifier
                                         .size(60.dp)
                                         .background(
-                                            color = weightProgressBackground,
+                                            color = PressurecolorBackground,
                                             shape = RoundedCornerShape(10.dp)
                                         )
                                         .clip(RoundedCornerShape(15.dp))
@@ -101,7 +102,7 @@ fun WeightScreen(navController: NavController) {
                                 Spacer(modifier = Modifier.width(16.dp))
 
                                 Text(
-                                    text = "Weight",
+                                    text = "Blood Pressure",
                                     style = MaterialTheme.typography.bodyLarge,
                                     fontSize = 20.sp,
                                     color = white,
@@ -114,12 +115,13 @@ fun WeightScreen(navController: NavController) {
 
 
                         // Card input Weight
-                        var weightInput by remember { mutableStateOf("65") }
+                        var bloodPressureSystolicInput by remember { mutableStateOf("110") }
+                        var bloodPressureDiastolicInput by remember { mutableStateOf("75") }
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
-                                .height(150.dp),
+                                .height(250.dp),
                             colors = CardDefaults.cardColors(
                                 containerColor = cardsBackgroud
                             )
@@ -136,22 +138,70 @@ fun WeightScreen(navController: NavController) {
                                     horizontalArrangement = Arrangement.Center
                                 ){
                                     TextField(
-                                        value = weightInput , // Mandando a llamar el peso
-                                        onValueChange = { weightInput = it },
+                                        value = bloodPressureSystolicInput , // Mandando a llamar la BloodGlucose
+                                        onValueChange = { bloodPressureSystolicInput = it },
                                         shape = RoundedCornerShape(8.dp),
                                         modifier = Modifier
                                             .size(width = 150.dp, height = 50.dp)
                                     )
-                                    Text(
-                                        text = "kg",
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        fontSize = 16.sp,
-                                        color = white,
+                                    Box(
                                         modifier = Modifier
-                                            .padding(16.dp)
-                                    )
+                                            .padding(16.dp),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        Column (
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ){
+                                            Text(
+                                                text = "Systolic", // Cambiar por una variable de usuario o db
+                                                style = MaterialTheme.typography.bodyLarge,
+                                                color = white
+                                            )
+                                            Text(
+                                                text = "mmHg",
+                                                style = MaterialTheme.typography.bodyLarge,
+                                                color = Color.Gray
+                                            )
+                                        }
+                                    }
+
                                 }
-                                Spacer(modifier = Modifier.height(16.dp))
+
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    TextField(
+                                        value = bloodPressureDiastolicInput, // Nueva variable para diastolic input
+                                        onValueChange = { bloodPressureDiastolicInput = it },
+                                        shape = RoundedCornerShape(8.dp),
+                                        modifier = Modifier
+                                            .size(width = 150.dp, height = 50.dp)
+                                    )
+                                    Box(
+                                        modifier = Modifier.padding(16.dp),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        Column(
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            Text(
+                                                text = "Diastolic", // Cambiar por una variable de usuario o db
+                                                style = MaterialTheme.typography.bodyLarge,
+                                                color = white
+                                            )
+                                            Text(
+                                                text = "mmHg",
+                                                style = MaterialTheme.typography.bodyLarge,
+                                                color = Color.Gray
+                                            )
+                                        }
+                                    }
+                                }
+
+
                                 Button(
                                     onClick = { /* Handle update logic */ },
                                     colors = ButtonDefaults.buttonColors(containerColor = contrast2),
@@ -170,8 +220,8 @@ fun WeightScreen(navController: NavController) {
                         ){
                             Card(
                                 modifier = Modifier
-                                    .width(75.dp)
-                                    .height(105.dp)
+                                    .width(100.dp)
+                                    .height(200.dp)
                                     .padding(end = 8.dp), // Spacing between cards
                                 colors = CardDefaults.cardColors(
                                     containerColor = cardsBackgroud
@@ -181,19 +231,35 @@ fun WeightScreen(navController: NavController) {
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier.fillMaxSize()
                                 ) {
-                                    Text(
-                                        text = "65 kg",
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        color = white
-                                    )
+                                    Column (
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ){
+                                        Text(
+                                            text = "110", // Cambiar por una variable de usuario o db
+                                            fontSize = 25.sp,
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            color = white
+                                        )
+                                        Text(
+                                            text = "75",
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            color = white
+                                        )
+                                        Text(
+                                            text = "mmHg",
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            color = Color.Gray
+                                        )
+                                    }
                                 }
                             }
 
-                            // Card Normal and
+                            // Card Normal and LinerProgressIndicator
                             Card(
                                 modifier = Modifier
                                     .weight(1f)
-                                    .height(105.dp)
+                                    .height(200.dp)
                                     .padding(start = 8.dp), // Spacing between cards
                                 colors = CardDefaults.cardColors(
                                     containerColor = cardsBackgroud
@@ -218,9 +284,26 @@ fun WeightScreen(navController: NavController) {
                                         Spacer(modifier = Modifier.height(8.dp))
 
                                         LinearProgressIndicator(
+                                            progress = 0.7f,
+                                            color = bloodPressureColor,
+                                            trackColor = PressurecolorBackground,
+                                            modifier = Modifier
+                                                .height(16.dp)
+                                                .clip(RoundedCornerShape(10.dp))
+                                        )
+
+                                        Spacer(modifier = Modifier.height(16.dp))
+
+                                        Text(
+                                            text = "Normal", // Se tiene que validar para ver que le vamos a poner
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            color = white
+                                        )
+
+                                        LinearProgressIndicator(
                                             progress = 0.5f,
-                                            color = weightProgress,
-                                            trackColor = weightProgressBackground,
+                                            color = bloodPressureColor,
+                                            trackColor = PressurecolorBackground,
                                             modifier = Modifier
                                                 .height(16.dp)
                                                 .clip(RoundedCornerShape(10.dp))
@@ -261,12 +344,12 @@ fun WeightScreen(navController: NavController) {
                                 verticalAlignment = Alignment.CenterVertically
                             ){
                                 Image(
-                                    painter = painterResource(id = R.drawable.materialsymbolshistory),
-                                    contentDescription = "Weight Icon",
+                                    painter = painterResource(id = R.drawable.materialsymbolshistory__3_),
+                                    contentDescription = "History Icon",
                                     modifier = Modifier
                                         .size(60.dp)
                                         .background(
-                                            color = weightProgressBackground,
+                                            color = PressurecolorBackground,
                                             shape = RoundedCornerShape(10.dp)
                                         )
                                         .clip(RoundedCornerShape(15.dp))
@@ -293,6 +376,6 @@ fun WeightScreen(navController: NavController) {
 }
 @Composable
 @Preview
-fun WeightScreenPreview() {
-    WeightScreen(navController = rememberNavController())
+fun BloodPressureScreenPreview() {
+    BloodPressureScreen(navController = rememberNavController())
 }
