@@ -1,7 +1,6 @@
 package com.micharlie.healthcare.ui.screens.mainScreen
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,15 +16,10 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.cards.BloodGlucoseCard
 import com.micharlie.healthcare.ui.cards.BloodPressureCard
 import com.micharlie.healthcare.ui.cards.BodyFatCard
@@ -36,12 +30,14 @@ import com.micharlie.healthcare.ui.cards.WeightCard
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen() {
+
+fun MainScreen(sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
     val navController = rememberNavController()
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -117,10 +113,7 @@ fun MainScreen() {
                 }
             }
         }
-    }, navController = navController  )
+    }, navController = navController,getVideoViewModel)
 }
-@Composable
-@Preview
-fun MainScreenPreview() {
-    MainScreen()
-}
+
+

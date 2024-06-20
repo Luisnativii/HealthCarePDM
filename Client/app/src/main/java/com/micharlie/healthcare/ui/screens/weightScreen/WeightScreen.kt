@@ -47,6 +47,7 @@ import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.historyCards.HistoryWeightCard
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
@@ -56,7 +57,7 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WeightScreen(navController: NavController) {
+fun WeightScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -334,10 +335,5 @@ fun WeightScreen(navController: NavController) {
                 }
             }
         }
-    }, navController = navController  )
-}
-@Composable
-@Preview
-fun WeightScreenPreview() {
-    WeightScreen(navController = rememberNavController())
+    }, navController = navController, getVideoViewModel)
 }
