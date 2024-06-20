@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.components.YoutubePlayer
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.secondary
@@ -34,9 +35,9 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun VideoScreen(navController: NavController, url: String) {
+fun VideoScreen(navController: NavController, url: String, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    DrawerBar(drawerState = drawerState, sessionState = true, navController = navController,
+    DrawerBar(drawerState = drawerState, sessionState = true, navController = navController, getVideoViewModel = getVideoViewModel,
         content = {
             Scaffold(topBar = { TopBar(drawerState = drawerState) }, bottomBar = { BottomBar() }) {
                 Column(
@@ -78,14 +79,7 @@ fun VideoScreen(navController: NavController, url: String) {
         })
 }
 
-@Composable
-@Preview
-fun VideoScreenPreview() {
-    VideoScreen(
-        navController = rememberNavController(),
-        url = "https://youtu.be/vmSSXE-itOM?si=KawME0KXBNEAS02F"
-    )
-}
+
 
 fun extractYoutubeVideoId(url: String): String? {
     val regex =

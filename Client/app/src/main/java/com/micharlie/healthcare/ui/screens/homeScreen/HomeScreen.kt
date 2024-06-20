@@ -18,11 +18,12 @@ import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.HomeScreenSelector
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.primary
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
     //Se crea el drawer state para manejar el estado de la barra lateral
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     //Se importa la funcion de drawer bar y se le pasan los parametros, el argumento session
@@ -31,6 +32,7 @@ fun HomeScreen(navController: NavController) {
     DrawerBar(drawerState = drawerState,
         sessionState = true,
         navController = navController,
+        getVideoViewModel = getVideoViewModel,
         content = {
             Scaffold(topBar = { TopBar(drawerState = drawerState) },
                 bottomBar = { BottomBar() })
@@ -59,8 +61,4 @@ fun HomeScreenContent() {
 }
 
 
-@Composable
-@Preview
-fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController())
-}
+

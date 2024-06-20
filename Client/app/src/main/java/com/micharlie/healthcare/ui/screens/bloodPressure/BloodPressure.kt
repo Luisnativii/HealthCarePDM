@@ -46,6 +46,7 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.PressurecolorBackground
 import com.micharlie.healthcare.ui.theme.bloodPressureColor
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
@@ -55,7 +56,7 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BloodPressureScreen(navController: NavController) {
+fun BloodPressureScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -372,10 +373,5 @@ fun BloodPressureScreen(navController: NavController) {
                 }
             }
         }
-    }, navController = navController  )
-}
-@Composable
-@Preview
-fun BloodPressureScreenPreview() {
-    BloodPressureScreen(navController = rememberNavController())
+    }, navController = navController, getVideoViewModel)
 }

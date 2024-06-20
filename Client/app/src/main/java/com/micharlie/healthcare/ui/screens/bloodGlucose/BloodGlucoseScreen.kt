@@ -46,6 +46,7 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.bloodGlucoseProgress
 import com.micharlie.healthcare.ui.theme.bloodGlucoseProgressBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
@@ -55,7 +56,7 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BloodGlucoseScreen(navController: NavController) {
+fun BloodGlucoseScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -300,10 +301,5 @@ fun BloodGlucoseScreen(navController: NavController) {
                 }
             }
         }
-    }, navController = navController  )
-}
-@Composable
-@Preview
-fun BloodGlucoseScreenPreview() {
-    BloodGlucoseScreen(navController = rememberNavController())
+    }, navController = navController, getVideoViewModel)
 }

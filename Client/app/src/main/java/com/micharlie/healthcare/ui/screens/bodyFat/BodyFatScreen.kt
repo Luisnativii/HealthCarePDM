@@ -46,6 +46,7 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.bodyFatProgress
 import com.micharlie.healthcare.ui.theme.bodyFatProgressBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
@@ -55,7 +56,7 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BodyFatScreen(navController: NavController) {
+fun BodyFatScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -302,10 +303,5 @@ fun BodyFatScreen(navController: NavController) {
                 }
             }
         }
-    }, navController = navController  )
-}
-@Composable
-@Preview
-fun BodyFatScreenPreview() {
-    BodyFatScreen(navController = rememberNavController())
+    }, navController = navController, getVideoViewModel )
 }

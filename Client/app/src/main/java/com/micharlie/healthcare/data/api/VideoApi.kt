@@ -21,4 +21,13 @@ class VideoApi (
 
     @SerializedName(value = Constants.CATEGORY)
     val category: String? = "",
-)
+
+    val createdAt: String? = "",
+
+    val updatedAt: String? = "",
+
+    ){
+    override fun toString(): String {
+        return "VideoApi(videoBanner=$videoBanner, channelName=$channelName, channelPhoto=$channelPhoto, videoName=$videoName, link=$link, category=$category, createdAt=$createdAt, updatedAt=$updatedAt)"
+    }
+}

@@ -44,6 +44,7 @@ import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast1
 import com.micharlie.healthcare.ui.theme.contrast2
@@ -53,7 +54,7 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HeightScreen(navController: NavController) {
+fun HeightScreen(navController: NavController, getVideoViewModel: GetVideoViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -257,10 +258,5 @@ fun HeightScreen(navController: NavController) {
                 }
             }
         }
-    }, navController = navController  )
-}
-@Composable
-@Preview
-fun HeightScreenPreview() {
-    HeightScreen(navController = rememberNavController())
+    }, navController = navController, getVideoViewModel)
 }
