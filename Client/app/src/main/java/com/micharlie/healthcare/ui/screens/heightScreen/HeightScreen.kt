@@ -35,11 +35,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
@@ -55,7 +53,12 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HeightScreen(navController: NavController, getVideoViewModel: GetVideoViewModel) {
+fun HeightScreen(
+    navController: NavController,
+    getVideoViewModel: GetVideoViewModel,
+    height: Int,
+    date: String
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -200,19 +203,6 @@ fun HeightScreen(navController: NavController, getVideoViewModel: GetVideoViewMo
                             }
                         }
 
-                        // Graphics Card
-                        Card (
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp, horizontal = 16.dp)
-                                .height(150.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = cardsBackgroud
-                            )
-                        ){
-
-                        }
-
                         // History Card
                         Card(
                             modifier = Modifier
@@ -267,25 +257,25 @@ fun HeightScreen(navController: NavController, getVideoViewModel: GetVideoViewMo
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryHeightCard()
+                            HistoryHeightCard(height,date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryHeightCard()
+                            HistoryHeightCard(height,date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryHeightCard()
+                            HistoryHeightCard(height,date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryHeightCard()
+                            HistoryHeightCard(height,date)
                         }
                     }
                 }

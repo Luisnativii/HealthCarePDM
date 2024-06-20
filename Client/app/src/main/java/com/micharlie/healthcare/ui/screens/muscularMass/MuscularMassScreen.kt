@@ -57,7 +57,13 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Prueba(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
+fun Prueba(
+    navController: NavController,
+    sessionState: Boolean = true,
+    getVideoViewModel: GetVideoViewModel,
+    muscularMass:Int,
+    date:String
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -312,25 +318,25 @@ fun Prueba(navController: NavController, sessionState: Boolean = true, getVideoV
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryMuscularMassCard()
+                            HistoryMuscularMassCard(muscularMass, date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryMuscularMassCard()
+                            HistoryMuscularMassCard(muscularMass, date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryMuscularMassCard()
+                            HistoryMuscularMassCard(muscularMass, date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryMuscularMassCard()
+                            HistoryMuscularMassCard(muscularMass, date)
                         }
 
                     }

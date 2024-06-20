@@ -33,7 +33,7 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 
 
 @Composable
-fun HistoryBloodPressureCard(){
+fun HistoryBloodPressureCard(bloodPressureSystolic:Int , bloodPressureDiastolic:Int, date:String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -83,13 +83,13 @@ fun HistoryBloodPressureCard(){
                             horizontalAlignment = Alignment.End
                         ){
                             Text(
-                                text = "110",
+                                text = bloodPressureSystolic.toString(),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontSize = 23.sp,
                                 color = Color.White
                             )
                             Text(
-                                text = "75",
+                                text = bloodPressureDiastolic.toString(),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontSize = 15.sp,
                                 color = Color.White
@@ -106,7 +106,7 @@ fun HistoryBloodPressureCard(){
                         )
                     }
                     Text(
-                        text = "12/12/2024", // Date
+                        text = date.toString(), // Date
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 14.sp,
                         color = Color.Gray
@@ -120,5 +120,5 @@ fun HistoryBloodPressureCard(){
 @Preview
 @Composable
 fun HistoryBloodPressureCardPreview(){
-    HistoryBloodPressureCard()
+    HistoryBloodPressureCard(bloodPressureSystolic = 110, bloodPressureDiastolic = 70, date = "09/10/2024")
 }

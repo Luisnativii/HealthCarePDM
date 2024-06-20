@@ -57,7 +57,14 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BloodPressureScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
+fun BloodPressureScreen(
+    navController: NavController,
+    sessionState: Boolean = true,
+    getVideoViewModel: GetVideoViewModel,
+    bloodPressureSystolic: Int,
+    bloodPressureDiastolic: Int,
+    date: String
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -117,8 +124,8 @@ fun BloodPressureScreen(navController: NavController, sessionState: Boolean = tr
 
 
                         // Card input Weight
-                        var bloodPressureSystolicInput by remember { mutableStateOf("110") }
-                        var bloodPressureDiastolicInput by remember { mutableStateOf("75") }
+                        var bloodPressureSystolicInput by remember { mutableStateOf(bloodPressureSystolic.toString()) }
+                        var bloodPressureDiastolicInput by remember { mutableStateOf(bloodPressureDiastolic.toString()) }
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -382,25 +389,25 @@ fun BloodPressureScreen(navController: NavController, sessionState: Boolean = tr
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryBloodPressureCard()
+                            HistoryBloodPressureCard(bloodPressureSystolic, bloodPressureDiastolic, date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryBloodPressureCard()
+                            HistoryBloodPressureCard(bloodPressureSystolic, bloodPressureDiastolic, date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryBloodPressureCard()
+                            HistoryBloodPressureCard(bloodPressureSystolic, bloodPressureDiastolic, date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryBloodPressureCard()
+                            HistoryBloodPressureCard(bloodPressureSystolic, bloodPressureDiastolic, date)
                         }
 
                     }

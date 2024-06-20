@@ -57,7 +57,13 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CholesterolScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
+fun CholesterolScreen(
+    navController: NavController,
+    sessionState: Boolean = true,
+    getVideoViewModel: GetVideoViewModel,
+    cholesterol: Int,
+    date: String
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -312,25 +318,25 @@ fun CholesterolScreen(navController: NavController, sessionState: Boolean = true
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryCholesterolCard()
+                            HistoryCholesterolCard(cholesterol, date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryCholesterolCard()
+                            HistoryCholesterolCard(cholesterol, date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryCholesterolCard()
+                            HistoryCholesterolCard(cholesterol, date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryCholesterolCard()
+                            HistoryCholesterolCard(cholesterol, date)
                         }
                     }
                 }

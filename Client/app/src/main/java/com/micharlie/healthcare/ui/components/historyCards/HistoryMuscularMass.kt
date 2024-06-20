@@ -32,7 +32,7 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
 
 @Composable
-fun HistoryMuscularMassCard(){
+fun HistoryMuscularMassCard(muscularMass:Int, date:String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -75,7 +75,7 @@ fun HistoryMuscularMassCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "20",
+                            text = muscularMass.toString(),
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -91,7 +91,7 @@ fun HistoryMuscularMassCard(){
                         )
                     }
                     Text(
-                        text = "12/12/2024", // Date
+                        text = date.toString(), // Date
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 14.sp,
                         color = Color.Gray
@@ -105,5 +105,5 @@ fun HistoryMuscularMassCard(){
 @Preview
 @Composable
 fun HistoryMuscularMassCardPreview(){
-    HistoryMuscularMassCard()
+    HistoryMuscularMassCard(muscularMass = 20, date = "12/12/2024")
 }

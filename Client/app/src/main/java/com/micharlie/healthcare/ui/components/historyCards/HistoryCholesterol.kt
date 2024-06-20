@@ -33,7 +33,7 @@ import com.micharlie.healthcare.ui.theme.cholesterolProgressBackground
 import com.micharlie.healthcare.ui.theme.weightProgressBackground
 
 @Composable
-fun HistoryCholesterolCard(){
+fun HistoryCholesterolCard(cholesterol: Int, date: String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -76,7 +76,7 @@ fun HistoryCholesterolCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "90",
+                            text = cholesterol.toString(),
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -92,7 +92,7 @@ fun HistoryCholesterolCard(){
                         )
                     }
                     Text(
-                        text = "12/12/2024", // Date
+                        text = date.toString(), // Date
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 14.sp,
                         color = Color.Gray
@@ -106,5 +106,5 @@ fun HistoryCholesterolCard(){
 @Preview
 @Composable
 fun HistoryCholesterolCardPreview(){
-    HistoryCholesterolCard()
+    HistoryCholesterolCard(cholesterol = 90, date = "12/12/2024")
 }

@@ -33,7 +33,7 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 
 
 @Composable
-fun HistoryBloodGlucoseCard(){
+fun HistoryBloodGlucoseCard(bloodGlucose: Int, date: String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -76,7 +76,7 @@ fun HistoryBloodGlucoseCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "80", // lo que tenga la api
+                            text = bloodGlucose.toString(), // lo que tenga la api
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -92,7 +92,7 @@ fun HistoryBloodGlucoseCard(){
                         )
                     }
                     Text(
-                        text = "12/12/2024", // Date
+                        text = date.toString(), // Date
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 14.sp,
                         color = Color.Gray
@@ -106,5 +106,5 @@ fun HistoryBloodGlucoseCard(){
 @Preview
 @Composable
 fun HistoryBloodGlucoseCardPreview(){
-    HistoryBloodGlucoseCard()
+    HistoryBloodGlucoseCard(bloodGlucose = 80, date = "11/02/2024")
 }

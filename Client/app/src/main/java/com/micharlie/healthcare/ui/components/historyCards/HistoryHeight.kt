@@ -33,7 +33,7 @@ import com.micharlie.healthcare.ui.theme.heightBackground
 
 
 @Composable
-fun HistoryHeightCard(){
+fun HistoryHeightCard(height: Int, date: String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -76,7 +76,7 @@ fun HistoryHeightCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "170",
+                            text = height.toString(),
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -92,7 +92,7 @@ fun HistoryHeightCard(){
                         )
                     }
                     Text(
-                        text = "12/12/2024", // Date
+                        text = date.toString(), // Date
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 14.sp,
                         color = Color.Gray
@@ -106,5 +106,5 @@ fun HistoryHeightCard(){
 @Preview
 @Composable
 fun HistoryHeightCardPreview(){
-    HistoryHeightCard()
+    HistoryHeightCard(height = 170, date = "12/12/2024")
 }

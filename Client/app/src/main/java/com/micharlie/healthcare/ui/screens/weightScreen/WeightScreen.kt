@@ -57,7 +57,13 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WeightScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
+fun WeightScreen(
+    navController: NavController,
+    sessionState: Boolean = true,
+    getVideoViewModel: GetVideoViewModel,
+    weight:Int,
+    date:String
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -310,25 +316,25 @@ fun WeightScreen(navController: NavController, sessionState: Boolean = true, get
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryWeightCard()
+                            HistoryWeightCard(weight,date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryWeightCard()
+                            HistoryWeightCard(weight,date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryWeightCard()
+                            HistoryWeightCard(weight,date)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(10.dp)
                         ){
-                            HistoryWeightCard()
+                            HistoryWeightCard(weight,date)
                         }
 
                     }

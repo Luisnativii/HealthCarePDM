@@ -32,7 +32,7 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.weightProgressBackground
 
 @Composable
-fun HistoryWeightCard(){
+fun HistoryWeightCard(weight:Int, date:String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -75,7 +75,7 @@ fun HistoryWeightCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "65",
+                            text = weight.toString(),
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -91,7 +91,7 @@ fun HistoryWeightCard(){
                         )
                     }
                     Text(
-                        text = "12/12/2024", // Date
+                        text = date.toString(), // Date
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 14.sp,
                         color = Color.Gray
@@ -105,5 +105,5 @@ fun HistoryWeightCard(){
 @Preview
 @Composable
 fun HistoryWeightCardPreview(){
-    HistoryWeightCard()
+    HistoryWeightCard(weight = 65, date = "12/12/2024")
 }
