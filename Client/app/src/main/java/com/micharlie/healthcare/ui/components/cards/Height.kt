@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.cards
+package com.micharlie.healthcare.ui.components.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,9 +24,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.heightBackground
 import com.micharlie.healthcare.ui.theme.seeMore
@@ -36,13 +37,13 @@ import com.micharlie.healthcare.ui.theme.seeMore
 // Para agregar el onClick colocar esto en el modifier despues de height
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Height */ }
 @Composable
-fun HeightCard(navController: NavHostController){
+fun HeightCard(navController: NavController, height: Int){
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(150.dp)
-            .clickable { navController.navigate("HeightScreen") },
+            .clickable { navController.navigate(ScreenRoute.HeightScreen.route) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -99,7 +100,7 @@ fun HeightCard(navController: NavHostController){
             horizontalArrangement = Arrangement.Center
         ){
             Text(
-                text = "70", // Aquí debemos de pasar una variable para cambiar el valor
+                text = height.toString(), // Aquí debemos de pasar una variable para cambiar el valor
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 30.sp,
                 color = Color.White
@@ -119,5 +120,5 @@ fun HeightCard(navController: NavHostController){
 @Composable
 fun HeightPreview(){
     val navController = rememberNavController()
-    HeightCard(navController = navController)
+    HeightCard(navController = navController, height = 70)
 }

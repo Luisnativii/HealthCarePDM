@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.historyCards
+package com.micharlie.healthcare.ui.components.historyCards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,17 +28,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.micharlie.healthcare.R
-import com.micharlie.healthcare.ui.theme.PressurecolorBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
+import com.micharlie.healthcare.ui.theme.heightBackground
 
 
 @Composable
-fun HistoryBloodPressureCard(){
+fun HistoryHeightCard(height: Int, date: String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .height(120.dp),
+            .height(100.dp),
         colors = CardDefaults.elevatedCardColors(
             containerColor = cardsBackgroud
         ),
@@ -57,14 +57,11 @@ fun HistoryBloodPressureCard(){
                 horizontalArrangement = Arrangement.Center // Centrar el contenido de la Row
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.materialsymbolsbloodpressureoutline),
-                    contentDescription = "Blood Pressure Icon",
+                    painter = painterResource(id = R.drawable.materialsymbolsheight),
+                    contentDescription = "Height Icon",
                     modifier = Modifier
-                        .size(50.dp)
-                        .background(
-                            color = PressurecolorBackground,
-                            shape = RoundedCornerShape(10.dp)
-                        )
+                        .size(40.dp)
+                        .background(color = heightBackground, shape = RoundedCornerShape(10.dp))
                         .clip(RoundedCornerShape(15.dp))
                 )
 
@@ -78,35 +75,24 @@ fun HistoryBloodPressureCard(){
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
-
-                        Column (
-                            horizontalAlignment = Alignment.End
-                        ){
-                            Text(
-                                text = "110",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 23.sp,
-                                color = Color.White
-                            )
-                            Text(
-                                text = "75",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 15.sp,
-                                color = Color.White
-                            )
-                        }
+                        Text(
+                            text = height.toString(),
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontSize = 25.sp,
+                            color = Color.White
+                        )
 
                         Spacer(modifier = Modifier.width(10.dp))
 
                         Text(
-                            text = "mmHg",
+                            text = "cm",
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 15.sp,
                             color = Color.White
                         )
                     }
                     Text(
-                        text = "12/12/2024", // Date
+                        text = date.toString(), // Date
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 14.sp,
                         color = Color.Gray
@@ -119,6 +105,6 @@ fun HistoryBloodPressureCard(){
 
 @Preview
 @Composable
-fun HistoryBloodPressureCardPreview(){
-    HistoryBloodPressureCard()
+fun HistoryHeightCardPreview(){
+    HistoryHeightCard(height = 170, date = "12/12/2024")
 }

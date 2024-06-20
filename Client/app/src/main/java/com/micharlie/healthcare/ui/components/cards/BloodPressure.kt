@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.cards
+package com.micharlie.healthcare.ui.components.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.theme.PressurecolorBackground
@@ -36,8 +36,10 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height quedaria:
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de BloodPressure () */ },
 @Composable
-fun BloodPressureCard(navController: NavHostController) {
-    ElevatedCard (
+fun BloodPressureCard(
+    navController: NavController, bloodPressureSystolic: Int, bloodPressureDiastolic: Int
+) {
+    ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
@@ -51,29 +53,29 @@ fun BloodPressureCard(navController: NavHostController) {
         ),
         shape = RoundedCornerShape(10.dp)
 
-    ){
+    ) {
         // Icon and Tittle
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.materialsymbolsbloodpressureoutline),
                 contentDescription = "Blood Pressure Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .background( color = PressurecolorBackground, shape = RoundedCornerShape(10.dp))
+                    .background(color = PressurecolorBackground, shape = RoundedCornerShape(10.dp))
                     .clip(RoundedCornerShape(15.dp))
             )
 
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
                 horizontalAlignment = Alignment.Start
-            ){
+            ) {
                 Text(
                     text = "Blood Pressure",
                     style = MaterialTheme.typography.bodyMedium,
@@ -90,25 +92,23 @@ fun BloodPressureCard(navController: NavHostController) {
         }
 
         // Blood Pressure Values
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Column(
-                modifier = Modifier
-                    .padding(start = 56.dp),
-                verticalArrangement = Arrangement.Center
-            ){
+                modifier = Modifier.padding(start = 56.dp), verticalArrangement = Arrangement.Center
+            ) {
                 Text(
-                    text ="110", // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
+                    text = bloodPressureSystolic.toString(), // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 30.sp,
                     color = Color.White
                 )
                 Text(
-                    text ="74", // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
+                    text = bloodPressureDiastolic.toString(), // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 20.sp,
                     color = Color.White,
@@ -132,5 +132,7 @@ fun BloodPressureCard(navController: NavHostController) {
 @Composable
 fun BloodPressureCardPreview() {
     val navController = rememberNavController()
-    BloodPressureCard(navController = navController)
+    BloodPressureCard(
+        navController = navController, bloodPressureSystolic = 110, bloodPressureDiastolic = 74
+    )
 }

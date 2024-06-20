@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.historyCards
+package com.micharlie.healthcare.ui.components.historyCards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,7 +33,7 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 
 
 @Composable
-fun HistoryBodyFatCard(){
+fun HistoryBodyFatCard(bodyFat: Int, date: String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -76,7 +76,7 @@ fun HistoryBodyFatCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "10",
+                            text = bodyFat.toString(),
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -92,7 +92,7 @@ fun HistoryBodyFatCard(){
                         )
                     }
                     Text(
-                        text = "12/12/2024", // Date
+                        text = date.toString(), // Date
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 14.sp,
                         color = Color.Gray
@@ -106,5 +106,5 @@ fun HistoryBodyFatCard(){
 @Preview
 @Composable
 fun HistoryBodyFatCardPreview(){
-    HistoryBodyFatCard()
+    HistoryBodyFatCard(bodyFat = 10, date = "10/10/2024")
 }

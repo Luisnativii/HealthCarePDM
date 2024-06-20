@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.historyCards
+package com.micharlie.healthcare.ui.components.historyCards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,10 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
-import com.micharlie.healthcare.ui.theme.weightProgressBackground
+import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
 
 @Composable
-fun HistoryWeightCard(){
+fun HistoryMuscularMassCard(muscularMass:Int, date:String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -56,11 +56,11 @@ fun HistoryWeightCard(){
                 horizontalArrangement = Arrangement.Center // Centrar el contenido de la Row
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.hugeiconsweightscale__1_),
-                    contentDescription = "Weight Icon",
+                    painter = painterResource(id = R.drawable.iconparkoutlinemuscle),
+                    contentDescription = "Muscular Mass Icon",
                     modifier = Modifier
                         .size(40.dp)
-                        .background(color = weightProgressBackground, shape = RoundedCornerShape(10.dp))
+                        .background(color = muscularMassProgressBackground, shape = RoundedCornerShape(10.dp))
                         .clip(RoundedCornerShape(15.dp))
                 )
 
@@ -75,7 +75,7 @@ fun HistoryWeightCard(){
                         horizontalArrangement = Arrangement.Center // Centrar horizontalmente
                     ) {
                         Text(
-                            text = "65",
+                            text = muscularMass.toString(),
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 25.sp,
                             color = Color.White
@@ -91,7 +91,7 @@ fun HistoryWeightCard(){
                         )
                     }
                     Text(
-                        text = "12/12/2024", // Date
+                        text = date.toString(), // Date
                         style = MaterialTheme.typography.bodyMedium,
                         fontSize = 14.sp,
                         color = Color.Gray
@@ -104,6 +104,6 @@ fun HistoryWeightCard(){
 
 @Preview
 @Composable
-fun HistoryWeightCardPreview(){
-    HistoryWeightCard()
+fun HistoryMuscularMassCardPreview(){
+    HistoryMuscularMassCard(muscularMass = 20, date = "12/12/2024")
 }

@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.cards
+package com.micharlie.healthcare.ui.components.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,32 +21,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
-import com.micharlie.healthcare.ui.theme.bodyFatProgress
-import com.micharlie.healthcare.ui.theme.bodyFatProgressBackground
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
+import com.micharlie.healthcare.ui.theme.cholesterolProgress
+import com.micharlie.healthcare.ui.theme.cholesterolProgressBackground
 import com.micharlie.healthcare.ui.theme.seeMore
-import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 
-// Agregar el Onclick para redirigir a la pantalla de Body Fat
+// Agregar el Onclick para redirigir a la pantalla de Cholesterol
 // Para agregar el onClick colocar esto en el modifier despues de height
-// .clickable { /* la direccion para ir en este caso seria a la pantalla de Body Fat */ }
+// .clickable { /* la direccion para ir en este caso seria a la pantalla de Cholesterol */ }
 @Composable
-fun BodyFatCard(navController: NavHostController) {
-    ElevatedCard (
+fun CholesterolCard(navController: NavController, cholesterol: Int) {
+    ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable { navController.navigate("BodyFatScreen") },
+            .clickable { navController.navigate(ScreenRoute.CholesterolScreen.route) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -55,31 +54,33 @@ fun BodyFatCard(navController: NavHostController) {
         ),
         shape = RoundedCornerShape(10.dp)
 
-    ){
-       // Icon and Tittle
+    ) {
+        // Icon and Tittle
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Image(
-                painter = painterResource(id = R.drawable.materialsymbolsbodyfat),
-                contentDescription = "Body Fat Icon",
+                painter = painterResource(id = R.drawable.healthiconsgallbladderoutline),
+                contentDescription = "Cholesterol Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .background( color = bodyFatProgressBackground, shape = RoundedCornerShape(10.dp))
+                    .background(
+                        color = cholesterolProgressBackground, shape = RoundedCornerShape(10.dp)
+                    )
                     .clip(RoundedCornerShape(15.dp))
             )
 
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
                 horizontalAlignment = Alignment.Start
-            ){
+            ) {
                 Text(
-                    text = "Body Fat",
+                    text = "Cholesterol",
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 20.sp,
                     color = white
@@ -94,27 +95,25 @@ fun BodyFatCard(navController: NavHostController) {
         }
 
         // Body Fat
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(
-                text = "10", // Cambiar esto por lo que se debe recibir de la base de datos o del usuario
-                style = MaterialTheme.typography.bodyLarge,
-                fontSize = 30.sp,
-                color = white
+                text = cholesterol.toString(), // Cambiar esto por el que debe recibir de la base de datos o del usuario
+                style = MaterialTheme.typography.bodyLarge, fontSize = 30.sp, color = white
             )
 
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
                 horizontalAlignment = Alignment.Start
-            ){
+            ) {
                 Text(
-                    text = "%",
+                    text = "mg/dL",
                     style = MaterialTheme.typography.bodyMedium,
                     fontSize = 16.sp,
                     color = white
@@ -122,13 +121,12 @@ fun BodyFatCard(navController: NavHostController) {
             }
         }
 
-
         // Progress Bar
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-        ){
+        ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -136,12 +134,12 @@ fun BodyFatCard(navController: NavHostController) {
                     .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Cambiar esto por lo que se debe recibir de la base de datos o del usuario para el porcentaje
+                    progress = cholesterol / 100f, // Cambiar esto para hacer el calculo de porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),
-                    color = bodyFatProgress,
-                    trackColor = bodyFatProgressBackground
+                    color = cholesterolProgress,
+                    trackColor = cholesterolProgressBackground
                 )
             }
         }
@@ -152,7 +150,7 @@ fun BodyFatCard(navController: NavHostController) {
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
-        ){
+        ) {
             Column {
                 Text(
                     text = "Low",
@@ -177,7 +175,7 @@ fun BodyFatCard(navController: NavHostController) {
 
 @Preview
 @Composable
-fun BodyFatCardPreview() {
+fun CholesterolCardPreview() {
     val navController = rememberNavController()
-    BodyFatCard(navController = navController)
+    CholesterolCard(navController = navController, cholesterol = 90)
 }

@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.cards
+package com.micharlie.healthcare.ui.components.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,9 +25,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.muscularMassProgress
 import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
@@ -38,13 +39,13 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height quedaria:
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Muscular Mass  */ },
 @Composable
-fun MuscularMassCard(navController: NavHostController){
+fun MuscularMassCard(navController: NavController, muscularMass: Int){
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable { navController.navigate("MuscularMassScreen") },
+            .clickable { navController.navigate(ScreenRoute.MuscularMassScreen.route) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -63,7 +64,7 @@ fun MuscularMassCard(navController: NavHostController){
         ){
             Image(
                 painter = painterResource(id = R.drawable.iconparkoutlinemuscle),
-                contentDescription = "Weight Icon",
+                contentDescription = "Muscular Mass Icon",
                 modifier = Modifier
                     .size(40.dp)
                     .background( color = muscularMassProgressBackground, shape = RoundedCornerShape(10.dp))
@@ -99,7 +100,7 @@ fun MuscularMassCard(navController: NavHostController){
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "20", // Change this value
+                text = muscularMass.toString(), // Change this value
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 30.sp,
                 color = white
@@ -133,7 +134,7 @@ fun MuscularMassCard(navController: NavHostController){
                     .clip(RoundedCornerShape(8.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Cambiar esto por el valor para hacer el calculo del porcentaje
+                    progress = muscularMass/100f, // Cambiar esto por el valor para hacer el calculo del porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),
@@ -175,5 +176,5 @@ fun MuscularMassCard(navController: NavHostController){
 @Composable
 fun MuscularMassCardPreview(){
     val navController = rememberNavController()
-    MuscularMassCard(navController = navController)
+    MuscularMassCard(navController = navController, muscularMass = 20)
 }

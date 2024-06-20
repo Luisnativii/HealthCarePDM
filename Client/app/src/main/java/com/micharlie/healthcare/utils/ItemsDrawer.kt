@@ -37,7 +37,7 @@ data object LoginItem: ItemsDrawer(
 data object HomeItem: ItemsDrawer(
     icon = Icons.Rounded.Home,
     title = "Home",
-    route = "home"
+    route = "homeSession"
 )
 data object HealthItem: ItemsDrawer(
 
