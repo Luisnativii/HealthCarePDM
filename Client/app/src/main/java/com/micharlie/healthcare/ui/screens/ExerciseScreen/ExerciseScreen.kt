@@ -19,8 +19,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,9 +33,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.micharlie.healthcare.data.api.VideoApi
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.components.VideoCard
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoState
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
@@ -47,6 +52,19 @@ fun ExerciseScreen(
     sessionState: Boolean = true,
     getVideoViewModel: GetVideoViewModel
 ) {
+    var videos by remember { mutableStateOf(listOf<VideoApi>()) }
+
+    LaunchedEffect(getVideoViewModel) {
+        getVideoViewModel.getVideoState.collect { state ->
+            when (state) {
+                is GetVideoState.Success -> {
+                    videos = state.videos
+                }
+                // Manejar otros estados si es necesario
+                else -> {}
+            }
+        }
+    }
     var cat by remember {
         mutableIntStateOf(0)
     }
@@ -61,7 +79,7 @@ fun ExerciseScreen(
                 bottomBar = { BottomBar() },
                 topBar = { TopBar(drawerState = drawerState) },
             )
-            {
+            { it ->
                 // Content of the screen
                 Column(
                     modifier = Modifier
@@ -132,16 +150,17 @@ fun ExerciseScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        items(10) {
+                        items(videos.size) { it1 ->
                             //VideoCard()
-                            Box(
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .padding(5.dp)
-                                    .background(secondary)
-                            ) {
-                                Text("$it")
-                            }
+                          VideoCard(
+                              videoId = videos[it1].link!!,
+                              videoCategory = videos[it1].category!!,
+                              videoImageUrl = videos[it1].videoBanner!!,
+                              imageChannel = videos[it1].channelPhoto!!,
+                              videoTitle = videos[it1].videoName!!,
+                              userChannel = videos[it1].channelName!!,
+                              navController = navController
+                          )
 
                         }
                     }

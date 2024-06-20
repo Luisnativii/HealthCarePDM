@@ -37,7 +37,8 @@ import com.micharlie.healthcare.ui.theme.white
 @Composable
 fun VideoScreen(navController: NavController, url: String, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    DrawerBar(drawerState = drawerState, sessionState = true, navController = navController, getVideoViewModel = getVideoViewModel,
+    DrawerBar(drawerState = drawerState, sessionState = sessionState, navController = navController,
+        getVideoViewModel = getVideoViewModel,
         content = {
             Scaffold(topBar = { TopBar(drawerState = drawerState) }, bottomBar = { BottomBar() }) {
                 Column(
