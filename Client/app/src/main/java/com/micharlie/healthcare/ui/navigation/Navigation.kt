@@ -58,10 +58,10 @@ fun Navigation() {
             VideoScreen(navController, url, true, getVideoViewModel)
         }
         composable(route = ScreenRoute.Login.route) {
-            LoginScreen(navController = navController)
+            LoginScreen(navController = navController, getVideoViewModel)
         }
         composable(route = ScreenRoute.Register.route) {
-            RegisterScreen(navController = navController)
+            RegisterScreen(navController = navController, getVideoViewModel)
         }
         composable(route = ScreenRoute.Main.route) {
             MainScreen(sessionState = true, getVideoViewModel = getVideoViewModel)
