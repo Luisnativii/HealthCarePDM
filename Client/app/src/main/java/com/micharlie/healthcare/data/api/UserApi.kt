@@ -1,7 +1,13 @@
 package com.micharlie.healthcare.data.api
 
+import retrofit2.Call
 import com.google.gson.annotations.SerializedName
 import com.micharlie.healthcare.utils.Constants
+import retrofit2.http.Body
+import retrofit2.http.Headers
+import retrofit2.http.POST
+
+
 
 data class UserApi(
     @SerializedName(value = Constants.NAME)
@@ -20,7 +26,7 @@ data class UserApi(
     val dateBirth: String? = "",
 
     @SerializedName(value = Constants.DATA)
-    val FamilyMembers: List<dataApi> = arrayListOf(),
+    val data: List<dataApi> = arrayListOf(),
 )
 
 data class dataApi(
@@ -50,6 +56,19 @@ data class dataApi(
     @SerializedName(value = Constants.DATE)
     val date: String? = "",
 )
+
+interface UserApiService {
+    @Headers("Content-Type: application/json")
+    @POST(Constants.POSTUSERBACEURL)
+    fun postUser(@Body user: UserApi): Call<String>
+
+    @Headers("Content-Type: application/json")
+    @POST(Constants.POSTLOGINBACEURL)
+    fun loginUser(@Body loginData: UserApi): Call<String>
+    //no se porque putas usa USERAPI
+}
+
+
 
 
 //name
