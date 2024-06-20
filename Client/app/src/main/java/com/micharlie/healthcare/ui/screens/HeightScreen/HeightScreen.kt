@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.screens.WeightScreen
+package com.micharlie.healthcare.ui.screens.HeightScreen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -46,7 +46,9 @@ import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
+import com.micharlie.healthcare.ui.theme.contrast1
 import com.micharlie.healthcare.ui.theme.contrast2
+import com.micharlie.healthcare.ui.theme.heightBackground
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.weightProgress
 import com.micharlie.healthcare.ui.theme.weightProgressBackground
@@ -54,7 +56,7 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WeightScreen(navController: NavController) {
+fun HeightScreen(navController: NavController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -70,7 +72,7 @@ fun WeightScreen(navController: NavController) {
                 // Content of the screen
                 LazyColumn {
                     item {
-                        // Card Icon and Tittle Weight
+                        // Card Icon and Tittle Height
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -87,12 +89,12 @@ fun WeightScreen(navController: NavController) {
                                 verticalAlignment = Alignment.CenterVertically
                             ){
                                 Image(
-                                    painter = painterResource(id = R.drawable.hugeiconsweightscale__1_),
-                                    contentDescription = "Weight Icon",
+                                    painter = painterResource(id = R.drawable.materialsymbolsheight),
+                                    contentDescription = "Height Icon",
                                     modifier = Modifier
                                         .size(60.dp)
                                         .background(
-                                            color = weightProgressBackground,
+                                            color = heightBackground,
                                             shape = RoundedCornerShape(10.dp)
                                         )
                                         .clip(RoundedCornerShape(15.dp))
@@ -113,8 +115,8 @@ fun WeightScreen(navController: NavController) {
                         }
 
 
-                        // Card input Weight
-                        var weightInput by remember { mutableStateOf("65") }
+                        // Card input Height
+                        var heightInput by remember { mutableStateOf("170") }
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -136,14 +138,14 @@ fun WeightScreen(navController: NavController) {
                                     horizontalArrangement = Arrangement.Center
                                 ){
                                     TextField(
-                                        value = weightInput , // Mandando a llamar el peso
-                                        onValueChange = { weightInput = it },
+                                        value = heightInput , // Cambiar por lo que ponga el usuario
+                                        onValueChange = { heightInput = it },
                                         shape = RoundedCornerShape(8.dp),
                                         modifier = Modifier
                                             .size(width = 150.dp, height = 50.dp)
                                     )
                                     Text(
-                                        text = "kg",
+                                        text = "cm",
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 16.sp,
                                         color = white,
@@ -162,70 +164,39 @@ fun WeightScreen(navController: NavController) {
                             }
                         }
 
-                        // Card
-                        Row(
+                        // Card cm
+                        Card (
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
+                                .height(75.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = cardsBackgroud
+                            )
                         ){
-                            Card(
-                                modifier = Modifier
-                                    .width(75.dp)
-                                    .height(105.dp)
-                                    .padding(end = 8.dp), // Spacing between cards
-                                colors = CardDefaults.cardColors(
-                                    containerColor = cardsBackgroud
-                                )
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
                             ) {
-                                Box(
-                                    contentAlignment = Alignment.Center,
-                                    modifier = Modifier.fillMaxSize()
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
                                 ) {
                                     Text(
-                                        text = "65 kg",
+                                        text = "170",
                                         style = MaterialTheme.typography.bodyLarge,
-                                        color = white
+                                        fontSize = 20.sp,
+                                        color = white,
+                                        modifier = Modifier.padding(end = 4.dp)
                                     )
-                                }
-                            }
 
-                            // Card Normal and
-                            Card(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(105.dp)
-                                    .padding(start = 8.dp), // Spacing between cards
-                                colors = CardDefaults.cardColors(
-                                    containerColor = cardsBackgroud
-                                )
-                            ) {
-                                Box(
-                                    contentAlignment = Alignment.Center,
-                                    modifier = Modifier.fillMaxSize()
-                                ) {
-                                    Column (
-                                        modifier = Modifier
-                                            .fillMaxSize(),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ){
-                                        Text(
-                                            text = "Normal", // Se tiene que validar para ver que le vamos a poner
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            color = white
-                                        )
-
-                                        Spacer(modifier = Modifier.height(8.dp))
-
-                                        LinearProgressIndicator(
-                                            progress = 0.5f,
-                                            color = weightProgress,
-                                            trackColor = weightProgressBackground,
-                                            modifier = Modifier
-                                                .height(16.dp)
-                                                .clip(RoundedCornerShape(10.dp))
-                                        )
-                                    }
+                                    Text(
+                                        text = "cm",
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontSize = 16.sp,
+                                        color = contrast1,
+                                        modifier = Modifier.padding(start = 4.dp)
+                                    )
                                 }
                             }
                         }
@@ -261,12 +232,12 @@ fun WeightScreen(navController: NavController) {
                                 verticalAlignment = Alignment.CenterVertically
                             ){
                                 Image(
-                                    painter = painterResource(id = R.drawable.materialsymbolshistory),
+                                    painter = painterResource(id = R.drawable.materialsymbolshistory__1_),
                                     contentDescription = "Weight Icon",
                                     modifier = Modifier
                                         .size(60.dp)
                                         .background(
-                                            color = weightProgressBackground,
+                                            color = heightBackground,
                                             shape = RoundedCornerShape(10.dp)
                                         )
                                         .clip(RoundedCornerShape(15.dp))
@@ -293,6 +264,6 @@ fun WeightScreen(navController: NavController) {
 }
 @Composable
 @Preview
-fun WeightScreenPreview() {
-    WeightScreen(navController = rememberNavController())
+fun HeightScreenPreview() {
+    HeightScreen(navController = rememberNavController())
 }
