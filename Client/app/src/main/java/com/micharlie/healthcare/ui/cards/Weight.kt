@@ -3,6 +3,7 @@ package com.micharlie.healthcare.ui.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,7 +43,8 @@ fun WeightCard(){
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .height(250.dp),
+            .height(250.dp)
+            .clickable {  },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
