@@ -100,17 +100,19 @@ fun Navigation() {
             WeightScreen(navController = navController, getVideoViewModel = getVideoViewModel)
         }
         composable(route = ScreenRoute.MuscularMassScreen.route) {
-            MuscularMassScreen(navController = navController, getVideoViewModel = getVideoViewModel)
-        composable(route = ScreenRoute.Login.route) {
-            LoginScreen(navController = navController, getVideoViewModel)
-        }
-        composable(route = ScreenRoute.Register.route) {
-            RegisterScreen(navController = navController, getVideoViewModel)
-        }
-        composable(route = ScreenRoute.Main.route) {
-            MainScreen(sessionState = true, getVideoViewModel = getVideoViewModel)
-        }
+            MuscularMassScreen(navController = navController, getVideoViewModel =
+            getVideoViewModel)}
+            composable(route = ScreenRoute.Login.route) {
+                LoginScreen(navController = navController, getVideoViewModel)
+            }
+            composable(route = ScreenRoute.Register.route) {
+                RegisterScreen(navController = navController, getVideoViewModel)
+            }
+            composable(route = ScreenRoute.HomeSession.route) {
+                MainScreen(sessionState = true, getVideoViewModel = getVideoViewModel,
+                    navController = navController)
+            }
 
+        }
     }
-}
 
