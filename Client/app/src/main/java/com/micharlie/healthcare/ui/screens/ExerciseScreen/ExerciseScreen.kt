@@ -42,60 +42,104 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ExerciseScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
+fun ExerciseScreen(
+    navController: NavController,
+    sessionState: Boolean = true,
+    getVideoViewModel: GetVideoViewModel
+) {
     var cat by remember {
         mutableIntStateOf(0)
     }
-    val drawerState = rememberDrawerState(initialValue =DrawerValue.Closed)
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     DrawerBar(drawerState = drawerState,
         sessionState = sessionState,
         navController = navController,
         getVideoViewModel = getVideoViewModel,
         content = {
             // Content of the drawer
-            Scaffold(bottomBar = { BottomBar()},
-                topBar = { TopBar(drawerState = drawerState)},
-                )
+            Scaffold(
+                bottomBar = { BottomBar() },
+                topBar = { TopBar(drawerState = drawerState) },
+            )
             {
                 // Content of the screen
-                Column(modifier = Modifier
-                    .padding(it)
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .background(primary)) {
-                        Column (modifier = Modifier
+                Column(
+                    modifier = Modifier
+                        .padding(it)
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .background(primary)
+                ) {
+                    Column(
+                        modifier = Modifier
                             .fillMaxWidth()
-                            .padding(4.dp), horizontalAlignment = Alignment.CenterHorizontally){
-                            Text(text = "Categorias", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = white)
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
-                                Button(onClick = { cat = 1},modifier = Modifier
-                                    .weight(0.5f)
-                                    .padding(2.dp, 0.dp),colors = ButtonDefaults.buttonColors(containerColor = contrast2)) {
-                                    Text(text = "HIIT", fontWeight = FontWeight.Medium,fontSize = 11.sp)
-                                    
-                                }
-                                Button(onClick = { cat = 2 },modifier = Modifier
-                                    .weight(0.5f)
-                                    .padding(2.dp, 0.dp),
-                                    colors = ButtonDefaults.buttonColors(containerColor = contrast2)) {
-                                    Text(text = "INTERMEDIO",fontWeight = FontWeight.Medium,fontSize = 11.sp)
-
-                                }
-                                Button(onClick = { cat = 3},modifier = Modifier
+                            .padding(4.dp), horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "Categorias",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = white
+                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Button(
+                                onClick = { cat = 1 },
+                                modifier = Modifier
                                     .weight(0.5f)
                                     .padding(2.dp, 0.dp),
-                                    colors = ButtonDefaults.buttonColors(containerColor = contrast2)) {
-                                    Text(text = "PRINCIPIANTE",fontWeight = FontWeight.Medium, fontSize = 11.sp)
-
-                                }
+                                colors = ButtonDefaults.buttonColors(containerColor = contrast2)
+                            ) {
+                                Text(
+                                    text = "HIIT",
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 11.sp
+                                )
 
                             }
+                            Button(
+                                onClick = { cat = 2 }, modifier = Modifier
+                                    .weight(0.5f)
+                                    .padding(2.dp, 0.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = contrast2)
+                            ) {
+                                Text(
+                                    text = "INTERMEDIO",
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 11.sp
+                                )
+
+                            }
+                            Button(
+                                onClick = { cat = 3 }, modifier = Modifier
+                                    .weight(0.5f)
+                                    .padding(2.dp, 0.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = contrast2)
+                            ) {
+                                Text(
+                                    text = "PRINCIPIANTE",
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 11.sp
+                                )
+
+                            }
+
                         }
-                    LazyColumn(modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally) {
+                    }
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         items(10) {
                             //VideoCard()
-                            Box(modifier = Modifier.size(100.dp).padding(5.dp).background(secondary)){
+                            Box(
+                                modifier = Modifier
+                                    .size(100.dp)
+                                    .padding(5.dp)
+                                    .background(secondary)
+                            ) {
                                 Text("$it")
                             }
 

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.muscularMassProgress
 import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
@@ -44,7 +45,7 @@ fun MuscularMassCard(navController: NavController, muscularMass: Int){
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable { navController.navigate("MuscularMassScreen") },
+            .clickable { navController.navigate(ScreenRoute.MuscularMassScreen.route) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),

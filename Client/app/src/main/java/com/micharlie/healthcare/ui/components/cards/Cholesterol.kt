@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.cholesterolProgress
 import com.micharlie.healthcare.ui.theme.cholesterolProgressBackground
@@ -39,12 +40,12 @@ import com.micharlie.healthcare.ui.theme.white
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Cholesterol */ }
 @Composable
 fun CholesterolCard(navController: NavController, cholesterol: Int) {
-    ElevatedCard (
+    ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable { navController.navigate("CholesterolScreen") },
+            .clickable { navController.navigate(ScreenRoute.CholesterolScreen.route) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -53,29 +54,31 @@ fun CholesterolCard(navController: NavController, cholesterol: Int) {
         ),
         shape = RoundedCornerShape(10.dp)
 
-    ){
+    ) {
         // Icon and Tittle
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.healthiconsgallbladderoutline),
                 contentDescription = "Cholesterol Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .background( color = cholesterolProgressBackground, shape = RoundedCornerShape(10.dp))
+                    .background(
+                        color = cholesterolProgressBackground, shape = RoundedCornerShape(10.dp)
+                    )
                     .clip(RoundedCornerShape(15.dp))
             )
 
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
                 horizontalAlignment = Alignment.Start
-            ){
+            ) {
                 Text(
                     text = "Cholesterol",
                     style = MaterialTheme.typography.bodyLarge,
@@ -92,25 +95,23 @@ fun CholesterolCard(navController: NavController, cholesterol: Int) {
         }
 
         // Body Fat
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(
                 text = cholesterol.toString(), // Cambiar esto por el que debe recibir de la base de datos o del usuario
-                style = MaterialTheme.typography.bodyLarge,
-                fontSize = 30.sp,
-                color = white
+                style = MaterialTheme.typography.bodyLarge, fontSize = 30.sp, color = white
             )
 
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
                 horizontalAlignment = Alignment.Start
-            ){
+            ) {
                 Text(
                     text = "mg/dL",
                     style = MaterialTheme.typography.bodyMedium,
@@ -121,11 +122,11 @@ fun CholesterolCard(navController: NavController, cholesterol: Int) {
         }
 
         // Progress Bar
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-        ){
+        ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -133,7 +134,7 @@ fun CholesterolCard(navController: NavController, cholesterol: Int) {
                     .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = cholesterol/100f, // Cambiar esto para hacer el calculo de porcentaje
+                    progress = cholesterol / 100f, // Cambiar esto para hacer el calculo de porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),
@@ -149,7 +150,7 @@ fun CholesterolCard(navController: NavController, cholesterol: Int) {
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
-        ){
+        ) {
             Column {
                 Text(
                     text = "Low",

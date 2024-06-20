@@ -61,21 +61,21 @@ fun BloodGlucoseScreen(
     navController: NavController,
     sessionState: Boolean = true,
     getVideoViewModel: GetVideoViewModel,
-    bloodGlucose: Int,
-    date: String
+//    bloodGlucose: Int,
+    //date: String
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
-    DrawerBar(drawerState = drawerState, sessionState = true , content = {
-        Scaffold(
-            bottomBar = { BottomBar() },
-            topBar = { TopBar(drawerState = drawerState) }
-        ) {
+    var bloodGlucose by remember { mutableStateOf(0) }
+    var date by remember { mutableStateOf("") }
+    bloodGlucose = 65 //meter el valor del vm
+    date = "2021-10-10" //meter el valor del vm
+    DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
+        Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(
                 modifier = Modifier
                     .padding(it)
                     .background(primary)
-            ){
+            ) {
                 // Content of the screen
                 LazyColumn {
                     item {
@@ -89,12 +89,12 @@ fun BloodGlucoseScreen(
                                 containerColor = cardsBackgroud
                             )
                         ) {
-                            Row (
+                            Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(20.dp),
                                 verticalAlignment = Alignment.CenterVertically
-                            ){
+                            ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.materialsymbolsglucoseoutlinerounded),
                                     contentDescription = "Blood Glucose Icon",
@@ -132,32 +132,30 @@ fun BloodGlucoseScreen(
                             colors = CardDefaults.cardColors(
                                 containerColor = cardsBackgroud
                             )
-                        ){
-                            Column (
+                        ) {
+                            Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(20.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
-                            ){
-                                Row (
+                            ) {
+                                Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Center
-                                ){
+                                ) {
                                     TextField(
-                                        value = bloodGlucoseInput , // Mandando a llamar la BloodGlucose
+                                        value = bloodGlucoseInput, // Mandando a llamar la BloodGlucose
                                         onValueChange = { bloodGlucoseInput = it },
                                         shape = RoundedCornerShape(8.dp),
-                                        modifier = Modifier
-                                            .size(width = 150.dp, height = 50.dp)
+                                        modifier = Modifier.size(width = 150.dp, height = 50.dp)
                                     )
                                     Text(
                                         text = "mg/dL",
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 16.sp,
                                         color = white,
-                                        modifier = Modifier
-                                            .padding(16.dp)
+                                        modifier = Modifier.padding(16.dp)
                                     )
                                 }
                                 Spacer(modifier = Modifier.height(16.dp))
@@ -176,7 +174,7 @@ fun BloodGlucoseScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
-                        ){
+                        ) {
                             Card(
                                 modifier = Modifier
                                     .width(75.dp)
@@ -190,10 +188,10 @@ fun BloodGlucoseScreen(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier.fillMaxSize()
                                 ) {
-                                    Column (
+                                    Column(
                                         verticalArrangement = Arrangement.Center,
                                         horizontalAlignment = Alignment.CenterHorizontally
-                                    ){
+                                    ) {
                                         Text(
                                             text = "65", // Cambiar por una variable de usuario o db
                                             style = MaterialTheme.typography.bodyLarge,
@@ -222,12 +220,11 @@ fun BloodGlucoseScreen(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier.fillMaxSize()
                                 ) {
-                                    Column (
-                                        modifier = Modifier
-                                            .fillMaxSize(),
+                                    Column(
+                                        modifier = Modifier.fillMaxSize(),
                                         verticalArrangement = Arrangement.Center,
                                         horizontalAlignment = Alignment.CenterHorizontally
-                                    ){
+                                    ) {
                                         Text(
                                             text = "Normal", // Se tiene que validar para ver que le vamos a poner
                                             style = MaterialTheme.typography.bodyLarge,
@@ -250,7 +247,7 @@ fun BloodGlucoseScreen(
                         }
 
                         // Graphics Card
-                        Card (
+                        Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
@@ -258,7 +255,7 @@ fun BloodGlucoseScreen(
                             colors = CardDefaults.cardColors(
                                 containerColor = cardsBackgroud
                             )
-                        ){
+                        ) {
 
                         }
 
@@ -274,8 +271,7 @@ fun BloodGlucoseScreen(
                             shape = RoundedCornerShape(10.dp)
                         ) {
                             Box(
-                                modifier = Modifier
-                                    .fillMaxSize(),
+                                modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center // Centrar el contenido del Box
                             ) {
                                 Row(
@@ -304,8 +300,7 @@ fun BloodGlucoseScreen(
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 20.sp,
                                         color = white,
-                                        modifier = Modifier
-                                            .padding(all = 16.dp)
+                                        modifier = Modifier.padding(all = 16.dp)
                                     )
                                 }
                             }
@@ -313,27 +308,23 @@ fun BloodGlucoseScreen(
 
                         // History Cards
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
+                            modifier = Modifier.padding(10.dp)
+                        ) {
                             HistoryBloodGlucoseCard(bloodGlucose, date)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
+                            modifier = Modifier.padding(10.dp)
+                        ) {
                             HistoryBloodGlucoseCard(bloodGlucose, date)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
+                            modifier = Modifier.padding(10.dp)
+                        ) {
                             HistoryBloodGlucoseCard(bloodGlucose, date)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
+                            modifier = Modifier.padding(10.dp)
+                        ) {
                             HistoryBloodGlucoseCard(bloodGlucose, date)
                         }
                     }

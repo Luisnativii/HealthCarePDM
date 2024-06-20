@@ -41,18 +41,18 @@ fun MainScreen(
     sessionState: Boolean = true,
     getVideoViewModel: GetVideoViewModel,
     navController: NavController,
-    height: Int,
-    weight: Int,
-    muscularMass: Int,
-    bodyFat: Int,
-    cholesterol: Int,
-    bloodGlucose: Int,
-    bloodPressureSystolic: Int,
-    bloodPressureDiastolic: Int
-) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-    DrawerBar(drawerState = drawerState, sessionState = true, content = {
+    ) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val height = 0
+    val weight = 0
+    val muscularMass = 0
+    val bodyFat = 0
+    val cholesterol = 0
+    val bloodGlucose = 0
+    val bloodPressureSystolic = 0
+    val bloodPressureDiastolic = 0
+    DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
         Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(
                 modifier = Modifier
@@ -76,7 +76,7 @@ fun MainScreen(
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            HeightCard(navController = navController,height = height)
+                            HeightCard(navController = navController, height = height)
                         }
                         Box(
                             modifier = Modifier.padding(16.dp)
@@ -86,7 +86,9 @@ fun MainScreen(
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            MuscularMassCard(navController = navController, muscularMass = muscularMass)
+                            MuscularMassCard(
+                                navController = navController, muscularMass = muscularMass
+                            )
                         }
                         Box(
                             modifier = Modifier.padding(16.dp)
@@ -96,17 +98,25 @@ fun MainScreen(
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            CholesterolCard(navController = navController, cholesterol = cholesterol)
+                            CholesterolCard(
+                                navController = navController, cholesterol = cholesterol
+                            )
                         }
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            BloodGlucoseCard(navController = navController, bloodGlucose = bloodGlucose)
+                            BloodGlucoseCard(
+                                navController = navController, bloodGlucose = bloodGlucose
+                            )
                         }
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            BloodPressureCard(navController = navController, bloodPressureSystolic = bloodPressureSystolic, bloodPressureDiastolic = bloodPressureDiastolic)
+                            BloodPressureCard(
+                                navController = navController,
+                                bloodPressureSystolic = bloodPressureSystolic,
+                                bloodPressureDiastolic = bloodPressureDiastolic
+                            )
                         }
                     }
                 }

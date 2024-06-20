@@ -64,21 +64,19 @@ fun BodyFatScreen(
     navController: NavController,
     sessionState: Boolean = true,
     getVideoViewModel: GetVideoViewModel,
-    bodyFat: Int,
-    date: String
-) {
+
+    ) {
+    var bodyFat: Int = 10 // Se tiene que cambiar con VM
+    var date: String = "10/10/2021" // Se tiene que cambiar con VM
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-    DrawerBar(drawerState = drawerState, sessionState = true , content = {
-        Scaffold(
-            bottomBar = { BottomBar() },
-            topBar = { TopBar(drawerState = drawerState) }
-        ) {
+    DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
+        Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(
                 modifier = Modifier
                     .padding(it)
                     .background(primary)
-            ){
+            ) {
                 // Content of the screen
                 LazyColumn {
                     item {
@@ -92,12 +90,12 @@ fun BodyFatScreen(
                                 containerColor = cardsBackgroud
                             )
                         ) {
-                            Row (
+                            Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(20.dp),
                                 verticalAlignment = Alignment.CenterVertically
-                            ){
+                            ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.materialsymbolsbodyfat),
                                     contentDescription = "Body Fat Icon",
@@ -135,32 +133,30 @@ fun BodyFatScreen(
                             colors = CardDefaults.cardColors(
                                 containerColor = cardsBackgroud
                             )
-                        ){
-                            Column (
+                        ) {
+                            Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(20.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
-                            ){
-                                Row (
+                            ) {
+                                Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Center
-                                ){
+                                ) {
                                     TextField(
-                                        value = bodyFatInput , // Mandando a llamar el peso
+                                        value = bodyFatInput, // Mandando a llamar el peso
                                         onValueChange = { bodyFatInput = it },
                                         shape = RoundedCornerShape(8.dp),
-                                        modifier = Modifier
-                                            .size(width = 150.dp, height = 50.dp)
+                                        modifier = Modifier.size(width = 150.dp, height = 50.dp)
                                     )
                                     Text(
                                         text = "%",
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 16.sp,
                                         color = white,
-                                        modifier = Modifier
-                                            .padding(16.dp)
+                                        modifier = Modifier.padding(16.dp)
                                     )
                                 }
 
@@ -181,7 +177,7 @@ fun BodyFatScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
-                        ){
+                        ) {
                             Card(
                                 modifier = Modifier
                                     .width(75.dp)
@@ -195,10 +191,10 @@ fun BodyFatScreen(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier.fillMaxSize()
                                 ) {
-                                    Column (
+                                    Column(
                                         verticalArrangement = Arrangement.Center,
                                         horizontalAlignment = Alignment.CenterHorizontally
-                                    ){
+                                    ) {
                                         Text(
                                             text = "10", // Cambiar por una variable de usuario o db
                                             style = MaterialTheme.typography.bodyLarge,
@@ -227,12 +223,11 @@ fun BodyFatScreen(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier.fillMaxSize()
                                 ) {
-                                    Column (
-                                        modifier = Modifier
-                                            .fillMaxSize(),
+                                    Column(
+                                        modifier = Modifier.fillMaxSize(),
                                         verticalArrangement = Arrangement.Center,
                                         horizontalAlignment = Alignment.CenterHorizontally
-                                    ){
+                                    ) {
                                         Text(
                                             text = "Normal", // Se tiene que validar para ver que le vamos a poner
                                             style = MaterialTheme.typography.bodyLarge,
@@ -255,7 +250,7 @@ fun BodyFatScreen(
                         }
 
                         // Graphics Card
-                        Card (
+                        Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
@@ -263,7 +258,7 @@ fun BodyFatScreen(
                             colors = CardDefaults.cardColors(
                                 containerColor = cardsBackgroud
                             )
-                        ){
+                        ) {
 
                         }
 
@@ -279,8 +274,7 @@ fun BodyFatScreen(
                             shape = RoundedCornerShape(10.dp)
                         ) {
                             Box(
-                                modifier = Modifier
-                                    .fillMaxSize(),
+                                modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center // Centrar el contenido del Box
                             ) {
                                 Row(
@@ -309,8 +303,7 @@ fun BodyFatScreen(
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 20.sp,
                                         color = white,
-                                        modifier = Modifier
-                                            .padding(all = 16.dp)
+                                        modifier = Modifier.padding(all = 16.dp)
                                     )
                                 }
                             }
@@ -318,32 +311,28 @@ fun BodyFatScreen(
 
                         // History Card
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
+                            modifier = Modifier.padding(10.dp)
+                        ) {
                             HistoryBodyFatCard(bodyFat, date)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
+                            modifier = Modifier.padding(10.dp)
+                        ) {
                             HistoryBodyFatCard(bodyFat, date)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
+                            modifier = Modifier.padding(10.dp)
+                        ) {
                             HistoryBodyFatCard(bodyFat, date)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
+                            modifier = Modifier.padding(10.dp)
+                        ) {
                             HistoryBodyFatCard(bodyFat, date)
                         }
                     }
                 }
             }
         }
-    }, navController = navController, getVideoViewModel )
+    }, navController = navController, getVideoViewModel)
 }

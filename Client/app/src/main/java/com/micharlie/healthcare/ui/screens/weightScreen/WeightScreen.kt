@@ -29,6 +29,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -61,21 +62,18 @@ fun WeightScreen(
     navController: NavController,
     sessionState: Boolean = true,
     getVideoViewModel: GetVideoViewModel,
-    weight:Int,
-    date:String
+
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
-    DrawerBar(drawerState = drawerState, sessionState = true , content = {
-        Scaffold(
-            bottomBar = { BottomBar() },
-            topBar = { TopBar(drawerState = drawerState) }
-        ) {
+     var weight by remember { mutableIntStateOf(65) }
+    var date by remember { mutableStateOf("2023-06-01") }
+    DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
+        Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(
                 modifier = Modifier
                     .padding(it)
                     .background(primary)
-            ){
+            ) {
                 // Content of the screen
                 LazyColumn {
                     item {
@@ -89,12 +87,12 @@ fun WeightScreen(
                                 containerColor = cardsBackgroud
                             )
                         ) {
-                            Row (
+                            Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(20.dp),
                                 verticalAlignment = Alignment.CenterVertically
-                            ){
+                            ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.hugeiconsweightscale__1_),
                                     contentDescription = "Weight Icon",
@@ -132,32 +130,30 @@ fun WeightScreen(
                             colors = CardDefaults.cardColors(
                                 containerColor = cardsBackgroud
                             )
-                        ){
-                            Column (
+                        ) {
+                            Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(20.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
-                            ){
-                                Row (
+                            ) {
+                                Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Center
-                                ){
+                                ) {
                                     TextField(
-                                        value = weightInput , // Mandando a llamar el peso
+                                        value = weightInput, // Mandando a llamar el peso
                                         onValueChange = { weightInput = it },
                                         shape = RoundedCornerShape(8.dp),
-                                        modifier = Modifier
-                                            .size(width = 150.dp, height = 50.dp)
+                                        modifier = Modifier.size(width = 150.dp, height = 50.dp)
                                     )
                                     Text(
                                         text = "kg",
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 16.sp,
                                         color = white,
-                                        modifier = Modifier
-                                            .padding(16.dp)
+                                        modifier = Modifier.padding(16.dp)
                                     )
                                 }
                                 Spacer(modifier = Modifier.height(16.dp))
@@ -176,7 +172,7 @@ fun WeightScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
-                        ){
+                        ) {
                             Card(
                                 modifier = Modifier
                                     .width(75.dp)
@@ -190,10 +186,10 @@ fun WeightScreen(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier.fillMaxSize()
                                 ) {
-                                    Column (
+                                    Column(
                                         verticalArrangement = Arrangement.Center,
                                         horizontalAlignment = Alignment.CenterHorizontally
-                                    ){
+                                    ) {
                                         Text(
                                             text = weightInput, // Cambiar por una variable de usuario o db
                                             style = MaterialTheme.typography.bodyLarge,
@@ -222,12 +218,11 @@ fun WeightScreen(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier.fillMaxSize()
                                 ) {
-                                    Column (
-                                        modifier = Modifier
-                                            .fillMaxSize(),
+                                    Column(
+                                        modifier = Modifier.fillMaxSize(),
                                         verticalArrangement = Arrangement.Center,
                                         horizontalAlignment = Alignment.CenterHorizontally
-                                    ){
+                                    ) {
                                         Text(
                                             text = "Normal", // Se tiene que validar para ver que le vamos a poner
                                             style = MaterialTheme.typography.bodyLarge,
@@ -250,7 +245,7 @@ fun WeightScreen(
                         }
 
                         // Graphics Card
-                        Card (
+                        Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
@@ -258,7 +253,7 @@ fun WeightScreen(
                             colors = CardDefaults.cardColors(
                                 containerColor = cardsBackgroud
                             )
-                        ){
+                        ) {
 
                         }
 
@@ -274,8 +269,7 @@ fun WeightScreen(
                             shape = RoundedCornerShape(10.dp)
                         ) {
                             Box(
-                                modifier = Modifier
-                                    .fillMaxSize(),
+                                modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center // Centrar el contenido del Box
                             ) {
                                 Row(
@@ -304,8 +298,7 @@ fun WeightScreen(
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 20.sp,
                                         color = white,
-                                        modifier = Modifier
-                                            .padding(all = 16.dp)
+                                        modifier = Modifier.padding(all = 16.dp)
                                     )
                                 }
                             }
@@ -313,28 +306,24 @@ fun WeightScreen(
 
                         // History cards sera Dinamicos para que sea la cantidad de registros hechos
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
-                            HistoryWeightCard(weight,date)
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            HistoryWeightCard(weight, date)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
-                            HistoryWeightCard(weight,date)
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            HistoryWeightCard(weight, date)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
-                            HistoryWeightCard(weight,date)
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            HistoryWeightCard(weight, date)
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
-                            HistoryWeightCard(weight,date)
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            HistoryWeightCard(weight, date)
                         }
 
                     }

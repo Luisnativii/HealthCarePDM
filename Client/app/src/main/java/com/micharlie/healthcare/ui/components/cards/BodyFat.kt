@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.bodyFatProgress
 import com.micharlie.healthcare.ui.theme.bodyFatProgressBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
@@ -39,12 +40,12 @@ import com.micharlie.healthcare.ui.theme.white
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Body Fat */ }
 @Composable
 fun BodyFatCard(navController: NavController, bodyFat: Int) {
-    ElevatedCard (
+    ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable { navController.navigate("BodyFatScreen") },
+            .clickable { navController.navigate(ScreenRoute.BodyFatScreen.route) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -53,29 +54,31 @@ fun BodyFatCard(navController: NavController, bodyFat: Int) {
         ),
         shape = RoundedCornerShape(10.dp)
 
-    ){
-       // Icon and Tittle
+    ) {
+        // Icon and Tittle
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.materialsymbolsbodyfat),
                 contentDescription = "Body Fat Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .background( color = bodyFatProgressBackground, shape = RoundedCornerShape(10.dp))
+                    .background(
+                        color = bodyFatProgressBackground, shape = RoundedCornerShape(10.dp)
+                    )
                     .clip(RoundedCornerShape(15.dp))
             )
 
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
                 horizontalAlignment = Alignment.Start
-            ){
+            ) {
                 Text(
                     text = "Body Fat",
                     style = MaterialTheme.typography.bodyLarge,
@@ -92,25 +95,23 @@ fun BodyFatCard(navController: NavController, bodyFat: Int) {
         }
 
         // Body Fat
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(
                 text = bodyFat.toString(), // Cambiar esto por lo que se debe recibir de la base de datos o del usuario
-                style = MaterialTheme.typography.bodyLarge,
-                fontSize = 30.sp,
-                color = white
+                style = MaterialTheme.typography.bodyLarge, fontSize = 30.sp, color = white
             )
 
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
                 horizontalAlignment = Alignment.Start
-            ){
+            ) {
                 Text(
                     text = "%",
                     style = MaterialTheme.typography.bodyMedium,
@@ -122,11 +123,11 @@ fun BodyFatCard(navController: NavController, bodyFat: Int) {
 
 
         // Progress Bar
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-        ){
+        ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -150,7 +151,7 @@ fun BodyFatCard(navController: NavController, bodyFat: Int) {
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
-        ){
+        ) {
             Column {
                 Text(
                     text = "Low",

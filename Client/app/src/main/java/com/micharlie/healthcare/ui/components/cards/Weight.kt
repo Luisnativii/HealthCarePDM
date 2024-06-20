@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.seeMore
 import com.micharlie.healthcare.ui.theme.weightProgress
@@ -40,13 +41,13 @@ import com.micharlie.healthcare.ui.theme.white
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Weight */ },
 
 @Composable
-fun WeightCard(navController: NavController, weight: Int ){
-    ElevatedCard (
+fun WeightCard(navController: NavController, weight: Int) {
+    ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable { navController.navigate("WeightScreen") },
+            .clickable { navController.navigate(ScreenRoute.WeightScreen.route) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -55,31 +56,31 @@ fun WeightCard(navController: NavController, weight: Int ){
         ),
         shape = RoundedCornerShape(10.dp)
 
-    ){
+    ) {
 
         // Icon and Tittle
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
 
             Image(
                 painter = painterResource(id = R.drawable.hugeiconsweightscale__1_),
                 contentDescription = "Weight Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .background( color = weightProgressBackground, shape = RoundedCornerShape(10.dp))
+                    .background(color = weightProgressBackground, shape = RoundedCornerShape(10.dp))
                     .clip(RoundedCornerShape(15.dp))
             )
 
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
                 horizontalAlignment = Alignment.Start
-            ){
+            ) {
                 Text(
                     text = "Weight",
                     style = MaterialTheme.typography.bodyLarge,
@@ -96,24 +97,22 @@ fun WeightCard(navController: NavController, weight: Int ){
         }
 
         // Weight
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(
                 text = weight.toString(), // Aqui debemos de pasar una varible para poder cambiar el valor
-                style = MaterialTheme.typography.bodyLarge,
-                fontSize = 30.sp,
-                color = white
+                style = MaterialTheme.typography.bodyLarge, fontSize = 30.sp, color = white
             )
-            Column (
+            Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
                 horizontalAlignment = Alignment.Start
-            ){
+            ) {
                 Text(
                     text = "kg",
                     style = MaterialTheme.typography.bodyMedium,
@@ -124,11 +123,11 @@ fun WeightCard(navController: NavController, weight: Int ){
         }
 
         // Progress Bar
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-        ){
+        ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -136,7 +135,7 @@ fun WeightCard(navController: NavController, weight: Int ){
                     .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = weight/100f, // Cambiar esto por el calculo del porcentaje
+                    progress = weight / 100f, // Cambiar esto por el calculo del porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),
@@ -147,12 +146,12 @@ fun WeightCard(navController: NavController, weight: Int ){
         }
 
         // Low and High
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
-        ){
+        ) {
             Column {
                 Text(
                     text = "low",
@@ -177,7 +176,7 @@ fun WeightCard(navController: NavController, weight: Int ){
 
 @Preview
 @Composable
-fun WeightCardPreview(){
+fun WeightCardPreview() {
     val navController = rememberNavController()
     WeightCard(navController = navController, weight = 70)
 }

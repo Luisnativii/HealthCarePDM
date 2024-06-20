@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.bloodGlucoseProgress
 import com.micharlie.healthcare.ui.theme.bloodGlucoseProgressBackground
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
@@ -44,7 +45,7 @@ fun BloodGlucoseCard(navController: NavController, bloodGlucose: Int) {
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable { navController.navigate("BloodGlucoseScreen") },
+            .clickable { navController.navigate(ScreenRoute.BloodGlucoseScreen.route) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),

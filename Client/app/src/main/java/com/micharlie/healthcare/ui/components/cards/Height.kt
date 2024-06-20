@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.heightBackground
 import com.micharlie.healthcare.ui.theme.seeMore
@@ -42,7 +43,7 @@ fun HeightCard(navController: NavController, height: Int){
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(150.dp)
-            .clickable { navController.navigate("HeightScreen") },
+            .clickable { navController.navigate(ScreenRoute.HeightScreen.route) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),

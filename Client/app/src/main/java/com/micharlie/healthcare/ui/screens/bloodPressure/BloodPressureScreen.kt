@@ -1,5 +1,4 @@
 package com.micharlie.healthcare.ui.screens.bloodPressure
-
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,6 +28,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,11 +37,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
@@ -61,22 +59,27 @@ fun BloodPressureScreen(
     navController: NavController,
     sessionState: Boolean = true,
     getVideoViewModel: GetVideoViewModel,
-    bloodPressureSystolic: Int,
-    bloodPressureDiastolic: Int,
-    date: String
+
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    var bloodPressureSystolic by remember {
+        mutableIntStateOf(110)//cambiar por vm
+    }
+    var bloodPressureDiastolic by remember {
+        mutableIntStateOf(75)//cambiar por vm
+    }
+    var date by remember {
+        mutableStateOf("2021-10-10")//cambiar por vm
+    }
 
-    DrawerBar(drawerState = drawerState, sessionState = true , content = {
-        Scaffold(
-            bottomBar = { BottomBar() },
-            topBar = { TopBar(drawerState = drawerState) }
-        ) {
+
+    DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
+        Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(
                 modifier = Modifier
                     .padding(it)
                     .background(primary)
-            ){
+            ) {
                 // Content of the screen
                 LazyColumn {
                     item {
@@ -90,12 +93,12 @@ fun BloodPressureScreen(
                                 containerColor = cardsBackgroud
                             )
                         ) {
-                            Row (
+                            Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(20.dp),
                                 verticalAlignment = Alignment.CenterVertically
-                            ){
+                            ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.materialsymbolsbloodpressureoutline),
                                     contentDescription = "Blood Pressure Icon",
@@ -124,8 +127,16 @@ fun BloodPressureScreen(
 
 
                         // Card input Weight
-                        var bloodPressureSystolicInput by remember { mutableStateOf(bloodPressureSystolic.toString()) }
-                        var bloodPressureDiastolicInput by remember { mutableStateOf(bloodPressureDiastolic.toString()) }
+                        var bloodPressureSystolicInput by remember {
+                            mutableStateOf(
+                                bloodPressureSystolic.toString()
+                            )
+                        }
+                        var bloodPressureDiastolicInput by remember {
+                            mutableStateOf(
+                                bloodPressureDiastolic.toString()
+                            )
+                        }
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -134,34 +145,32 @@ fun BloodPressureScreen(
                             colors = CardDefaults.cardColors(
                                 containerColor = cardsBackgroud
                             )
-                        ){
-                            Column (
+                        ) {
+                            Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(20.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
-                            ){
-                                Row (
+                            ) {
+                                Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.Center
-                                ){
+                                ) {
                                     TextField(
-                                        value = bloodPressureSystolicInput , // Mandando a llamar la BloodGlucose
+                                        value = bloodPressureSystolicInput, // Mandando a llamar la BloodGlucose
                                         onValueChange = { bloodPressureSystolicInput = it },
                                         shape = RoundedCornerShape(8.dp),
-                                        modifier = Modifier
-                                            .size(width = 150.dp, height = 50.dp)
+                                        modifier = Modifier.size(width = 150.dp, height = 50.dp)
                                     )
                                     Box(
-                                        modifier = Modifier
-                                            .padding(16.dp),
+                                        modifier = Modifier.padding(16.dp),
                                         contentAlignment = Alignment.Center,
                                     ) {
-                                        Column (
+                                        Column(
                                             verticalArrangement = Arrangement.Center,
                                             horizontalAlignment = Alignment.CenterHorizontally
-                                        ){
+                                        ) {
                                             Text(
                                                 text = "Systolic", // Cambiar por una variable de usuario o db
                                                 style = MaterialTheme.typography.bodyLarge,
@@ -185,8 +194,7 @@ fun BloodPressureScreen(
                                         value = bloodPressureDiastolicInput, // Nueva variable para diastolic input
                                         onValueChange = { bloodPressureDiastolicInput = it },
                                         shape = RoundedCornerShape(8.dp),
-                                        modifier = Modifier
-                                            .size(width = 150.dp, height = 50.dp)
+                                        modifier = Modifier.size(width = 150.dp, height = 50.dp)
                                     )
                                     Box(
                                         modifier = Modifier.padding(16.dp),
@@ -226,7 +234,7 @@ fun BloodPressureScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
-                        ){
+                        ) {
                             Card(
                                 modifier = Modifier
                                     .width(100.dp)
@@ -240,10 +248,10 @@ fun BloodPressureScreen(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier.fillMaxSize()
                                 ) {
-                                    Column (
+                                    Column(
                                         verticalArrangement = Arrangement.Center,
                                         horizontalAlignment = Alignment.CenterHorizontally
-                                    ){
+                                    ) {
                                         Text(
                                             text = "110", // Cambiar por una variable de usuario o db
                                             fontSize = 25.sp,
@@ -278,12 +286,11 @@ fun BloodPressureScreen(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier.fillMaxSize()
                                 ) {
-                                    Column (
-                                        modifier = Modifier
-                                            .fillMaxSize(),
+                                    Column(
+                                        modifier = Modifier.fillMaxSize(),
                                         verticalArrangement = Arrangement.Center,
                                         horizontalAlignment = Alignment.CenterHorizontally
-                                    ){
+                                    ) {
                                         Text(
                                             text = "Normal", // Se tiene que validar para ver que le vamos a poner
                                             style = MaterialTheme.typography.bodyLarge,
@@ -323,7 +330,7 @@ fun BloodPressureScreen(
                         }
 
                         // Graphics Card
-                        Card (
+                        Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
@@ -331,7 +338,7 @@ fun BloodPressureScreen(
                             colors = CardDefaults.cardColors(
                                 containerColor = cardsBackgroud
                             )
-                        ){
+                        ) {
 
                         }
 
@@ -347,8 +354,7 @@ fun BloodPressureScreen(
                             shape = RoundedCornerShape(10.dp)
                         ) {
                             Box(
-                                modifier = Modifier
-                                    .fillMaxSize(),
+                                modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center // Centrar el contenido del Box
                             ) {
                                 Row(
@@ -377,8 +383,7 @@ fun BloodPressureScreen(
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 20.sp,
                                         color = white,
-                                        modifier = Modifier
-                                            .padding(all = 16.dp)
+                                        modifier = Modifier.padding(all = 16.dp)
                                     )
                                 }
                             }
@@ -386,28 +391,32 @@ fun BloodPressureScreen(
 
                         // History Cards
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
-                            HistoryBloodPressureCard(bloodPressureSystolic, bloodPressureDiastolic, date)
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            HistoryBloodPressureCard(
+                                bloodPressureSystolic, bloodPressureDiastolic, date
+                            )
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
-                            HistoryBloodPressureCard(bloodPressureSystolic, bloodPressureDiastolic, date)
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            HistoryBloodPressureCard(
+                                bloodPressureSystolic, bloodPressureDiastolic, date
+                            )
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
-                            HistoryBloodPressureCard(bloodPressureSystolic, bloodPressureDiastolic, date)
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            HistoryBloodPressureCard(
+                                bloodPressureSystolic, bloodPressureDiastolic, date
+                            )
                         }
                         Box(
-                            modifier = Modifier
-                                .padding(10.dp)
-                        ){
-                            HistoryBloodPressureCard(bloodPressureSystolic, bloodPressureDiastolic, date)
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            HistoryBloodPressureCard(
+                                bloodPressureSystolic, bloodPressureDiastolic, date
+                            )
                         }
 
                     }
