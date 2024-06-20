@@ -54,6 +54,6 @@ fun Navigation() {
             val url = it.arguments?.getString("url") ?: ""
             VideoScreen(navController, url, true, getVideoViewModel)
         }
-        
+
     }
 }

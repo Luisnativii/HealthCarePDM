@@ -1,7 +1,6 @@
 package com.micharlie.healthcare.ui.screens.mainScreen
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,15 +16,10 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.cards.BloodGlucoseCard
 import com.micharlie.healthcare.ui.cards.BloodPressureCard
 import com.micharlie.healthcare.ui.cards.BodyFatCard
@@ -42,7 +36,10 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
+
+fun MainScreen(sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
+    val navController = rememberNavController()
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -74,48 +71,49 @@ fun MainScreen(navController: NavController, sessionState: Boolean = true, getVi
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            HeightCard()
+                            HeightCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            WeightCard()
+                            WeightCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            MuscularMassCard()
+                            MuscularMassCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            BodyFatCard()
+                            BodyFatCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            CholesterolCard()
+                            CholesterolCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            BloodGlucoseCard()
+                            BloodGlucoseCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            BloodPressureCard()
+                            BloodPressureCard(navController = navController)
                         }
                     }
                 }
             }
-
         }
     }, navController = navController,getVideoViewModel)
 }
+
+
