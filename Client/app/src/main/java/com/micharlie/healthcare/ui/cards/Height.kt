@@ -2,6 +2,7 @@ package com.micharlie.healthcare.ui.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.heightBackground
@@ -33,12 +36,13 @@ import com.micharlie.healthcare.ui.theme.seeMore
 // Para agregar el onClick colocar esto en el modifier despues de height
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Height */ }
 @Composable
-fun HeightCard(){
+fun HeightCard(navController: NavHostController){
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .height(150.dp),
+            .height(150.dp)
+            .clickable { navController.navigate("HeightScreen") },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -62,7 +66,7 @@ fun HeightCard(){
                 contentDescription = "Weight Icon",
                 modifier = Modifier
                     .size(40.dp)
-                    .background( color = heightBackground, shape = RoundedCornerShape(10.dp))
+                    .background(color = heightBackground, shape = RoundedCornerShape(10.dp))
                     .clip(RoundedCornerShape(15.dp))
             )
 
@@ -114,5 +118,6 @@ fun HeightCard(){
 @Preview
 @Composable
 fun HeightPreview(){
-    HeightCard()
+    val navController = rememberNavController()
+    HeightCard(navController = navController)
 }

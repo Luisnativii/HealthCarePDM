@@ -2,6 +2,7 @@ package com.micharlie.healthcare.ui.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.cholesterolProgress
@@ -35,12 +38,13 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Cholesterol */ }
 @Composable
-fun CholesterolCard() {
+fun CholesterolCard(navController: NavHostController) {
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .height(250.dp),
+            .height(250.dp)
+            .clickable { navController.navigate("CholesterolScreen") },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -171,5 +175,6 @@ fun CholesterolCard() {
 @Preview
 @Composable
 fun CholesterolCardPreview() {
-    CholesterolCard()
+    val navController = rememberNavController()
+    CholesterolCard(navController = navController)
 }

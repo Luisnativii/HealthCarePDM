@@ -41,7 +41,9 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen(navController: NavController) {
+fun MainScreen() {
+    val navController = rememberNavController()
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -73,53 +75,52 @@ fun MainScreen(navController: NavController) {
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            HeightCard()
+                            HeightCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            WeightCard()
+                            WeightCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            MuscularMassCard()
+                            MuscularMassCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            BodyFatCard()
+                            BodyFatCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            CholesterolCard()
+                            CholesterolCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            BloodGlucoseCard()
+                            BloodGlucoseCard(navController = navController)
                         }
                         Box(
                             modifier = Modifier
                                 .padding(16.dp)
                         ){
-                            BloodPressureCard()
+                            BloodPressureCard(navController = navController)
                         }
                     }
                 }
             }
-
         }
     }, navController = navController  )
 }
 @Composable
 @Preview
 fun MainScreenPreview() {
-    MainScreen(navController = rememberNavController())
+    MainScreen()
 }

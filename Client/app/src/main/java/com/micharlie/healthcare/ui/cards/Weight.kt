@@ -26,6 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.R
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.seeMore
@@ -38,13 +40,13 @@ import com.micharlie.healthcare.ui.theme.white
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Weight */ },
 
 @Composable
-fun WeightCard(){
+fun WeightCard(navController: NavHostController){
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .height(250.dp)
-            .clickable {  },
+            .clickable { navController.navigate("WeightScreen") },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         ),
@@ -176,5 +178,6 @@ fun WeightCard(){
 @Preview
 @Composable
 fun WeightCardPreview(){
-    WeightCard()
+    val navController = rememberNavController()
+    WeightCard(navController = navController)
 }
