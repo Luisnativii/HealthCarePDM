@@ -37,7 +37,19 @@ import com.micharlie.healthcare.ui.theme.white
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 
-fun MainScreen(sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel, navController: NavController) {
+fun MainScreen(
+    sessionState: Boolean = true,
+    getVideoViewModel: GetVideoViewModel,
+    navController: NavController,
+    height: Int,
+    weight: Int,
+    muscularMass: Int,
+    bodyFat: Int,
+    cholesterol: Int,
+    bloodGlucose: Int,
+    bloodPressureSystolic: Int,
+    bloodPressureDiastolic: Int
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true, content = {
@@ -64,37 +76,37 @@ fun MainScreen(sessionState: Boolean = true, getVideoViewModel: GetVideoViewMode
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            HeightCard(navController = navController)
+                            HeightCard(navController = navController,height = height)
                         }
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            WeightCard(navController = navController)
+                            WeightCard(navController = navController, weight = weight)
                         }
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            MuscularMassCard(navController = navController)
+                            MuscularMassCard(navController = navController, muscularMass = muscularMass)
                         }
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            BodyFatCard(navController = navController)
+                            BodyFatCard(navController = navController, bodyFat = bodyFat)
                         }
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            CholesterolCard(navController = navController)
+                            CholesterolCard(navController = navController, cholesterol = cholesterol)
                         }
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            BloodGlucoseCard(navController = navController)
+                            BloodGlucoseCard(navController = navController, bloodGlucose = bloodGlucose)
                         }
                         Box(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            BloodPressureCard(navController = navController)
+                            BloodPressureCard(navController = navController, bloodPressureSystolic = bloodPressureSystolic, bloodPressureDiastolic = bloodPressureDiastolic)
                         }
                     }
                 }

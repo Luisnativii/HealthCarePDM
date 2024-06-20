@@ -38,7 +38,7 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de BloodGlucose */ }
 @Composable
-fun BloodGlucoseCard(navController: NavController) {
+fun BloodGlucoseCard(navController: NavController, bloodGlucose: Int) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -101,7 +101,7 @@ fun BloodGlucoseCard(navController: NavController) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "90", // Cambiar esto por el que debe recibir de la base de datos o del usuario
+                text = bloodGlucose.toString(), // Cambiar esto por el que debe recibir de la base de datos o del usuario
                 style = MaterialTheme.typography.bodyLarge, fontSize = 30.sp, color = white
             )
 
@@ -134,7 +134,7 @@ fun BloodGlucoseCard(navController: NavController) {
                     .clip(RoundedCornerShape(10.dp)) // Set rounded corners here
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Hacer la consulta para obtener el valor, este es otro valor que se debe cambiar
+                    progress = bloodGlucose/100f, // Hacer la consulta para obtener el valor, este es otro valor que se debe cambiar
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp), // Ensure the height matches the Box
@@ -176,5 +176,5 @@ fun BloodGlucoseCard(navController: NavController) {
 @Composable
 fun BloodGlucoseCardPreview() {
     val navController = rememberNavController()
-    BloodGlucoseCard(navController = navController)
+    BloodGlucoseCard(navController = navController, bloodGlucose = 90)
 }

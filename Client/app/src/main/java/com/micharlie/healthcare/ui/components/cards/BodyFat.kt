@@ -38,7 +38,7 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Body Fat */ }
 @Composable
-fun BodyFatCard(navController: NavController) {
+fun BodyFatCard(navController: NavController, bodyFat: Int) {
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
@@ -99,7 +99,7 @@ fun BodyFatCard(navController: NavController) {
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "10", // Cambiar esto por lo que se debe recibir de la base de datos o del usuario
+                text = bodyFat.toString(), // Cambiar esto por lo que se debe recibir de la base de datos o del usuario
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 30.sp,
                 color = white
@@ -177,5 +177,5 @@ fun BodyFatCard(navController: NavController) {
 @Composable
 fun BodyFatCardPreview() {
     val navController = rememberNavController()
-    BodyFatCard(navController = navController)
+    BodyFatCard(navController = navController, bodyFat = 10)
 }

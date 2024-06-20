@@ -38,7 +38,7 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height quedaria:
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Muscular Mass  */ },
 @Composable
-fun MuscularMassCard(navController: NavController){
+fun MuscularMassCard(navController: NavController, muscularMass: Int){
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,7 +63,7 @@ fun MuscularMassCard(navController: NavController){
         ){
             Image(
                 painter = painterResource(id = R.drawable.iconparkoutlinemuscle),
-                contentDescription = "Weight Icon",
+                contentDescription = "Muscular Mass Icon",
                 modifier = Modifier
                     .size(40.dp)
                     .background( color = muscularMassProgressBackground, shape = RoundedCornerShape(10.dp))
@@ -99,7 +99,7 @@ fun MuscularMassCard(navController: NavController){
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "20", // Change this value
+                text = muscularMass.toString(), // Change this value
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 30.sp,
                 color = white
@@ -133,7 +133,7 @@ fun MuscularMassCard(navController: NavController){
                     .clip(RoundedCornerShape(8.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Cambiar esto por el valor para hacer el calculo del porcentaje
+                    progress = muscularMass/100f, // Cambiar esto por el valor para hacer el calculo del porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),
@@ -175,5 +175,5 @@ fun MuscularMassCard(navController: NavController){
 @Composable
 fun MuscularMassCardPreview(){
     val navController = rememberNavController()
-    MuscularMassCard(navController = navController)
+    MuscularMassCard(navController = navController, muscularMass = 20)
 }

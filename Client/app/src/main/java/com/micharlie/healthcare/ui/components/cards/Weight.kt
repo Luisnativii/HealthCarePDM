@@ -40,7 +40,7 @@ import com.micharlie.healthcare.ui.theme.white
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Weight */ },
 
 @Composable
-fun WeightCard(navController: NavController){
+fun WeightCard(navController: NavController, weight: Int ){
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
@@ -103,7 +103,7 @@ fun WeightCard(navController: NavController){
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "70", // Aqui debemos de pasar una varible para poder cambiar el valor
+                text = weight.toString(), // Aqui debemos de pasar una varible para poder cambiar el valor
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 30.sp,
                 color = white
@@ -136,7 +136,7 @@ fun WeightCard(navController: NavController){
                     .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = 0.5f, // Cambiar esto por el calculo del porcentaje
+                    progress = weight/100f, // Cambiar esto por el calculo del porcentaje
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),
@@ -179,5 +179,5 @@ fun WeightCard(navController: NavController){
 @Composable
 fun WeightCardPreview(){
     val navController = rememberNavController()
-    WeightCard(navController = navController)
+    WeightCard(navController = navController, weight = 70)
 }

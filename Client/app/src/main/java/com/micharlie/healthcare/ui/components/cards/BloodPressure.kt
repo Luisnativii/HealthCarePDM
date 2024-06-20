@@ -36,7 +36,7 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height quedaria:
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de BloodPressure () */ },
 @Composable
-fun BloodPressureCard(navController: NavController) {
+fun BloodPressureCard(navController: NavController, bloodPressureSystolic: Int, bloodPressureDiastolic: Int) {
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()
@@ -102,13 +102,13 @@ fun BloodPressureCard(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ){
                 Text(
-                    text ="110", // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
+                    text =bloodPressureSystolic.toString(), // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 30.sp,
                     color = Color.White
                 )
                 Text(
-                    text ="74", // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
+                    text =bloodPressureDiastolic.toString(), // Cambiar esto por lo que debe de recibir de la base de datos o del usuario
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 20.sp,
                     color = Color.White,
@@ -132,5 +132,5 @@ fun BloodPressureCard(navController: NavController) {
 @Composable
 fun BloodPressureCardPreview() {
     val navController = rememberNavController()
-    BloodPressureCard(navController = navController)
+    BloodPressureCard(navController = navController, bloodPressureSystolic = 110, bloodPressureDiastolic = 74)
 }
