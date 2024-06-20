@@ -10,11 +10,14 @@ import androidx.compose.ui.unit.dp
 import com.micharlie.healthcare.ui.theme.HealthCareTheme
 import com.micharlie.healthcare.ui.theme.black
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.contrasPrimary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = viewModel()) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
@@ -74,10 +77,13 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
         }
         when (loginState) {
             is LoginState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-            is LoginState.Success -> Text("Login successful!", color = MaterialTheme.colorScheme.primary)
+            is LoginState.Success -> {
+                navController.navigate(ScreenRoute.Main.route)
+            }
             is LoginState.Error -> {
                 errorMessage = (loginState as LoginState.Error).message
             }
+            LoginState.Idle -> Unit // No action for Idle state
         }
     }
 }
@@ -85,7 +91,8 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
 @Preview
 @Composable
 fun PreviewLoginScreen() {
+    val navController = rememberNavController()
     HealthCareTheme {
-        LoginScreen()
+        LoginScreen(navController)
     }
 }

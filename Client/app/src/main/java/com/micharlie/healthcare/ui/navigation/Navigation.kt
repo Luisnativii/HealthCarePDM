@@ -9,9 +9,12 @@ import androidx.navigation.navArgument
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.micharlie.healthcare.data.api.ApiService
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.login.LoginScreen
 import com.micharlie.healthcare.ui.screens.ExerciseScreen.ExerciseScreen
 import com.micharlie.healthcare.ui.screens.VideoScreen.VideoScreen
 import com.micharlie.healthcare.ui.screens.homeScreen.HomeScreen
+import com.micharlie.healthcare.ui.screens.mainScreen.MainScreen
+import com.micharlie.healthcare.ui.signup.RegisterScreen
 import com.micharlie.healthcare.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -53,6 +56,15 @@ fun Navigation() {
                 type = NavType.StringType })) {
             val url = it.arguments?.getString("url") ?: ""
             VideoScreen(navController, url, true, getVideoViewModel)
+        }
+        composable(route = ScreenRoute.Login.route) {
+            LoginScreen(navController = navController)
+        }
+        composable(route = ScreenRoute.Register.route) {
+            RegisterScreen(navController = navController)
+        }
+        composable(route = ScreenRoute.Main.route) {
+            MainScreen(sessionState = true, getVideoViewModel = getVideoViewModel)
         }
 
     }

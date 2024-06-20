@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.micharlie.healthcare.data.api.ApiResponseSuccessful
 import com.micharlie.healthcare.data.api.NetworkUtils
 import com.micharlie.healthcare.data.api.UserApi
@@ -36,7 +37,7 @@ import retrofit2.Response
 
 
 @Composable
-fun HomeScreenCard(text1: String, text2: String, imageId: Int) {
+fun HomeScreenCard(navController: NavController, text1: String, text2: String, imageId: Int) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,7 +71,7 @@ fun HomeScreenCard(text1: String, text2: String, imageId: Int) {
         ) {
             Button(
                 onClick = {
-
+                    navController.navigate("login")
                     val login = UserApi(
                         email = "luis.nativi24@gmail.com",
                         password = "le260206N$"
@@ -112,6 +113,7 @@ fun HomeScreenCard(text1: String, text2: String, imageId: Int) {
             }
             Button(
                 onClick = {
+                    navController.navigate("register")
                     val user = UserApi(
                         name = "nativi",
                         email = "luis.nativi24@gmail.com",
