@@ -62,7 +62,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
         }
         Button(
             onClick = {
-                loginViewModel.login(email, password)
+                //loginViewModel.login(email, password)
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = contrasPrimary,

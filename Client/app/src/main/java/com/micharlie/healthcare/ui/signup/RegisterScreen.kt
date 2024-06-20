@@ -114,7 +114,7 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
                 Button(
                     onClick = {
                         val user = RegisterRequest(name, email, gender, dateBirth, password)
-                        registerViewModel.register(user)
+                        //registerViewModel.register(user)
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = contrasPrimary,
