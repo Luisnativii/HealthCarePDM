@@ -1,9 +1,13 @@
 package com.micharlie.healthcare.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.micharlie.healthcare.ui.screens.ExerciseScreen.ExerciseScreen
+import com.micharlie.healthcare.ui.screens.VideoScreen.VideoScreen
 import com.micharlie.healthcare.ui.screens.homeScreen.HomeScreen
 
 @Composable
@@ -26,6 +30,15 @@ fun Navigation() {
         }*/
         composable(route = ScreenRoute.HomeNoSession.route) {
             HomeScreen(navController)
+        }
+        composable(route = ScreenRoute.ExerciseScreen.route) {
+            ExerciseScreen(navController)
+        }
+        composable(route = ScreenRoute.VideoScreen.route + "/{url}",
+            arguments = listOf(navArgument("url") {
+                type = NavType.StringType })) {
+            val url = it.arguments?.getString("url") ?: ""
+            VideoScreen(navController, url)
         }
         
     }

@@ -22,6 +22,7 @@ private val DarkColorScheme = darkColorScheme(
     onTertiary = white,
     onBackground = white,
     onSurface = white
+    tertiary = tertiary
 
 )
 

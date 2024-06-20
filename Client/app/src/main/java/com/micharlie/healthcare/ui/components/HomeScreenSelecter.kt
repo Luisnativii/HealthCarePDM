@@ -14,45 +14,48 @@ import kotlin.random.Random
 
 
 @Composable
-fun HomeScreenSelector(){
+fun HomeScreenSelector() {
     var n by remember {
         mutableIntStateOf(1)
     }
     LaunchedEffect(Unit) {
-        while(true){
+        while (true) {
             delay(5000)
-            n = Random.nextInt(1,4)
+            n = Random.nextInt(1, 4)
         }
-        
+
     }
     when (n) {
         1 -> {
             HomeScreenCard(
                 text1 = stringResource(R.string.home_title1),
                 text2 = stringResource(R.string.home_content1),
-                imageId = R.drawable.homescreen_1 )
+                imageId = R.drawable.homescreen_1
+            )
         }
+
         2 -> {
             HomeScreenCard(
                 text1 = stringResource(R.string.home_title2),
                 text2 = stringResource(R.string.home_content2),
-                imageId = R.drawable.homescreen_2 )
+                imageId = R.drawable.homescreen_2
+            )
         }
+
         else -> {
             HomeScreenCard(
                 text1 = stringResource(R.string.home_title3),
                 text2 = stringResource(R.string.home_content3),
-                imageId = R.drawable.homescreen_3 )
+                imageId = R.drawable.homescreen_3
+            )
         }
     }
 
 
-        
-    }
+}
 
 @Composable
 @Preview
-fun HomeScreenCarouselSelector()
-{
+fun HomeScreenCarouselSelector() {
     HomeScreenSelector()
 }

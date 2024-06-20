@@ -2,10 +2,13 @@ package com.micharlie.healthcare.data.api;
 
 import com.micharlie.healthcare.utils.Constants;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.GET;
 
 
 public interface ApiService {
@@ -17,5 +20,9 @@ public interface ApiService {
     @Headers({"Content-Type: application/json"})
     @POST(Constants.POST_USER_PATH)
     Call<ApiResponseSuccessful> postUser(@Body UserApi user);
+
+    @GET(Constants.VIDEOGET)
+    Call<List<VideoApi>> getVideos();
+
 
 }
