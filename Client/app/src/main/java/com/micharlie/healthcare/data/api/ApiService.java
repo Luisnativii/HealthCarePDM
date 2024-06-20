@@ -4,7 +4,9 @@ import com.micharlie.healthcare.utils.Constants;
 
 import java.util.List;
 
+import kotlinx.coroutines.Deferred;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -22,7 +24,7 @@ public interface ApiService {
     Call<ApiResponseSuccessful> postUser(@Body UserApi user);
 
     @GET(Constants.VIDEOGET)
-    Call<List<VideoApi>> getVideos();
+    Deferred<Response<List<VideoApi>>> getVideos();
 
 
 }

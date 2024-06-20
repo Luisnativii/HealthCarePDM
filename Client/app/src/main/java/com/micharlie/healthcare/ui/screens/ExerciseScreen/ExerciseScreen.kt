@@ -34,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.secondary
@@ -41,7 +42,7 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ExerciseScreen(navController: NavController, sessionState: Boolean = true) {
+fun ExerciseScreen(navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
     var cat by remember {
         mutableIntStateOf(0)
     }
@@ -49,6 +50,7 @@ fun ExerciseScreen(navController: NavController, sessionState: Boolean = true) {
     DrawerBar(drawerState = drawerState,
         sessionState = sessionState,
         navController = navController,
+        getVideoViewModel = getVideoViewModel,
         content = {
             // Content of the drawer
             Scaffold(bottomBar = { BottomBar()},
@@ -106,10 +108,5 @@ fun ExerciseScreen(navController: NavController, sessionState: Boolean = true) {
         })
 }
 
-@Composable
-@Preview
-fun ExerciseScreenPreview() {
-    ExerciseScreen(rememberNavController(), sessionState = true)
-}
 
 
