@@ -141,6 +141,7 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                                     if (response.isSuccessful) {
                                         val token = response.body()
                                         println("Post successful, token: $token")
+                                        //navigation para main scren
                                     } else {
                                         println("Post failed: ${response.errorBody()?.string()}")
                                     }
