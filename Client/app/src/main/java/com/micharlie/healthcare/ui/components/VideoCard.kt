@@ -49,11 +49,11 @@ fun VideoCard(
 ) {
 
     ElevatedCard(
+        onClick = onClickListener,
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
             .height(350.dp), colors = CardDefaults.cardColors(containerColor = secondary),
-        onClick = { onClickListener() }
     ) {
         Box(modifier = Modifier) {
             AsyncImage(
