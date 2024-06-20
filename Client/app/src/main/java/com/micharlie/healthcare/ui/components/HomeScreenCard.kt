@@ -72,34 +72,6 @@ fun HomeScreenCard(navController: NavController, text1: String, text2: String, i
             Button(
                 onClick = {
                     navController.navigate("login")
-                    val login = UserApi(
-                        email = "luis.nativi24@gmail.com",
-                        password = "le260206N$"
-                    )
-
-                    val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
-                    val service = retrofit.create(UserApiService::class.java)
-                    val call = service.loginUser(login)
-
-                    call.enqueue(object : Callback<String> {
-                        override fun onResponse(call: retrofit2.Call<String>, response: Response<String>) {
-                            try {
-                                if (response.isSuccessful) {
-                                    val token = response.body()
-                                    println("Login successful, token: $token")
-                                } else {
-                                    println("Login failed: ${response.errorBody()?.string()}")
-                                }
-                            } catch (e: Exception) {
-                                println("Error parsing response: ${e.message}")
-                            }
-                        }
-
-                        override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                            println("Login failed: ${t.message}")
-                        }
-                    })
-
                 },
 
 
@@ -114,36 +86,6 @@ fun HomeScreenCard(navController: NavController, text1: String, text2: String, i
             Button(
                 onClick = {
                     navController.navigate("register")
-                    val user = UserApi(
-                        name = "nativi",
-                        email = "luis.nativi24@gmail.com",
-                        gender = "Male",
-                        dateBirth = "2003-07-02",
-                        password = "le260206N$"
-                    )
-
-                    val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
-                    val service = retrofit.create(UserApiService::class.java)
-                    val call = service.postUser(user)
-
-                    call.enqueue(object : Callback<String> {
-                        override fun onResponse(call: retrofit2.Call<String>, response: Response<String>) {
-                            try {
-                                if (response.isSuccessful) {
-                                    val token = response.body()
-                                    println("Post successful, token: $token")
-                                } else {
-                                    println("Post failed: ${response.errorBody()?.string()}")
-                                }
-                            } catch (e: Exception) {
-                                println("Error parsing response: ${e.message}")
-                            }
-                        }
-
-                        override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                            println("Post failed: ${t.message}")
-                        }
-                    })
                 },
                 modifier = Modifier.width(150.dp),
                 colors = ButtonDefaults.buttonColors(
