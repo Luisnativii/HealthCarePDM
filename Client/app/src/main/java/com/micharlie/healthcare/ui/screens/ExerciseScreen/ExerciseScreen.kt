@@ -40,6 +40,7 @@ import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.VideoCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoState
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.secondary
@@ -159,7 +160,10 @@ fun ExerciseScreen(
                               imageChannel = videos[it1].channelPhoto!!,
                               videoTitle = videos[it1].videoName!!,
                               userChannel = videos[it1].channelName!!,
-                              navController = navController
+                              navController,
+                              onClickListener = {
+                                  navController.navigate(ScreenRoute.VideoScreen.route + "/${videos[it1].link}")
+                              }
                           )
 
                         }

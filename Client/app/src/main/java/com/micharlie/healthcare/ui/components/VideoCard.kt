@@ -44,7 +44,8 @@ fun VideoCard(
     imageChannel: String,
     videoTitle: String,
     userChannel: String,
-    navController: NavController
+    navController: NavController,
+    onClickListener: () -> Unit
 ) {
 
     ElevatedCard(
@@ -52,7 +53,7 @@ fun VideoCard(
             .padding(8.dp)
             .fillMaxWidth()
             .height(350.dp), colors = CardDefaults.cardColors(containerColor = secondary),
-        onClick = { navController.navigate(ScreenRoute.VideoScreen.route + "/${videoId}") }
+        onClick = { onClickListener() }
     ) {
         Box(modifier = Modifier) {
             AsyncImage(
@@ -105,15 +106,3 @@ fun VideoCard(
 
 }
 
-@Composable
-@Preview
-fun VideoCardPreview() {
-    VideoCard(
-        userChannel = "MicharlieFit",
-        videoCategory = "HIIT",
-        videoTitle = "Video Title",
-        videoImageUrl = "https://i.ytimg.com/vi/1y6smkh6c-0/maxresdefault.jpg",
-        imageChannel = "https://yt3.ggpht.com/ytc/AKedOLQ2J9z1z1Z9Z9z1z1Z9Z9z1z1Z9Z9z1z1Z9z1z1Z9",
-        navController = rememberNavController(), videoId = "1y6smkh6c-0"
-    )
-}
