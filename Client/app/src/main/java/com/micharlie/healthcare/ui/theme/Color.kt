@@ -12,7 +12,7 @@ val black = Color(0xff3F464A)
 val contrast1 = Color(0xffD7DF71)
 val contrast2 = Color(0xffF9A828)
 //Principalmente para botones principales
-val contrasPrimary = Color(0xff85FF91)
+val contrasPrimaryButtons = Color(0xff85FF91)
 
 
 // Cards Colors
