@@ -52,7 +52,7 @@ fun VideoCard(
             .padding(8.dp)
             .fillMaxWidth()
             .height(350.dp), colors = CardDefaults.cardColors(containerColor = secondary),
-        onClick = { navController.navigate(ScreenRoute.VideoScreen.route + "/{$videoId}") }
+        onClick = { navController.navigate(ScreenRoute.VideoScreen.route + "/${videoId}") }
     ) {
         Box(modifier = Modifier) {
             AsyncImage(
