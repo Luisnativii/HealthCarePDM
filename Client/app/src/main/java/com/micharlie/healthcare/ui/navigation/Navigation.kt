@@ -33,7 +33,7 @@ fun Navigation() {
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory()) // Añade el adaptador de llamadas de corutinas
         .build()
-    val sessionState = true
+    val sessionState = false
     val apiService =
         retrofit.create(ApiService::class.java) // Replace this with the actual initialization of your ApiService
     val getVideoViewModel = GetVideoViewModel(apiService)

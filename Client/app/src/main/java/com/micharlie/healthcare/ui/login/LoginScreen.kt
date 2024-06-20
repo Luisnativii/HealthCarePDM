@@ -125,6 +125,7 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                 }
                 Button(
                     onClick = {
+                        navController.navigate(ScreenRoute.HomeSession.route)
                         val login = UserApi(
                             email = email,
                             password = password
@@ -140,7 +141,8 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                                     if (response.isSuccessful) {
                                         val token = response.body()
                                         println("Login successful, token: $token")
-                                        navController.navigate(ScreenRoute.Main.route)
+                                        //por fines educativos se comenta
+                                        //navController.navigate(ScreenRoute.HomeSession.route)
                                     } else {
                                         println("Login failed: ${response.errorBody()?.string()}")
                                     }
