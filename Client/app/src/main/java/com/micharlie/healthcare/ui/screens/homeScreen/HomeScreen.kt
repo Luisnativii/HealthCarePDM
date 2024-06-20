@@ -45,7 +45,7 @@ fun HomeScreen(navController: NavController, sessionState: Boolean = true, getVi
                         .background(color = primary)
                 )
                 {
-                    HomeScreenContent()
+                    HomeScreenContent(navController = navController)
 
 
                 }
@@ -55,10 +55,12 @@ fun HomeScreen(navController: NavController, sessionState: Boolean = true, getVi
 }
 
 @Composable
-fun HomeScreenContent() {
-    HomeScreenSelector()
+fun HomeScreenContent(navController: NavController) {
+    HomeScreenSelector(navController = navController)
 
 }
+
+
 
 
 
