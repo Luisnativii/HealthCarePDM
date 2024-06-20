@@ -1,12 +1,24 @@
 package com.micharlie.healthcare.ui.login
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.micharlie.healthcare.ui.theme.HealthCareTheme
 import com.micharlie.healthcare.ui.theme.black
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -18,6 +30,7 @@ import com.micharlie.healthcare.data.api.UserApiService
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.contrasPrimary
+import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.utils.Constants
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,91 +41,130 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
-    Column(
+    val keyboardController = LocalSoftwareKeyboardController.current
+    Surface(
+        color = primary,
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center
-    ) {
-        TextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Email") },
-            colors = TextFieldDefaults.textFieldColors(
-                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                containerColor = MaterialTheme.colorScheme.surface,
-                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-                cursorColor = MaterialTheme.colorScheme.primary
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            colors = TextFieldDefaults.textFieldColors(
-                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                containerColor = MaterialTheme.colorScheme.surface,
-                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-                cursorColor = MaterialTheme.colorScheme.primary
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        if (errorMessage.isNotEmpty()) {
-            Text(errorMessage, color = MaterialTheme.colorScheme.error)
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        Button(
-            onClick = {
-
-
-                val login = UserApi(
-                    email = email,
-                    password = password
-                )
-
-                val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
-                val service = retrofit.create(UserApiService::class.java)
-                val call = service.loginUser(login)
-
-                call.enqueue(object : Callback<String> {
-                    override fun onResponse(call: retrofit2.Call<String>, response: Response<String>) {
-                        try {
-                            if (response.isSuccessful) {
-                                val token = response.body()
-                                println("Login successful, token: $token")
-                                //navigation 
-                            } else {
-                                println("Login failed: ${response.errorBody()?.string()}")
-                            }
-                        } catch (e: Exception) {
-                            println("Error parsing response: ${e.message}")
-                        }
-                    }
-
-                    override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                        println("Login failed: ${t.message}")
-                    }
-                })
-
-
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = contrasPrimary,
-                contentColor = black
-            ),
-            modifier = Modifier.fillMaxWidth()
+            .clickable { keyboardController?.hide() }
         ) {
-            Text("Login")
-        }
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                val text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(color = Color.White,fontSize = 30.sp)) {
+                        append("Log ")
+                    }
+                    withStyle(style = SpanStyle(color = contrasPrimary,fontSize = 30.sp)) {
+                        append("In")
+                    }
+                }
+                Text(text, style = MaterialTheme.typography.titleLarge)
+                Spacer(modifier = Modifier.height(8.dp))  // Espaciador entre los textos
+                ClickableText(
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(color = Color.White)) {
+                            append("First time here? Click here")
+                        }
+                    },
+                    onClick = { offset ->
+                        navController.navigate(ScreenRoute.Register.route) // Asegúrate de que este es el nombre correcto de la ruta de la pantalla de registro
+                    },
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Spacer(modifier = Modifier.height(32.dp))  // Espaciador antes de los campos de texto
 
+                TextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Email") },
+                    singleLine = true,
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(10.dp))
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                TextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text("Password") },
+                    singleLine = true,
+                    visualTransformation = PasswordVisualTransformation(),
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(10.dp))
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                if (errorMessage.isNotEmpty()) {
+                    Text(errorMessage, color = MaterialTheme.colorScheme.error)
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                Button(
+                    onClick = {
+                        val login = UserApi(
+                            email = email,
+                            password = password
+                        )
+
+                        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+                        val service = retrofit.create(UserApiService::class.java)
+                        val call = service.loginUser(login)
+
+                        call.enqueue(object : Callback<String> {
+                            override fun onResponse(call: retrofit2.Call<String>, response: Response<String>) {
+                                try {
+                                    if (response.isSuccessful) {
+                                        val token = response.body()
+                                        println("Login successful, token: $token")
+                                        navController.navigate(ScreenRoute.Main.route)
+                                    } else {
+                                        println("Login failed: ${response.errorBody()?.string()}")
+                                    }
+                                } catch (e: Exception) {
+                                    println("Error parsing response: ${e.message}")
+                                }
+                            }
+
+                            override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                                println("Login failed: ${t.message}")
+                            }
+                        })
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = contrasPrimary,
+                        contentColor = black
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 50.dp)
+                ) {
+                    Text("Login")
+                }
+            }
+        }
     }
 }
-
-
