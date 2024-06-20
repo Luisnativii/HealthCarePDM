@@ -174,6 +174,8 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                     Button(
                         onClick = {
 
+                            navController.navigate(ScreenRoute.HomeSession.route)
+
                             val user = UserApi(
                                 name = name,
                                 email = email,
@@ -192,7 +194,9 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                                         if (response.isSuccessful) {
                                             val token = response.body()
                                             println("Post successful, token: $token")
-                                            navController.navigate(ScreenRoute.Main.route)
+                                            //por fines educativos se comento para no iniciar secion para los qu eno tiene la bace
+                                            //navController.navigate(ScreenRoute.HomeSession.route)
+
                                         } else {
                                             println("Post failed: ${response.errorBody()?.string()}")
                                             println(errorMessage)
