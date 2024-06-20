@@ -1,4 +1,4 @@
-package com.micharlie.healthcare.ui.screens.HeightScreen
+package com.micharlie.healthcare.ui.screens.cholesterolScreen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,17 +47,15 @@ import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
-import com.micharlie.healthcare.ui.theme.contrast1
+import com.micharlie.healthcare.ui.theme.cholesterolProgress
+import com.micharlie.healthcare.ui.theme.cholesterolProgressBackground
 import com.micharlie.healthcare.ui.theme.contrast2
-import com.micharlie.healthcare.ui.theme.heightBackground
 import com.micharlie.healthcare.ui.theme.primary
-import com.micharlie.healthcare.ui.theme.weightProgress
-import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HeightScreen(navController: NavController) {
+fun CholesterolScreen(navController: NavController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     DrawerBar(drawerState = drawerState, sessionState = true , content = {
@@ -72,7 +71,7 @@ fun HeightScreen(navController: NavController) {
                 // Content of the screen
                 LazyColumn {
                     item {
-                        // Card Icon and Tittle Height
+                        // Card Icon and Tittle Weight
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -89,12 +88,12 @@ fun HeightScreen(navController: NavController) {
                                 verticalAlignment = Alignment.CenterVertically
                             ){
                                 Image(
-                                    painter = painterResource(id = R.drawable.materialsymbolsheight),
-                                    contentDescription = "Height Icon",
+                                    painter = painterResource(id = R.drawable.healthiconsgallbladderoutline),
+                                    contentDescription = "Cholesterol Icon",
                                     modifier = Modifier
                                         .size(60.dp)
                                         .background(
-                                            color = heightBackground,
+                                            color = cholesterolProgressBackground,
                                             shape = RoundedCornerShape(10.dp)
                                         )
                                         .clip(RoundedCornerShape(15.dp))
@@ -103,7 +102,7 @@ fun HeightScreen(navController: NavController) {
                                 Spacer(modifier = Modifier.width(16.dp))
 
                                 Text(
-                                    text = "Weight",
+                                    text = "Cholesterol",
                                     style = MaterialTheme.typography.bodyLarge,
                                     fontSize = 20.sp,
                                     color = white,
@@ -115,8 +114,8 @@ fun HeightScreen(navController: NavController) {
                         }
 
 
-                        // Card input Height
-                        var heightInput by remember { mutableStateOf("170") }
+                        // Card input Cholesterol
+                        var cholesterolInput by remember { mutableStateOf("90") }
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -138,14 +137,14 @@ fun HeightScreen(navController: NavController) {
                                     horizontalArrangement = Arrangement.Center
                                 ){
                                     TextField(
-                                        value = heightInput , // Cambiar por lo que ponga el usuario
-                                        onValueChange = { heightInput = it },
+                                        value = cholesterolInput , // Mandando a llamar el peso
+                                        onValueChange = { cholesterolInput = it },
                                         shape = RoundedCornerShape(8.dp),
                                         modifier = Modifier
                                             .size(width = 150.dp, height = 50.dp)
                                     )
                                     Text(
-                                        text = "cm",
+                                        text = "mg/dL",
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 16.sp,
                                         color = white,
@@ -153,7 +152,9 @@ fun HeightScreen(navController: NavController) {
                                             .padding(16.dp)
                                     )
                                 }
+
                                 Spacer(modifier = Modifier.height(16.dp))
+
                                 Button(
                                     onClick = { /* Handle update logic */ },
                                     colors = ButtonDefaults.buttonColors(containerColor = contrast2),
@@ -164,39 +165,80 @@ fun HeightScreen(navController: NavController) {
                             }
                         }
 
-                        // Card cm
-                        Card (
+                        // Card
+                        Row(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp, horizontal = 16.dp)
-                                .height(75.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = cardsBackgroud
-                            )
                         ){
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
+                            Card(
+                                modifier = Modifier
+                                    .width(75.dp)
+                                    .height(105.dp)
+                                    .padding(end = 8.dp), // Spacing between cards
+                                colors = CardDefaults.cardColors(
+                                    containerColor = cardsBackgroud
+                                )
                             ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.Center
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxSize()
                                 ) {
-                                    Text(
-                                        text = "170",
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        fontSize = 20.sp,
-                                        color = white,
-                                        modifier = Modifier.padding(end = 4.dp)
-                                    )
+                                    Column (
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ){
+                                        Text(
+                                            text = "90", // Cambiar por una variable de usuario o db
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            color = white
+                                        )
+                                        Text(
+                                            text = "mg/dL",
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            color = Color.Gray
+                                        )
+                                    }
+                                }
+                            }
 
-                                    Text(
-                                        text = "cm",
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        fontSize = 16.sp,
-                                        color = contrast1,
-                                        modifier = Modifier.padding(start = 4.dp)
-                                    )
+                            // Card Normal and LinerProgressIndicator
+                            Card(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(105.dp)
+                                    .padding(start = 8.dp), // Spacing between cards
+                                colors = CardDefaults.cardColors(
+                                    containerColor = cardsBackgroud
+                                )
+                            ) {
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxSize()
+                                ) {
+                                    Column (
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ){
+                                        Text(
+                                            text = "Normal", // Se tiene que validar para ver que le vamos a poner
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            color = white
+                                        )
+
+                                        Spacer(modifier = Modifier.height(8.dp))
+
+                                        LinearProgressIndicator(
+                                            progress = 0.5f,
+                                            color = cholesterolProgress,
+                                            trackColor = cholesterolProgressBackground,
+                                            modifier = Modifier
+                                                .height(16.dp)
+                                                .clip(RoundedCornerShape(10.dp))
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -232,12 +274,12 @@ fun HeightScreen(navController: NavController) {
                                 verticalAlignment = Alignment.CenterVertically
                             ){
                                 Image(
-                                    painter = painterResource(id = R.drawable.materialsymbolshistory__1_),
-                                    contentDescription = "Weight Icon",
+                                    painter = painterResource(id = R.drawable.materialsymbolshistory__4_),
+                                    contentDescription = "History Icon",
                                     modifier = Modifier
                                         .size(60.dp)
                                         .background(
-                                            color = heightBackground,
+                                            color = cholesterolProgressBackground,
                                             shape = RoundedCornerShape(10.dp)
                                         )
                                         .clip(RoundedCornerShape(15.dp))
@@ -264,6 +306,6 @@ fun HeightScreen(navController: NavController) {
 }
 @Composable
 @Preview
-fun HeightScreenPreview() {
-    HeightScreen(navController = rememberNavController())
+fun CholesterolScreenPreview() {
+    CholesterolScreen(navController = rememberNavController())
 }

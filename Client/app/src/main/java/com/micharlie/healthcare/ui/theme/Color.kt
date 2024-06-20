@@ -43,5 +43,6 @@ val bloodGlucoseProgress = Color(0xffFF3737)
 val bloodGlucoseProgressBackground = Color(0xffFFA0A0)
 
 // Blood Pressure Card Colors
+val bloodPressureColor = Color(0xffA53FE5)
 val PressurecolorBackground = Color(0xffE8C3FF)
 val contrasPrimary = Color(0xff85FF91)
