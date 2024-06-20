@@ -12,6 +12,7 @@ import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.screens.ExerciseScreen.ExerciseScreen
 import com.micharlie.healthcare.ui.screens.VideoScreen.VideoScreen
 import com.micharlie.healthcare.ui.screens.homeScreen.HomeScreen
+import com.micharlie.healthcare.ui.screens.mainScreen.MainScreen
 import com.micharlie.healthcare.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

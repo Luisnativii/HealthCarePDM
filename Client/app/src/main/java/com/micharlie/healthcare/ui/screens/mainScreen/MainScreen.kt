@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.ui.cards.BloodGlucoseCard
 import com.micharlie.healthcare.ui.cards.BloodPressureCard
@@ -37,7 +38,7 @@ import com.micharlie.healthcare.ui.theme.white
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 
-fun MainScreen(sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
+fun MainScreen(navController: NavController,sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
     val navController = rememberNavController()
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
