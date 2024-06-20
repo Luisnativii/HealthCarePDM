@@ -8,14 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.data.model.RegisterRequest
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.HealthCareTheme
 import com.micharlie.healthcare.ui.theme.black
 import com.micharlie.healthcare.ui.theme.contrasPrimary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
+fun RegisterScreen(navController: NavController, registerViewModel: RegisterViewModel = viewModel()) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -125,9 +128,10 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
                     Text("Register")
                 }
                 when (registerState) {
-                    is RegisterState.Loading -> CircularProgressIndicator(modifier = Modifier.align(
-                        Alignment.CenterHorizontally))
-                    is RegisterState.Success -> Text("Registration successful!", color = MaterialTheme.colorScheme.primary)
+                    is RegisterState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    is RegisterState.Success -> {
+                        navController.navigate(ScreenRoute.Main.route)
+                    }
                     is RegisterState.Error -> {
                         errorMessage = (registerState as RegisterState.Error).message
                     }
@@ -141,7 +145,8 @@ fun RegisterScreen(registerViewModel: RegisterViewModel = viewModel()) {
 @Preview
 @Composable
 fun PreviewRegisterScreen() {
+    val navController = rememberNavController()
     HealthCareTheme {
-        RegisterScreen()
+        RegisterScreen(navController)
     }
 }
