@@ -24,6 +24,7 @@ import com.micharlie.healthcare.data.api.UserApi
 import com.micharlie.healthcare.data.api.UserApiService
 import com.micharlie.healthcare.data.model.RegisterRequest
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.components.ViewModel.authViewModel
 import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.HealthCareTheme
 import com.micharlie.healthcare.ui.theme.black
@@ -36,7 +37,7 @@ import retrofit2.Response
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoViewModel) {
+fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoViewModel, viewModel: authViewModel) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -194,6 +195,9 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                                         if (response.isSuccessful) {
                                             val token = response.body()
                                             println("Post successful, token: $token")
+                                            val t = token?: "$token"
+                                            println("Post successful, token: $t")
+                                            viewModel.saveToken(t);
                                             //por fines educativos se comento para no iniciar secion para los qu eno tiene la bace
                                             //navController.navigate(ScreenRoute.HomeSession.route)
 

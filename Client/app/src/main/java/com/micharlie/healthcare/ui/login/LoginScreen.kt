@@ -28,6 +28,7 @@ import com.micharlie.healthcare.data.api.NetworkUtils
 import com.micharlie.healthcare.data.api.UserApi
 import com.micharlie.healthcare.data.api.UserApiService
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.components.ViewModel.authViewModel
 import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.contrasPrimary
 import com.micharlie.healthcare.ui.theme.primary
@@ -37,7 +38,7 @@ import retrofit2.Response
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewModel) {
+fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewModel, viewModel: authViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
@@ -140,8 +141,42 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                                 try {
                                     if (response.isSuccessful) {
                                         val token = response.body()
-                                        println("Login successful, token: $token")
-                                        //por fines educativos se comenta
+                                        val t = token?: "$token"
+                                        viewModel.saveToken(t);
+                                        println("Login successful: $token")
+
+                                        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+                                        val service = retrofit.create(UserApiService::class.java)
+
+                                        viewModel.traerToken()
+                                        val x = viewModel.token
+                                        println("Token data Store: $x")
+
+                                        // Hacer la llamada GET para obtener todos los datos de los usuarios
+                                        //usando data Store en X
+                                        //Sin usar data Store T
+
+                                        val callGetUsers = service.getUsers("Bearer $x")
+                                        println("Bearer $x")
+                                        println("Token data Store: ${viewModel.token.value}")
+
+                                        callGetUsers.enqueue(object : Callback<List<UserApi>> {
+                                            override fun onResponse(call: retrofit2.Call<List<UserApi>>, response: Response<List<UserApi>>) {
+                                                if (response.isSuccessful) {
+                                                    val users = response.body()
+                                                    // Haz algo con la lista de usuarios aquí
+                                                    println("Get users successful: $users")
+                                                    println("Get users successful: ${users?.size} users found")
+                                                } else {
+                                                    println("Get users failed: ${response.errorBody()?.string()}")
+                                                }
+                                            }
+
+                                            override fun onFailure(call: retrofit2.Call<List<UserApi>>, t: Throwable) {
+                                                println("Get users failed: ${t.message}")
+                                            }
+                                        })
+
                                         //navController.navigate(ScreenRoute.HomeSession.route)
                                     } else {
                                         println("Login failed: ${response.errorBody()?.string()}")
