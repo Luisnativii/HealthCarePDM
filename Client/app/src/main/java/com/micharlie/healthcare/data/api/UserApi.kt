@@ -33,6 +33,8 @@ data class UserApi(
 
 data class dataApi(
 
+    @SerializedName(value = "_id")
+    val id: String? = "",
 
     @SerializedName(value = Constants.HEIGHT)
     val height: String? = "",
@@ -44,7 +46,7 @@ data class dataApi(
     val muscularMass: String? = "",
 
     @SerializedName(value = Constants.BODYFAT)
-    val bodyFat: Boolean? = false,
+    val bodyFat: Double? = null,
 
     @SerializedName(value = Constants.CHOLESTEROL)
     val cholesterol: String? = "",
@@ -74,7 +76,7 @@ interface UserApiService {
 
     @Headers("Content-Type: application/json")
     @GET(Constants.GETDATAUSER) // Reemplaza esto con la ruta correcta de tu API
-    fun getUsers(@Header("Authorization") token: String): Call<List<UserApi>>
+    fun getUsers(@Header("Authorization") token: String): Call<List<dataApi>>
 }
 
 interface TokenCallback {
