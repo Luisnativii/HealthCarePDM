@@ -161,22 +161,7 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                                         println("Bearer $x")
                                         println("Token data Store: ${viewModel.token.value}")
 
-                                        callGetUsers.enqueue(object : Callback<List<dataApi>> {
-                                            override fun onResponse(call: retrofit2.Call<List<dataApi>>, response: Response<List<dataApi>>) {
-                                                if (response.isSuccessful) {
-                                                    val users = response.body()
-                                                    // Haz algo con la lista de usuarios aquí
-                                                    println("Get users successful: $users")
-                                                    println("Get users successful: ${users?.size} users found")
-                                                } else {
-                                                    println("Get users failed: ${response.errorBody()?.string()}")
-                                                }
-                                            }
-
-                                            override fun onFailure(call: retrofit2.Call<List<dataApi>>, t: Throwable) {
-                                                println("Get users failed: ${t.message}")
-                                            }
-                                        })
+                                        getVideoViewModel.getUsersData(t)
 
                                         //navController.navigate(ScreenRoute.HomeSession.route)
                                     } else {
