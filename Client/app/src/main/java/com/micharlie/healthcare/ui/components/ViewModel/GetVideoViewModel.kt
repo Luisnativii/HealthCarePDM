@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.await
@@ -81,4 +82,132 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
             }
         })
     }
+
+    fun updateHeight(token: String, newHeight: Int) {
+        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+        val service = retrofit.create(UserApiService::class.java)
+        val call = service.updateHeight("Bearer $token", mapOf("_height" to newHeight))
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Height updated successfully")
+                } else {
+                    println("Failed to update height: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to update height: ${t.message}")
+            }
+        })
+    }
+
+
+    fun updateWeight(token: String, newWeight: Int) {
+        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+        val service = retrofit.create(UserApiService::class.java)
+        val call = service.updateWeight("Bearer $token", mapOf("_weight" to newWeight))
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Weight updated successfully")
+                } else {
+                    println("Failed to update weight: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to update weight: ${t.message}")
+            }
+        })
+    }
+
+    fun updateMuscularMass(token: String, newMuscularMass: Int) {
+        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+        val service = retrofit.create(UserApiService::class.java)
+        val call = service.updateMuscularMass("Bearer $token", mapOf("_muscularMass" to newMuscularMass))
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Muscular mass updated successfully")
+                } else {
+                    println("Failed to update muscular mass: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to update muscular mass: ${t.message}")
+            }
+        })
+    }
+
+
+    fun updateBodyFat(token: String, newBodyFat: Float) {
+        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+        val service = retrofit.create(UserApiService::class.java)
+        val call = service.updateBodyFat("Bearer $token", mapOf("_bodyFat" to newBodyFat))
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Body fat updated successfully")
+                } else {
+                    println("Failed to update body fat: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to update body fat: ${t.message}")
+            }
+        })
+    }
+
+
+    fun updateCholesterol(token: String, newCholesterol: Int) {
+        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+        val service = retrofit.create(UserApiService::class.java)
+        val call = service.updateCholesterol("Bearer $token", mapOf("_cholesterol" to newCholesterol))
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Cholesterol updated successfully")
+                } else {
+                    println("Failed to update cholesterol: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to update cholesterol: ${t.message}")
+            }
+        })
+    }
+
+    fun updateBloodGlucose(token: String, newBloodGlucose: Float) {
+        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+        val service = retrofit.create(UserApiService::class.java)
+        val call = service.updateBloodGlucose("Bearer $token", mapOf("_bloodGlucose" to newBloodGlucose))
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Blood glucose updated successfully")
+                } else {
+                    println("Failed to update blood glucose: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to update blood glucose: ${t.message}")
+            }
+        })
+    }
+
+
+
+
+
 }

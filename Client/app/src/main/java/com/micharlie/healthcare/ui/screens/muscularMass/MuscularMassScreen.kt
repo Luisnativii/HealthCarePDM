@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,7 +31,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +46,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -54,12 +58,14 @@ import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.historyCards.HistoryMuscularMassCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.muscularMassProgress
 import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -69,6 +75,31 @@ fun MuscularMassScreen(
     getVideoViewModel: GetVideoViewModel
 
 ) {
+    val context = LocalContext.current
+    val sharedPreferencesManager = SharedPreferencesManager(context)
+    val token = sharedPreferencesManager.getToken()
+
+    if (token != null) {
+        LaunchedEffect(key1 = token) {
+            while (true) {
+                getVideoViewModel.getUsersData(token)
+                delay(5000) // Actualiza cada 5 segundos
+            }
+        }
+    }
+
+    val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
+
+    val muscularMassDateList = mutableListOf<Pair<Int, String>>()
+    for (user in userData) {
+        val muscularMass = user.muscularMass?.toIntOrNull()
+        val date = user.date ?: "No date" // Usa "No date" si user.date es null
+        if (muscularMass != null && muscularMass != 0) {
+            muscularMassDateList.add(Pair(muscularMass, date))
+        }
+    }
+    println("MuscularMassDateList: $muscularMassDateList")
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var muscularMass by remember { mutableIntStateOf(20) }
     var date by remember { mutableStateOf("2021-10-10") }
@@ -166,7 +197,15 @@ fun MuscularMassScreen(
                                 Spacer(modifier = Modifier.height(16.dp))
 
                                 Button(
-                                    onClick = { /* Handle update logic */ },
+                                    onClick = onClick@{
+                                        val muscularMassInt = muscularMassInput.toIntOrNull() ?: return@onClick
+                                        val token = sharedPreferencesManager.getToken()
+                                        if (token != null) {
+                                            getVideoViewModel.updateMuscularMass(token, muscularMassInt)
+                                        } else {
+                                            println("Error: Token is null")
+                                        }
+                                    },
                                     colors = ButtonDefaults.buttonColors(containerColor = contrast2),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
@@ -415,28 +454,17 @@ fun MuscularMassScreen(
                         }
 
                         // History Cards se van a cambiar luego
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryMuscularMassCard(muscularMass, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryMuscularMassCard(muscularMass, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryMuscularMassCard(muscularMass, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryMuscularMassCard(muscularMass, date)
-                        }
 
                     }
+                    items(muscularMassDateList) { (muscularMass, date) ->
+                        Box(
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            HistoryMuscularMassCard(muscularMass, date) // Asegúrate de tener un componente HistoryMuscularMassCard
+                        }
+                    }
+
+
                 }
             }
         }

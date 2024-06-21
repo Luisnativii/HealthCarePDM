@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,7 +31,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,6 +45,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,6 +61,7 @@ import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.historyCards.HistoryBodyFatCard
 
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 
 import com.micharlie.healthcare.ui.theme.bodyFatProgress
 import com.micharlie.healthcare.ui.theme.bodyFatProgressBackground
@@ -64,6 +69,7 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -73,6 +79,31 @@ fun BodyFatScreen(
     getVideoViewModel: GetVideoViewModel,
 
     ) {
+    val context = LocalContext.current
+    val sharedPreferencesManager = SharedPreferencesManager(context)
+    val token = sharedPreferencesManager.getToken()
+
+    if (token != null) {
+        LaunchedEffect(key1 = token) {
+            while (true) {
+                getVideoViewModel.getUsersData(token)
+                delay(5000) // Actualiza cada 5 segundos
+            }
+        }
+    }
+
+    val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
+
+    val bodyFatDateList = mutableListOf<Pair<Float, String>>()
+    for (user in userData) {
+        val bodyFat = user.bodyFat?.toFloat()
+        val date = user.date ?: "No date" // Usa "No date" si user.date es null
+        if (bodyFat != null && bodyFat != 0f) {
+            bodyFatDateList.add(Pair(bodyFat, date))
+        }
+    }
+    println("BodyFatDateList: $bodyFatDateList")
+
     var bodyFat: Int = 10 // Se tiene que cambiar con VM
     var date: String = "10/10/2021" // Se tiene que cambiar con VM
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -170,7 +201,15 @@ fun BodyFatScreen(
                                 Spacer(modifier = Modifier.height(16.dp))
 
                                 Button(
-                                    onClick = { /* Handle update logic */ },
+                                    onClick = onClick@{
+                                        val bodyFatFloat = bodyFatInput.toFloatOrNull() ?: return@onClick
+                                        val token = sharedPreferencesManager.getToken()
+                                        if (token != null) {
+                                            getVideoViewModel.updateBodyFat(token, bodyFatFloat)
+                                        } else {
+                                            println("Error: Token is null")
+                                        }
+                                    },
                                     colors = ButtonDefaults.buttonColors(containerColor = contrast2),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
@@ -419,27 +458,17 @@ fun BodyFatScreen(
                         }
 
                         // History Card
+
+                    }
+
+                    items(bodyFatDateList) { (bodyFat, date) ->
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            HistoryBodyFatCard(bodyFat, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBodyFatCard(bodyFat, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBodyFatCard(bodyFat, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBodyFatCard(bodyFat, date)
+                            HistoryBodyFatCard(bodyFat, date) // Asegúrate de tener un componente HistoryBodyFatCard
                         }
                     }
+
                 }
             }
         }

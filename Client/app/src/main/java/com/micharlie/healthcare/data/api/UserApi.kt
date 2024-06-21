@@ -7,6 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 
@@ -75,8 +76,35 @@ interface UserApiService {
     //no se porque putas usa USERAPI
 
     @Headers("Content-Type: application/json")
-    @GET(Constants.GETDATAUSER) // Reemplaza esto con la ruta correcta de tu API
+    @GET(Constants.GETDATAUSER)
     fun getUsers(@Header("Authorization") token: String): Call<List<dataApi>>
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER)
+    fun updateHeight(@Header("Authorization") token: String, @Body heightData: Map<String, Int>): Call<Void>
+
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER)
+    fun updateWeight(@Header("Authorization") token: String, @Body weightData: Map<String, Int>): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER) 
+    fun updateMuscularMass(@Header("Authorization") token: String, @Body muscularMassData: Map<String, Int>): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER)
+    fun updateBodyFat(@Header("Authorization") token: String, @Body bodyFatData: Map<String, Float>): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER)
+    fun updateCholesterol(@Header("Authorization") token: String, @Body cholesterolData: Map<String, Int>): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER)
+    fun updateBloodGlucose(@Header("Authorization") token: String, @Body bloodGlucoseData: Map<String, Float>): Call<Void>
+
+
 }
 
 interface TokenCallback {

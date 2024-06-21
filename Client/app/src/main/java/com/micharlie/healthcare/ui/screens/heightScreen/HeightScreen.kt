@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,7 +28,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,18 +49,48 @@ import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.historyCards.HistoryHeightCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast1
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.heightBackground
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HeightScreen(
     navController: NavController, getVideoViewModel: GetVideoViewModel, sessionState: Boolean = true
 ) {
+
+    val context = LocalContext.current
+    val sharedPreferencesManager = SharedPreferencesManager(context)
+    val token = sharedPreferencesManager.getToken()
+
+    if (token != null) {
+        LaunchedEffect(key1 = token) {
+            while (true) {
+                getVideoViewModel.getUsersData(token)
+                delay(5000) // Actualiza cada 5 segundos
+            }
+        }
+    }
+
+    val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
+
+    val heightDateList = mutableListOf<Pair<Int, String>>()
+    for (user in userData) {
+        val height = user.height?.toIntOrNull()
+        val date = user.date ?: "No date" // Usa "No date" si user.date es null
+        if (height != null && height != 0) {
+            heightDateList.add(Pair(height, date))
+        }
+    }
+    println("HeightDateList: $heightDateList")
+
+
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var height by remember {
         mutableIntStateOf(190)
@@ -157,7 +191,17 @@ fun HeightScreen(
                                 }
                                 Spacer(modifier = Modifier.height(16.dp))
                                 Button(
-                                    onClick = { /* Handle update logic */ },
+                                    onClick = onClick@{
+
+                                        val heightInt = heightInput.toIntOrNull() ?: return@onClick
+                                        val token = sharedPreferencesManager.getToken()
+                                        if (token != null) {
+                                            getVideoViewModel.updateHeight(token, heightInt)
+                                        } else {
+                                            println("Error: Token is null")
+                                        }
+
+                                    },
                                     colors = ButtonDefaults.buttonColors(containerColor = contrast2),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
@@ -251,25 +295,15 @@ fun HeightScreen(
                         }
 
                         // History Cards despues se cambiara por una lista de cosas que traera de la API
+
+
+
+                    }
+                    items(heightDateList) { (height, date) ->
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            HistoryHeightCard(height, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryHeightCard(height, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryHeightCard(height, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryHeightCard(height, date)
+                            HistoryHeightCard(height, date) // Asegúrate de tener un componente HistoryHeightCard
                         }
                     }
                 }

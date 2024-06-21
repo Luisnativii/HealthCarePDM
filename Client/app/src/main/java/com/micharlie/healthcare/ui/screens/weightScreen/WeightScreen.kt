@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,7 +31,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +46,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,12 +60,14 @@ import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.historyCards.HistoryWeightCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.weightProgress
 import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -71,6 +77,31 @@ fun WeightScreen(
     getVideoViewModel: GetVideoViewModel,
 
 ) {
+    val context = LocalContext.current
+    val sharedPreferencesManager = SharedPreferencesManager(context)
+    val token = sharedPreferencesManager.getToken()
+
+    if (token != null) {
+        LaunchedEffect(key1 = token) {
+            while (true) {
+                getVideoViewModel.getUsersData(token)
+                delay(5000) // Actualiza cada 5 segundos
+            }
+        }
+    }
+
+    val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
+
+    val weightDateList = mutableListOf<Pair<Int, String>>()
+    for (user in userData) {
+        val weight = user.weight?.toIntOrNull()
+        val date = user.date ?: "No date" // Usa "No date" si user.date es null
+        if (weight != null && weight != 0) {
+            weightDateList.add(Pair(weight, date))
+        }
+    }
+    println("WeightDateList: $weightDateList")
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var weight by remember { mutableIntStateOf(65) }
     var date by remember { mutableStateOf("2023-06-01") }
@@ -165,7 +196,17 @@ fun WeightScreen(
                                 }
                                 Spacer(modifier = Modifier.height(16.dp))
                                 Button(
-                                    onClick = { /* Handle update logic */ },
+                                    onClick = onClick@{
+                                        val weightInt = weightInput.toIntOrNull() ?: return@onClick
+                                        val token = sharedPreferencesManager.getToken()
+                                        if (token != null) {
+                                            getVideoViewModel.updateWeight(token, weightInt)
+                                            getVideoViewModel.getUsersData(token)
+                                        } else {
+                                            println("Error: Token is null")
+                                        }
+
+                                    },
                                     colors = ButtonDefaults.buttonColors(containerColor = contrast2),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
@@ -411,28 +452,14 @@ fun WeightScreen(
                             }
                         }
 
-                        // History cards sera Dinamicos para que sea la cantidad de registros hechos
+//asddasd
+                    }
+                    items(weightDateList) { (weight, date) ->
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            HistoryWeightCard(weight, date)
+                            HistoryWeightCard(weight, date) // Asegúrate de tener un componente HistoryWeightCard
                         }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryWeightCard(weight, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryWeightCard(weight, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryWeightCard(weight, date)
-                        }
-
                     }
                 }
             }
