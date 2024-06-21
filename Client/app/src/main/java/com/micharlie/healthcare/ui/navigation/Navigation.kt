@@ -20,6 +20,8 @@ import com.micharlie.healthcare.ui.screens.heightScreen.HeightScreen
 import com.micharlie.healthcare.ui.screens.homeScreen.HomeScreen
 import com.micharlie.healthcare.ui.screens.mainScreen.MainScreen
 import com.micharlie.healthcare.ui.screens.muscularMass.MuscularMassScreen
+import com.micharlie.healthcare.ui.screens.recites.FoodPlanScreen
+import com.micharlie.healthcare.ui.screens.recites.RecipeListScreen
 import com.micharlie.healthcare.ui.screens.weightScreen.WeightScreen
 import com.micharlie.healthcare.ui.signup.RegisterScreen
 import com.micharlie.healthcare.utils.Constants
@@ -110,6 +112,16 @@ fun Navigation() {
         }
         composable(route = ScreenRoute.HomeSession.route) {
             MainScreen(sessionState = true, getVideoViewModel = getVideoViewModel, navController = navController)
+        }
+        composable(route = ScreenRoute.FoodPlan.route) {
+            FoodPlanScreen(navController = navController)
+        }
+        composable(
+            route = ScreenRoute.RecipeList.route + "/{mealType}",
+            arguments = listOf(navArgument("mealType") { type = NavType.StringType })
+        ) {
+            val mealType = it.arguments?.getString("mealType") ?: ""
+            RecipeListScreen(navController = navController, mealType = mealType)
         }
     }
 }
