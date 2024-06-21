@@ -40,8 +40,7 @@ fun Navigation() {
     //val viewmodel: MainViewModel = viewModel()
     NavHost(
         navController = navController,
-        startDestination = if (sessionState) ScreenRoute.HomeSession.route else ScreenRoute.HomeNoSession
-            .route
+        startDestination = if (sessionState) ScreenRoute.HomeSession.route else ScreenRoute.HomeNoSession.route
     ) {
         //Se crean las rutas para cada pantalla y tambien aqui se pasan los argumentos
         /*
@@ -60,13 +59,16 @@ fun Navigation() {
             ExerciseScreen(navController, true, getVideoViewModel)
         }
         composable(
-            route = ScreenRoute.VideoScreen.route + "/{url}",
-            arguments = listOf(navArgument("url") {
+            route = ScreenRoute.VideoScreen.route + "/{videoUrl}/{name}",
+            arguments = listOf(navArgument("videoUrl") {
+                type = NavType.StringType
+            }, navArgument("name") {
                 type = NavType.StringType
             })
         ) {
-            val url = it.arguments?.getString("url") ?: ""
-            VideoScreen(navController, url, true, getVideoViewModel)
+            val url = it.arguments?.getString("videoUrl") ?: ""
+            val name = it.arguments?.getString("name") ?: ""
+            VideoScreen(navController, url, name,true, getVideoViewModel)
         }
         composable(route = ScreenRoute.HomeSession.route) {
             MainScreen(
@@ -100,19 +102,24 @@ fun Navigation() {
             WeightScreen(navController = navController, getVideoViewModel = getVideoViewModel)
         }
         composable(route = ScreenRoute.MuscularMassScreen.route) {
-            MuscularMassScreen(navController = navController, getVideoViewModel =
-            getVideoViewModel)}
-            composable(route = ScreenRoute.Login.route) {
-                LoginScreen(navController = navController, getVideoViewModel)
-            }
-            composable(route = ScreenRoute.Register.route) {
-                RegisterScreen(navController = navController, getVideoViewModel)
-            }
-            composable(route = ScreenRoute.HomeSession.route) {
-                MainScreen(sessionState = true, getVideoViewModel = getVideoViewModel,
-                    navController = navController)
-            }
-
+            MuscularMassScreen(
+                navController = navController, getVideoViewModel = getVideoViewModel
+            )
         }
+        composable(route = ScreenRoute.Login.route) {
+            LoginScreen(navController = navController, getVideoViewModel)
+        }
+        composable(route = ScreenRoute.Register.route) {
+            RegisterScreen(navController = navController, getVideoViewModel)
+        }
+        composable(route = ScreenRoute.HomeSession.route) {
+            MainScreen(
+                sessionState = true,
+                getVideoViewModel = getVideoViewModel,
+                navController = navController
+            )
+        }
+
     }
+}
 

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -45,15 +46,18 @@ fun VideoCard(
     videoTitle: String,
     userChannel: String,
     navController: NavController,
-    onClickListener: () -> Unit
+
 ) {
 
     ElevatedCard(
-        onClick = onClickListener,
+        onClick = {
+            val videoIde = extractYoutubeVideoId(videoId)
+            navController.navigate(ScreenRoute.VideoScreen.route + "/${videoIde}/${videoTitle}")
+            println(videoIde)},
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .height(350.dp), colors = CardDefaults.cardColors(containerColor = secondary),
+            .fillMaxHeight(), colors = CardDefaults.cardColors(containerColor = secondary),
     ) {
         Box(modifier = Modifier) {
             AsyncImage(
@@ -69,6 +73,7 @@ fun VideoCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(80.dp)
                     .padding(8.dp)
                     .clip(RoundedCornerShape(10.dp))
                     .background(contrast2)
@@ -98,11 +103,16 @@ fun VideoCard(
             }
             Text(
                 text = videoTitle, modifier = Modifier.padding(8.dp), fontSize =
-                25.sp, fontWeight = FontWeight.Light, color = white
+                20.sp, fontWeight = FontWeight.Light, color = white, lineHeight = 30.sp
             )
         }
     }
 
 
 }
-
+fun extractYoutubeVideoId(url: String): String? {
+    val regex =
+        "(?<=v=|/videos/|embed/|youtu.be/|/v/|/e/|watch\\?v=|watch\\?vi=|watch\\?v%3D|watch\\?vi%3D|youtu.be/|%2Fvideos%2F|embed%2F|youtu.be%2F|youtu.be%2F|/v%2F|/e%2F|youtu.be%2F|youtu.be%2F|youtu.be%2F|youtu.be%2F|%3Fv%3D|&v=|/v=|/videos=|embed|youtu.be=|%2Fvideos|embed|youtu.be|%2Fv=|%2Fe=|youtu.be|youtu.be|youtu.be)([\\w-]{11})".toRegex()
+    val matchResult = regex.find(url)
+    return matchResult?.value
+}

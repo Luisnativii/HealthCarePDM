@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,9 +36,17 @@ import com.micharlie.healthcare.ui.theme.white
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun VideoScreen(navController: NavController, url: String, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel) {
+fun VideoScreen(
+    navController: NavController,
+    url: String,
+    name: String,
+    sessionState: Boolean = true,
+    getVideoViewModel: GetVideoViewModel
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    DrawerBar(drawerState = drawerState, sessionState = sessionState, navController = navController,
+    DrawerBar(drawerState = drawerState,
+        sessionState = sessionState,
+        navController = navController,
         getVideoViewModel = getVideoViewModel,
         content = {
             Scaffold(topBar = { TopBar(drawerState = drawerState) }, bottomBar = { BottomBar() }) {
@@ -46,14 +55,14 @@ fun VideoScreen(navController: NavController, url: String, sessionState: Boolean
                         .padding(it)
                         .background(primary)
                         .fillMaxHeight()
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "VideoName",
+                        text = name,
                         fontSize = 20.sp,
                         color = white,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
                     )
                     Box(
                         modifier = Modifier
@@ -65,21 +74,20 @@ fun VideoScreen(navController: NavController, url: String, sessionState: Boolean
                             )
                             .background(secondary)
                     ) {
-                        YoutubePlayer(videoId = extractYoutubeVideoId(url)!!)
+                        YoutubePlayer(videoId = url)
                     }
-                    Text(
-                        text = "Videos Similares",
-                        fontSize = 20.sp,
-                        color = white,
-                        fontWeight = FontWeight.SemiBold
-                    )
+//                    Text(
+//                        text = "Videos Similares",
+//                        fontSize = 20.sp,
+//                        color = white,
+//                        fontWeight = FontWeight.SemiBold
+//                    )
 
                 }
 
             }
         })
 }
-
 
 
 fun extractYoutubeVideoId(url: String): String? {

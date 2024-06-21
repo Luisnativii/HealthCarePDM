@@ -161,10 +161,6 @@ fun ExerciseScreen(
                               videoTitle = videos[it1].videoName!!,
                               userChannel = videos[it1].channelName!!,
                               navController,
-                              onClickListener = {
-                                  navController.navigate(ScreenRoute.VideoScreen.route +
-                                          "/${videos[it1].link!!}")
-                              }
                           )
 
                         }
