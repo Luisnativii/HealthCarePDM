@@ -49,11 +49,13 @@ import com.micharlie.healthcare.ui.theme.white
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ExerciseScreen(
-    navController: NavController,
-    sessionState: Boolean = true,
-    getVideoViewModel: GetVideoViewModel
+    navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel
 ) {
+    var cat by remember {
+        mutableIntStateOf(0)
+    }
     var videos by remember { mutableStateOf(listOf<VideoApi>()) }
+    var filteredVideos by remember { mutableStateOf(listOf<VideoApi>()) }
 
     LaunchedEffect(getVideoViewModel) {
         getVideoViewModel.getVideoState.collect { state ->
@@ -66,9 +68,7 @@ fun ExerciseScreen(
             }
         }
     }
-    var cat by remember {
-        mutableIntStateOf(0)
-    }
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     DrawerBar(drawerState = drawerState,
         sessionState = sessionState,
@@ -79,8 +79,7 @@ fun ExerciseScreen(
             Scaffold(
                 bottomBar = { BottomBar() },
                 topBar = { TopBar(drawerState = drawerState) },
-            )
-            { it ->
+            ) { it ->
                 // Content of the screen
                 Column(
                     modifier = Modifier
@@ -92,7 +91,8 @@ fun ExerciseScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(4.dp), horizontalAlignment = Alignment.CenterHorizontally
+                            .padding(4.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
                             text = "Categorias",
@@ -105,21 +105,27 @@ fun ExerciseScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Button(
-                                onClick = { cat = 1 },
+                                onClick = {
+                                    filteredVideos = videos.filter { it.category == "1" }
+                                },
                                 modifier = Modifier
                                     .weight(0.5f)
                                     .padding(2.dp, 0.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = contrast2)
                             ) {
                                 Text(
-                                    text = "HIIT",
-                                    fontWeight = FontWeight.Medium,
-                                    fontSize = 11.sp
+                                    text = "HIIT", fontWeight = FontWeight.Medium, fontSize = 11.sp
                                 )
 
                             }
                             Button(
-                                onClick = { cat = 2 }, modifier = Modifier
+                                onClick = {
+                                    filteredVideos = videos.filter {
+                                        it.category == "2"
+                                    }
+                                    println(filteredVideos)
+                                },
+                                modifier = Modifier
                                     .weight(0.5f)
                                     .padding(2.dp, 0.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = contrast2)
@@ -132,7 +138,12 @@ fun ExerciseScreen(
 
                             }
                             Button(
-                                onClick = { cat = 3 }, modifier = Modifier
+                                onClick = {
+                                    filteredVideos = videos.filter {
+                                        it.category == "3"
+                                    }
+                                },
+                                modifier = Modifier
                                     .weight(0.5f)
                                     .padding(2.dp, 0.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = contrast2)
@@ -151,17 +162,18 @@ fun ExerciseScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        items(videos.size) { it1 ->
+
+                        items(filteredVideos.size) { it1 ->
                             //VideoCard()
-                          VideoCard(
-                              videoId = videos[it1].link!!,
-                              videoCategory = videos[it1].category!!,
-                              videoImageUrl = videos[it1].videoBanner!!,
-                              imageChannel = videos[it1].channelPhoto!!,
-                              videoTitle = videos[it1].videoName!!,
-                              userChannel = videos[it1].channelName!!,
-                              navController,
-                          )
+                            VideoCard(
+                                videoId = filteredVideos[it1].link!!,
+                                videoCategory = filteredVideos[it1].category!!,
+                                videoImageUrl = filteredVideos[it1].videoBanner!!,
+                                imageChannel = filteredVideos[it1].channelPhoto!!,
+                                videoTitle = filteredVideos[it1].videoName!!,
+                                userChannel = filteredVideos[it1].channelName!!,
+                                navController,
+                            )
 
                         }
                     }

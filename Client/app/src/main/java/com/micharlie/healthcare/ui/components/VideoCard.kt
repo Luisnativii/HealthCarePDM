@@ -94,7 +94,12 @@ fun VideoCard(
                     color = white, fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = videoCategory,
+                    text = when(videoCategory){
+                        "1" -> "HIIT"
+                        "2" -> "INTERMEDIO"
+                        "3" -> "FACIL"
+                        else -> "noFacil"
+                    },
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center,
                     color = white,
