@@ -49,14 +49,94 @@ fun MainScreen(
     val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val height = 0
-    val weight = 0
-    val muscularMass = 0
-    val bodyFat = 0
-    val cholesterol = 0
-    val bloodGlucose = 0
-    val bloodPressureSystolic = 0
-    val bloodPressureDiastolic = 0
+
+    val firstUser = userData.firstOrNull()
+
+    val heightStr = firstUser?.height ?: ""
+    val height = if (heightStr.isBlank()) {
+        0
+    } else {
+        try {
+            heightStr.toInt()
+        } catch (e: NumberFormatException) {
+            0
+        }
+    }
+    val weightStr = firstUser?.weight ?: ""
+    val weight = if (weightStr.isBlank()) {
+        0
+    } else {
+        try {
+            weightStr.toInt()
+        } catch (e: NumberFormatException) {
+            0
+        }
+    }
+
+    val muscularMassStr = firstUser?.muscularMass ?: ""
+    val muscularMass = if (muscularMassStr.isBlank()) {
+        0
+    } else {
+        try {
+            muscularMassStr.toInt()
+        } catch (e: NumberFormatException) {
+            0
+        }
+    }
+
+    val bodyFatStr = firstUser?.bodyFat?.toString() ?: ""
+    val bodyFat = if (bodyFatStr.isBlank()) {
+        0f
+    } else {
+        try {
+            bodyFatStr.toFloat()
+        } catch (e: NumberFormatException) {
+            0f
+        }
+    }
+
+    val cholesterolStr = firstUser?.cholesterol ?: ""
+    val cholesterol = if (cholesterolStr.isBlank()) {
+        0
+    } else {
+        try {
+            cholesterolStr.toInt()
+        } catch (e: NumberFormatException) {
+            0
+        }
+    }
+
+    val bloodGlucoseStr = firstUser?.bloodGlucose ?: ""
+    val bloodGlucose = if (bloodGlucoseStr.isBlank()) {
+        0f
+    } else {
+        try {
+            bloodGlucoseStr.toFloat()
+        } catch (e: NumberFormatException) {
+            0f
+        }
+    }
+
+    val bloodPressureStr = firstUser?.bloodPressure ?: ""
+
+    val bloodPressureValues = if (bloodPressureStr.isBlank()) {
+        listOf("0", "0")
+    } else {
+        bloodPressureStr.split("/")
+    }
+
+    val bloodPressureSystolic = try {
+        bloodPressureValues.getOrNull(0)?.toInt() ?: 0
+    } catch (e: NumberFormatException) {
+        0
+    }
+
+    val bloodPressureDiastolic = try {
+        bloodPressureValues.getOrNull(1)?.toInt() ?: 0
+    } catch (e: NumberFormatException) {
+        0
+    }
+
     DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
         Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(

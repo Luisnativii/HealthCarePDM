@@ -85,19 +85,4 @@ interface TokenCallback {
 
 
 
-//name
-//email
-//age
-//gender
-//password
 
-//data
-
-//height
-//weight
-//muscularMass
-//bodyFat
-//cholesterol
-//bloodGlucose
-//bloodPressure
-//date

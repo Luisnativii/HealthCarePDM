@@ -39,7 +39,11 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Cholesterol */ }
 @Composable
-fun CholesterolCard(navController: NavController, cholesterol: Int) {
+fun CholesterolCard(navController: NavController, cholesterol: Comparable<*>) {
+
+    val numericCholesterol = (cholesterol as? Number)?.toFloat() ?: 0f
+    val progress = numericCholesterol / 100f
+
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -134,7 +138,7 @@ fun CholesterolCard(navController: NavController, cholesterol: Int) {
                     .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = cholesterol / 100f, // Cambiar esto para hacer el calculo de porcentaje
+                    progress = progress,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),
