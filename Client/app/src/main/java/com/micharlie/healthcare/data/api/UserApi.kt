@@ -4,6 +4,8 @@ import retrofit2.Call
 import com.google.gson.annotations.SerializedName
 import com.micharlie.healthcare.utils.Constants
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -62,12 +64,22 @@ interface UserApiService {
     @POST(Constants.POSTUSERBACEURL)
     fun postUser(@Body user: UserApi): Call<String>
 
+
+
     @Headers("Content-Type: application/json")
     @POST(Constants.POSTLOGINBACEURL)
     fun loginUser(@Body loginData: UserApi): Call<String>
+
     //no se porque putas usa USERAPI
+
+    @Headers("Content-Type: application/json")
+    @GET(Constants.GETDATAUSER) // Reemplaza esto con la ruta correcta de tu API
+    fun getUsers(@Header("Authorization") token: String): Call<List<UserApi>>
 }
 
+interface TokenCallback {
+    fun onTokenReceived(token: String)
+}
 
 
 

@@ -197,7 +197,7 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                                             println("Post successful, token: $token")
                                             val t = token?: "$token"
                                             println("Post successful, token: $t")
-                                            viewModel.setToken(t);
+                                            viewModel.saveToken(t);
                                             //por fines educativos se comento para no iniciar secion para los qu eno tiene la bace
                                             //navController.navigate(ScreenRoute.HomeSession.route)
 
