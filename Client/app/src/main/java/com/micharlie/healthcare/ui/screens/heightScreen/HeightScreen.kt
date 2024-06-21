@@ -141,7 +141,9 @@ fun HeightScreen(
                                 ) {
                                     TextField(
                                         value = heightInput, // Cambiar por lo que ponga el usuario
+
                                         onValueChange = { heightInput = it },
+
                                         shape = RoundedCornerShape(8.dp),
                                         modifier = Modifier.size(width = 150.dp, height = 50.dp)
                                     )

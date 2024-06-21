@@ -47,12 +47,40 @@ fun MainScreen(
     ) {
 
     val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
-
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val firstData = mutableMapOf<String, Any?>()
 
-    val firstUser = userData.firstOrNull()
+    for (user in userData) {
+        if ("_height" !in firstData && user.height?.toString()?.isNotEmpty() == true) {
+            firstData["_height"] = user.height
+        }
+        if ("_weight" !in firstData && user.weight?.toString()?.isNotEmpty() == true) {
+            firstData["_weight"] = user.weight
+        }
+        if ("_muscularMass" !in firstData && user.muscularMass?.toString()?.isNotEmpty() == true) {
+            firstData["_muscularMass"] = user.muscularMass
+        }
+        if ("_bodyFat" !in firstData && user.bodyFat?.toString()?.isNotEmpty() == true) {
+            firstData["_bodyFat"] = user.bodyFat
+        }
+        if ("_cholesterol" !in firstData && user.cholesterol?.toString()?.isNotEmpty() == true) {
+            firstData["_cholesterol"] = user.cholesterol
+        }
+        if ("_bloodGlucose" !in firstData && user.bloodGlucose?.toString()?.isNotEmpty() == true) {
+            firstData["_bloodGlucose"] = user.bloodGlucose
+        }
+        if ("_bloodPressure" !in firstData && user.bloodPressure?.toString()?.isNotEmpty() == true) {
+            firstData["_bloodPressure"] = user.bloodPressure
+        }
+        if (firstData.size == 7) {
+            // Si ya hemos encontrado todos los campos, podemos detener la búsqueda.
+            break
+        }
+    }
 
-    val heightStr = firstUser?.height ?: ""
+    print("firstData: $firstData")
+
+    val heightStr = firstData["_height"]?.toString() ?: ""
     val height = if (heightStr.isBlank()) {
         0
     } else {
@@ -62,7 +90,8 @@ fun MainScreen(
             0
         }
     }
-    val weightStr = firstUser?.weight ?: ""
+
+    val weightStr = firstData["_weight"]?.toString() ?: ""
     val weight = if (weightStr.isBlank()) {
         0
     } else {
@@ -73,7 +102,7 @@ fun MainScreen(
         }
     }
 
-    val muscularMassStr = firstUser?.muscularMass ?: ""
+    val muscularMassStr = firstData["_muscularMass"]?.toString() ?: ""
     val muscularMass = if (muscularMassStr.isBlank()) {
         0
     } else {
@@ -84,7 +113,7 @@ fun MainScreen(
         }
     }
 
-    val bodyFatStr = firstUser?.bodyFat?.toString() ?: ""
+    val bodyFatStr = firstData["_bodyFat"]?.toString() ?: ""
     val bodyFat = if (bodyFatStr.isBlank()) {
         0f
     } else {
@@ -95,7 +124,7 @@ fun MainScreen(
         }
     }
 
-    val cholesterolStr = firstUser?.cholesterol ?: ""
+    val cholesterolStr = firstData["_cholesterol"]?.toString() ?: ""
     val cholesterol = if (cholesterolStr.isBlank()) {
         0
     } else {
@@ -106,7 +135,7 @@ fun MainScreen(
         }
     }
 
-    val bloodGlucoseStr = firstUser?.bloodGlucose ?: ""
+    val bloodGlucoseStr = firstData["_bloodGlucose"]?.toString() ?: ""
     val bloodGlucose = if (bloodGlucoseStr.isBlank()) {
         0f
     } else {
@@ -117,7 +146,7 @@ fun MainScreen(
         }
     }
 
-    val bloodPressureStr = firstUser?.bloodPressure ?: ""
+    val bloodPressureStr = firstData["_bloodPressure"]?.toString() ?: ""
 
     val bloodPressureValues = if (bloodPressureStr.isBlank()) {
         listOf("0", "0")
