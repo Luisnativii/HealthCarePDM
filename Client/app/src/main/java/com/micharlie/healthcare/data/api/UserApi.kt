@@ -88,6 +88,22 @@ interface UserApiService {
     @PATCH(Constants.UPDATE_DATA_USER)
     fun updateWeight(@Header("Authorization") token: String, @Body weightData: Map<String, Int>): Call<Void>
 
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER) // Reemplaza esto con la ruta correcta de tu API
+    fun updateMuscularMass(@Header("Authorization") token: String, @Body muscularMassData: Map<String, Int>): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER) // Reemplaza esto con la ruta correcta de tu API
+    fun updateBodyFat(@Header("Authorization") token: String, @Body bodyFatData: Map<String, Float>): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER) // Reemplaza esto con la ruta correcta de tu API
+    fun updateCholesterol(@Header("Authorization") token: String, @Body cholesterolData: Map<String, Int>): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER) // Reemplaza esto con la ruta correcta de tu API
+    fun updateBloodGlucose(@Header("Authorization") token: String, @Body bloodGlucoseData: Map<String, Float>): Call<Void>
+
 
 }
 

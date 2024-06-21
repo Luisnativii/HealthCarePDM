@@ -43,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,6 +57,7 @@ import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.historyCards.HistoryCholesterolCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.cholesterolProgress
 import com.micharlie.healthcare.ui.theme.cholesterolProgressBackground
@@ -71,6 +73,10 @@ fun CholesterolScreen(
     getVideoViewModel: GetVideoViewModel,
 
 ) {
+    val context = LocalContext.current
+    val sharedPreferencesManager = SharedPreferencesManager(context)
+    val token = sharedPreferencesManager.getToken()
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var cholesterol by remember { mutableIntStateOf(90) }
     var date by remember { mutableStateOf("2021-10-10") }
@@ -168,7 +174,15 @@ fun CholesterolScreen(
                                 Spacer(modifier = Modifier.height(16.dp))
 
                                 Button(
-                                    onClick = { /* Handle update logic */ },
+                                    onClick = onClick@{
+                                        val cholesterolInt = cholesterolInput.toIntOrNull() ?: return@onClick
+                                        val token = sharedPreferencesManager.getToken()
+                                        if (token != null) {
+                                            getVideoViewModel.updateCholesterol(token, cholesterolInt)
+                                        } else {
+                                            println("Error: Token is null")
+                                        }
+                                    },
                                     colors = ButtonDefaults.buttonColors(containerColor = contrast2),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
