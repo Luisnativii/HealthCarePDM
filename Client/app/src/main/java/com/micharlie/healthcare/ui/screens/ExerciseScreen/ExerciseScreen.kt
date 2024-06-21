@@ -19,8 +19,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,10 +33,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.micharlie.healthcare.data.api.VideoApi
 import com.micharlie.healthcare.ui.components.BottomBar
 import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
+import com.micharlie.healthcare.ui.components.VideoCard
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoState
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.secondary
@@ -43,13 +49,26 @@ import com.micharlie.healthcare.ui.theme.white
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ExerciseScreen(
-    navController: NavController,
-    sessionState: Boolean = true,
-    getVideoViewModel: GetVideoViewModel
+    navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel
 ) {
     var cat by remember {
         mutableIntStateOf(0)
     }
+    var videos by remember { mutableStateOf(listOf<VideoApi>()) }
+    var filteredVideos by remember { mutableStateOf(listOf<VideoApi>()) }
+
+    LaunchedEffect(getVideoViewModel) {
+        getVideoViewModel.getVideoState.collect { state ->
+            when (state) {
+                is GetVideoState.Success -> {
+                    videos = state.videos
+                }
+                // Manejar otros estados si es necesario
+                else -> {}
+            }
+        }
+    }
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     DrawerBar(drawerState = drawerState,
         sessionState = sessionState,
@@ -60,8 +79,7 @@ fun ExerciseScreen(
             Scaffold(
                 bottomBar = { BottomBar() },
                 topBar = { TopBar(drawerState = drawerState) },
-            )
-            {
+            ) { it ->
                 // Content of the screen
                 Column(
                     modifier = Modifier
@@ -73,7 +91,8 @@ fun ExerciseScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(4.dp), horizontalAlignment = Alignment.CenterHorizontally
+                            .padding(4.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
                             text = "Categorias",
@@ -86,21 +105,27 @@ fun ExerciseScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Button(
-                                onClick = { cat = 1 },
+                                onClick = {
+                                    filteredVideos = videos.filter { it.category == "1" }
+                                },
                                 modifier = Modifier
                                     .weight(0.5f)
                                     .padding(2.dp, 0.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = contrast2)
                             ) {
                                 Text(
-                                    text = "HIIT",
-                                    fontWeight = FontWeight.Medium,
-                                    fontSize = 11.sp
+                                    text = "HIIT", fontWeight = FontWeight.Medium, fontSize = 11.sp
                                 )
 
                             }
                             Button(
-                                onClick = { cat = 2 }, modifier = Modifier
+                                onClick = {
+                                    filteredVideos = videos.filter {
+                                        it.category == "2"
+                                    }
+                                    println(filteredVideos)
+                                },
+                                modifier = Modifier
                                     .weight(0.5f)
                                     .padding(2.dp, 0.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = contrast2)
@@ -113,7 +138,12 @@ fun ExerciseScreen(
 
                             }
                             Button(
-                                onClick = { cat = 3 }, modifier = Modifier
+                                onClick = {
+                                    filteredVideos = videos.filter {
+                                        it.category == "3"
+                                    }
+                                },
+                                modifier = Modifier
                                     .weight(0.5f)
                                     .padding(2.dp, 0.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = contrast2)
@@ -132,16 +162,18 @@ fun ExerciseScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        items(10) {
+
+                        items(filteredVideos.size) { it1 ->
                             //VideoCard()
-                            Box(
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .padding(5.dp)
-                                    .background(secondary)
-                            ) {
-                                Text("$it")
-                            }
+                            VideoCard(
+                                videoId = filteredVideos[it1].link!!,
+                                videoCategory = filteredVideos[it1].category!!,
+                                videoImageUrl = filteredVideos[it1].videoBanner!!,
+                                imageChannel = filteredVideos[it1].channelPhoto!!,
+                                videoTitle = filteredVideos[it1].videoName!!,
+                                userChannel = filteredVideos[it1].channelName!!,
+                                navController,
+                            )
 
                         }
                     }

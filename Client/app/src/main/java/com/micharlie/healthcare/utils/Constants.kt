@@ -3,14 +3,14 @@ package com.micharlie.healthcare.utils
 object Constants {
 
     //api service(remplazar con la IP para local)
-    const val BASE_URL = "http://192.168.31.58:3500/api/"
+    const val BASE_URL = "http://192.168.5.199:3500/api/"
 
 
     //post
     const val POST_USER_PATH = "/"
 
     //URL completa para hacer registro
-    const val POSTUSERBACEURL = "http://192.168.31.58:3500/api/auth/"
+    const val POSTUSERBACEURL = "http://192.168.5.199:3500/api/auth/"
 
     //URL completa para ahcer login
     const val GETDATAUSER = "http://192.168.31.58:3500/api/auth/data/"
@@ -31,7 +31,7 @@ object Constants {
     const val BLOODPRESSURE = "bloodPressure"
     const val DATE = "date"
 
-    const val VIDEOBACEURLGET = "http://192.168.31.58:3500/api/"
+    const val VIDEOBACEURLGET = "http://192.168.5.199:3500/api/"
     const val VIDEOGET = "video"
     const val VIDEOBANER = "videoBanner"
     const val CHANNELNAME = "channelName"
