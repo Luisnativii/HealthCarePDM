@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,6 +46,7 @@ import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.historyCards.HistoryHeightCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast1
 import com.micharlie.healthcare.ui.theme.contrast2
@@ -57,6 +59,11 @@ import com.micharlie.healthcare.ui.theme.white
 fun HeightScreen(
     navController: NavController, getVideoViewModel: GetVideoViewModel, sessionState: Boolean = true
 ) {
+
+    val context = LocalContext.current
+    val sharedPreferencesManager = SharedPreferencesManager(context)
+    val token = sharedPreferencesManager.getToken()
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var height by remember {
         mutableIntStateOf(190)
@@ -160,7 +167,12 @@ fun HeightScreen(
                                     onClick = onClick@{
 
                                         val heightInt = heightInput.toIntOrNull() ?: return@onClick
-                                        getVideoViewModel.updateHeight(t, heightInt)
+                                        val token = sharedPreferencesManager.getToken()
+                                        if (token != null) {
+                                            getVideoViewModel.updateHeight(token, heightInt)
+                                        } else {
+                                            println("Error: Token is null")
+                                        }
 
                                     },
                                     colors = ButtonDefaults.buttonColors(containerColor = contrast2),

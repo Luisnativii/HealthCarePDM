@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -40,6 +41,7 @@ import retrofit2.Response
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewModel, viewModel: authViewModel) {
+    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
@@ -141,9 +143,10 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                             override fun onResponse(call: retrofit2.Call<String>, response: Response<String>) {
                                 try {
                                     if (response.isSuccessful) {
+                                        val sharedPreferencesManager = SharedPreferencesManager(context)
                                         val token = response.body()
-                                        val t = token?: "$token"
-                                        viewModel.saveToken(t);
+                                        val t = token ?: "$token"
+                                        sharedPreferencesManager.saveToken(t)
                                         println("Login successful: $token")
 
                                         val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
