@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,7 +28,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,6 +56,7 @@ import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.heightBackground
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -63,6 +67,26 @@ fun HeightScreen(
     val context = LocalContext.current
     val sharedPreferencesManager = SharedPreferencesManager(context)
     val token = sharedPreferencesManager.getToken()
+
+    if (token != null) {
+        LaunchedEffect(key1 = token) {
+            while (true) {
+                getVideoViewModel.getUsersData(token)
+                delay(5000) // Actualiza cada 5 segundos
+            }
+        }
+    }
+
+    val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
+
+    val heightList = mutableListOf<Int>()
+    for (user in userData) {
+        user.height?.toIntOrNull()?.let { heightList.add(it) }
+        println("Height: $heightList")
+    }
+    println("Height: $heightList")
+
+
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var height by remember {
@@ -268,21 +292,11 @@ fun HeightScreen(
                         }
 
                         // History Cards despues se cambiara por una lista de cosas que traera de la API
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryHeightCard(height, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryHeightCard(height, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryHeightCard(height, date)
-                        }
+
+
+
+                    }
+                    items(heightList) { height ->
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {
