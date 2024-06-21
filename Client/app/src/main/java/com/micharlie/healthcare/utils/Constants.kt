@@ -13,8 +13,8 @@ object Constants {
     const val POSTUSERBACEURL = "http://192.168.5.199:3500/api/auth/"
 
     //URL completa para ahcer login
-
-    const val POSTLOGINBACEURL = "http://192.168.5.199:3500/api/auth/login/"
+    const val GETDATAUSER = "http://192.168.31.58:3500/api/auth/data/"
+    const val POSTLOGINBACEURL = "http://192.168.31.58:3500/api/auth/login/"
     const val NAME = "name"
     const val EMAIL = "email"
     const val PASSWORD = "password"

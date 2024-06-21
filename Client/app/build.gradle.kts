@@ -57,9 +57,12 @@ dependencies {
     implementation(libs.core)
     implementation(libs.glide)
     implementation(libs.coil.compose)
+    implementation(libs.androidx.runtime.livedata)
     //versions
     val lifecycle_version = "2.8.1"
     val retrofit_vercion = "2.11.0"
+
+
 
     implementation ("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
 
@@ -77,7 +80,8 @@ dependencies {
     // para la funcion china de imprimir el Gson despues de convertirlo en logcat
     implementation ("com.squareup.okhttp3:okhttp:4.9.1")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
-
+    //Data store
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
