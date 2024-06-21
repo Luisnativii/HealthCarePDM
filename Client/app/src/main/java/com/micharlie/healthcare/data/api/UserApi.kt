@@ -89,7 +89,7 @@ interface UserApiService {
     fun updateWeight(@Header("Authorization") token: String, @Body weightData: Map<String, Int>): Call<Void>
 
     @Headers("Content-Type: application/json")
-    @PATCH(Constants.UPDATE_DATA_USER) 
+    @PATCH(Constants.UPDATE_DATA_USER)
     fun updateMuscularMass(@Header("Authorization") token: String, @Body muscularMassData: Map<String, Int>): Call<Void>
 
     @Headers("Content-Type: application/json")
