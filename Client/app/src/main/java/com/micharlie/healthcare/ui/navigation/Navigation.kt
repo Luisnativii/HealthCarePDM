@@ -16,6 +16,7 @@ import com.micharlie.healthcare.ui.screens.bloodGlucose.BloodGlucoseScreen
 import com.micharlie.healthcare.ui.screens.bloodPressure.BloodPressureScreen
 import com.micharlie.healthcare.ui.screens.bodyFat.BodyFatScreen
 import com.micharlie.healthcare.ui.screens.cholesterolScreen.CholesterolScreen
+import com.micharlie.healthcare.ui.screens.communityscreen.CommunityScreen
 import com.micharlie.healthcare.ui.screens.heightScreen.HeightScreen
 import com.micharlie.healthcare.ui.screens.homeScreen.HomeScreen
 import com.micharlie.healthcare.ui.screens.mainScreen.MainScreen
@@ -110,6 +111,9 @@ fun Navigation() {
         }
         composable(route = ScreenRoute.HomeSession.route) {
             MainScreen(sessionState = true, getVideoViewModel = getVideoViewModel, navController = navController)
+        }
+        composable(route = ScreenRoute.Community.route) {
+            CommunityScreen(navController = navController)
         }
     }
 }
