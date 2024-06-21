@@ -76,12 +76,19 @@ interface UserApiService {
     //no se porque putas usa USERAPI
 
     @Headers("Content-Type: application/json")
-    @GET(Constants.GETDATAUSER) // Reemplaza esto con la ruta correcta de tu API
+    @GET(Constants.GETDATAUSER)
     fun getUsers(@Header("Authorization") token: String): Call<List<dataApi>>
 
     @Headers("Content-Type: application/json")
-    @PATCH(Constants.UPDATE_HEIGHT_URL) // Reemplaza esto con la ruta correcta de tu API
+    @PATCH(Constants.UPDATE_DATA_USER)
     fun updateHeight(@Header("Authorization") token: String, @Body heightData: Map<String, Int>): Call<Void>
+
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER)
+    fun updateWeight(@Header("Authorization") token: String, @Body weightData: Map<String, Int>): Call<Void>
+
+
 }
 
 interface TokenCallback {

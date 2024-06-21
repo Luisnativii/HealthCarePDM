@@ -104,6 +104,28 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
     }
 
 
+    fun updateWeight(token: String, newWeight: Int) {
+        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+        val service = retrofit.create(UserApiService::class.java)
+        val call = service.updateWeight("Bearer $token", mapOf("_weight" to newWeight))
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Weight updated successfully")
+                } else {
+                    println("Failed to update weight: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to update weight: ${t.message}")
+            }
+        })
+    }
+
+
+
 
 
 }
