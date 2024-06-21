@@ -1,6 +1,7 @@
 package com.micharlie.healthcare.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,6 +10,7 @@ import androidx.navigation.navArgument
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.micharlie.healthcare.data.api.ApiService
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.components.ViewModel.authViewModel
 import com.micharlie.healthcare.ui.login.LoginScreen
 import com.micharlie.healthcare.ui.screens.ExerciseScreen.ExerciseScreen
 import com.micharlie.healthcare.ui.screens.VideoScreen.VideoScreen
@@ -27,7 +29,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
-fun Navigation() {
+fun Navigation(viewModel: authViewModel) {
     val navController = rememberNavController()
     val retrofit = Retrofit.Builder().baseUrl(Constants.VIDEOBACEURLGET)
         .addConverterFactory(GsonConverterFactory.create())
@@ -103,10 +105,10 @@ fun Navigation() {
             MuscularMassScreen(navController = navController, getVideoViewModel = getVideoViewModel)
         }
         composable(route = ScreenRoute.Login.route) {
-            LoginScreen(navController = navController, getVideoViewModel)
+            LoginScreen(navController = navController, getVideoViewModel, viewModel)
         }
         composable(route = ScreenRoute.Register.route) {
-            RegisterScreen(navController = navController, getVideoViewModel)
+            RegisterScreen(navController = navController, getVideoViewModel, viewModel)
         }
         composable(route = ScreenRoute.HomeSession.route) {
             MainScreen(sessionState = true, getVideoViewModel = getVideoViewModel, navController = navController)

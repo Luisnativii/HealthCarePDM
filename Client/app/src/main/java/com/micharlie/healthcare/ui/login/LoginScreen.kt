@@ -28,6 +28,7 @@ import com.micharlie.healthcare.data.api.NetworkUtils
 import com.micharlie.healthcare.data.api.UserApi
 import com.micharlie.healthcare.data.api.UserApiService
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.components.ViewModel.authViewModel
 import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.contrasPrimary
 import com.micharlie.healthcare.ui.theme.primary
@@ -37,7 +38,7 @@ import retrofit2.Response
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewModel) {
+fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewModel, viewModel: authViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
@@ -141,7 +142,9 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                                     if (response.isSuccessful) {
                                         val token = response.body()
                                         println("Login successful, token: $token")
+                                        val t = token?: "$token"
                                         //por fines educativos se comenta
+                                        viewModel.setToken(t);
                                         //navController.navigate(ScreenRoute.HomeSession.route)
                                     } else {
                                         println("Login failed: ${response.errorBody()?.string()}")
