@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,7 +31,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,6 +65,7 @@ import com.micharlie.healthcare.ui.theme.muscularMassProgress
 import com.micharlie.healthcare.ui.theme.muscularMassProgressBackground
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -74,6 +78,24 @@ fun MuscularMassScreen(
     val context = LocalContext.current
     val sharedPreferencesManager = SharedPreferencesManager(context)
     val token = sharedPreferencesManager.getToken()
+
+    if (token != null) {
+        LaunchedEffect(key1 = token) {
+            while (true) {
+                getVideoViewModel.getUsersData(token)
+                delay(5000) // Actualiza cada 5 segundos
+            }
+        }
+    }
+
+    val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
+
+    val muscularMassList = mutableListOf<Int>()
+    for (user in userData) {
+        user.muscularMass?.toIntOrNull()?.let { muscularMassList.add(it) }
+        println("Muscular Mass: $muscularMassList")
+    }
+    println("Muscular Mass: $muscularMassList")
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var muscularMass by remember { mutableIntStateOf(20) }
@@ -429,28 +451,17 @@ fun MuscularMassScreen(
                         }
 
                         // History Cards se van a cambiar luego
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryMuscularMassCard(muscularMass, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryMuscularMassCard(muscularMass, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryMuscularMassCard(muscularMass, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryMuscularMassCard(muscularMass, date)
-                        }
 
                     }
+                    items(muscularMassList) { muscularMass ->
+                        Box(
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            HistoryMuscularMassCard(muscularMass, date) // Asegúrate de tener un componente HistoryMuscularMassCard
+                        }
+                    }
+
+
                 }
             }
         }

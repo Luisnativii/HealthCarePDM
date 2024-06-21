@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,7 +31,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -66,6 +69,7 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -78,6 +82,23 @@ fun BodyFatScreen(
     val context = LocalContext.current
     val sharedPreferencesManager = SharedPreferencesManager(context)
     val token = sharedPreferencesManager.getToken()
+
+    if (token != null) {
+        LaunchedEffect(key1 = token) {
+            while (true) {
+                getVideoViewModel.getUsersData(token)
+                delay(5000) // Actualiza cada 5 segundos
+            }
+        }
+    }
+
+    val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
+
+    val bodyFatList = mutableListOf<Float>()
+    for (user in userData) {
+        user.bodyFat?.toFloat()?.let { bodyFatList.add(it) }
+        println("Body Fat: $bodyFatList")
+    }
 
     var bodyFat: Int = 10 // Se tiene que cambiar con VM
     var date: String = "10/10/2021" // Se tiene que cambiar con VM
@@ -433,27 +454,17 @@ fun BodyFatScreen(
                         }
 
                         // History Card
+
+                    }
+
+                    items(bodyFatList) { bodyFat ->
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            HistoryBodyFatCard(bodyFat, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBodyFatCard(bodyFat, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBodyFatCard(bodyFat, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBodyFatCard(bodyFat, date)
+                            HistoryBodyFatCard(bodyFat.toInt(), date) // Convertir bodyFat a Int antes de pasarlo a HistoryBodyFatCard
                         }
                     }
+
                 }
             }
         }
