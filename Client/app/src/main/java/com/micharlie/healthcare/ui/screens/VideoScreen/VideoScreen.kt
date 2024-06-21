@@ -51,6 +51,7 @@ fun VideoScreen(
     url: String,
     name: String,
     sessionState: Boolean = true,
+    category: String,
     getVideoViewModel: GetVideoViewModel
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -67,6 +68,7 @@ fun VideoScreen(
             }
         }
     }
+    videos = videos.filter { it.category == category }
     DrawerBar(drawerState = drawerState,
         sessionState = sessionState,
         navController = navController,
@@ -82,18 +84,18 @@ fun VideoScreen(
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Text(
-                        text = name,
-                        fontSize = 20.sp,
-                        color = white,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
+//                    Text(
+//                        text = name,
+//                        fontSize = 20.sp,
+//                        color = white,
+//                        fontWeight = FontWeight.Bold,
+//                        textAlign = TextAlign.Center
+//                    )
                     Box(
                         modifier = Modifier
                             .height(300.dp)
                             .fillMaxSize()
-                            .padding(8.dp)
+                            .padding(0.dp, 10.dp, 0.dp, 0.dp)
                             .clip(
                                 RoundedCornerShape(4.dp)
                             )
@@ -101,27 +103,27 @@ fun VideoScreen(
                     ) {
                         YoutubePlayer(videoId = url)
                     }
-//                    Column(modifier = Modifier.padding()) {
-//                        Text(text = "Videos Relacionados", fontSize = 20.sp, color = white, fontWeight = FontWeight.Bold)
-//                        LazyColumn(
-//                            modifier = Modifier.fillMaxWidth(),
-//                            horizontalAlignment = Alignment.CenterHorizontally
-//                        ) {
-//                            items(videos.size) { it1 ->
-//                                //VideoCard()
-//                                VideoCard(
-//                                    videoId = videos[it1].link!!,
-//                                    videoCategory = videos[it1].category!!,
-//                                    videoImageUrl = videos[it1].videoBanner!!,
-//                                    imageChannel = videos[it1].channelPhoto!!,
-//                                    videoTitle = videos[it1].videoName!!,
-//                                    userChannel = videos[it1].channelName!!,
-//                                    navController,
-//                                )
-//
-//                            }
-//                        }
-//                    }
+                    Column(modifier = Modifier.padding()) {
+
+                        LazyColumn(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            items(videos.size) { it1 ->
+                                //VideoCard()
+                                VideoCard(
+                                    videoId = videos[it1].link!!,
+                                    videoCategory = videos[it1].category!!,
+                                    videoImageUrl = videos[it1].videoBanner!!,
+                                    imageChannel = videos[it1].channelPhoto!!,
+                                    videoTitle = videos[it1].videoName!!,
+                                    userChannel = videos[it1].channelName!!,
+                                    navController,
+                                )
+
+                            }
+                        }
+                    }
 
                 }
 

@@ -52,7 +52,8 @@ fun VideoCard(
     ElevatedCard(
         onClick = {
             val videoIde = extractYoutubeVideoId(videoId)
-            navController.navigate(ScreenRoute.VideoScreen.route + "/${videoIde}/${videoTitle}")
+            navController.navigate(ScreenRoute.VideoScreen.route +
+                    "/${videoIde}/${videoTitle}/${videoCategory}")
             println(videoIde)},
         modifier = Modifier
             .padding(8.dp)

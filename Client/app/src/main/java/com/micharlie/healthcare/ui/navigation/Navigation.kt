@@ -59,16 +59,20 @@ fun Navigation() {
             ExerciseScreen(navController, true, getVideoViewModel)
         }
         composable(
-            route = ScreenRoute.VideoScreen.route + "/{videoUrl}/{name}",
+            route = ScreenRoute.VideoScreen.route + "/{videoUrl}/{name}/{category}",
             arguments = listOf(navArgument("videoUrl") {
                 type = NavType.StringType
             }, navArgument("name") {
                 type = NavType.StringType
-            })
+            },
+                navArgument("category") {
+                    type = NavType.StringType
+                })
         ) {
             val url = it.arguments?.getString("videoUrl") ?: ""
             val name = it.arguments?.getString("name") ?: ""
-            VideoScreen(navController, url, name,true, getVideoViewModel)
+            val category = it.arguments?.getString("category") ?: ""
+            VideoScreen(navController, url, name,true, getVideoViewModel = getVideoViewModel, category = category)
         }
         composable(route = ScreenRoute.HomeSession.route) {
             MainScreen(
