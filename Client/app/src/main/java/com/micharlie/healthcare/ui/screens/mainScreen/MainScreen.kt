@@ -14,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -33,6 +34,7 @@ import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
+import androidx.compose.runtime.livedata.observeAsState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -43,15 +45,127 @@ fun MainScreen(
     navController: NavController,
 
     ) {
+
+    val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val height = 0
-    val weight = 0
-    val muscularMass = 0
-    val bodyFat = 0
-    val cholesterol = 0
-    val bloodGlucose = 0
-    val bloodPressureSystolic = 0
-    val bloodPressureDiastolic = 0
+    val firstData = mutableMapOf<String, Any?>()
+
+    for (user in userData) {
+        if ("_height" !in firstData && user.height?.toString()?.isNotEmpty() == true) {
+            firstData["_height"] = user.height
+        }
+        if ("_weight" !in firstData && user.weight?.toString()?.isNotEmpty() == true) {
+            firstData["_weight"] = user.weight
+        }
+        if ("_muscularMass" !in firstData && user.muscularMass?.toString()?.isNotEmpty() == true) {
+            firstData["_muscularMass"] = user.muscularMass
+        }
+        if ("_bodyFat" !in firstData && user.bodyFat?.toString()?.isNotEmpty() == true) {
+            firstData["_bodyFat"] = user.bodyFat
+        }
+        if ("_cholesterol" !in firstData && user.cholesterol?.toString()?.isNotEmpty() == true) {
+            firstData["_cholesterol"] = user.cholesterol
+        }
+        if ("_bloodGlucose" !in firstData && user.bloodGlucose?.toString()?.isNotEmpty() == true) {
+            firstData["_bloodGlucose"] = user.bloodGlucose
+        }
+        if ("_bloodPressure" !in firstData && user.bloodPressure?.toString()?.isNotEmpty() == true) {
+            firstData["_bloodPressure"] = user.bloodPressure
+        }
+        if (firstData.size == 7) {
+            // Si ya hemos encontrado todos los campos, podemos detener la búsqueda.
+            break
+        }
+    }
+
+    print("firstData: $firstData")
+
+    val heightStr = firstData["_height"]?.toString() ?: ""
+    val height = if (heightStr.isBlank()) {
+        0
+    } else {
+        try {
+            heightStr.toInt()
+        } catch (e: NumberFormatException) {
+            0
+        }
+    }
+
+    val weightStr = firstData["_weight"]?.toString() ?: ""
+    val weight = if (weightStr.isBlank()) {
+        0
+    } else {
+        try {
+            weightStr.toInt()
+        } catch (e: NumberFormatException) {
+            0
+        }
+    }
+
+    val muscularMassStr = firstData["_muscularMass"]?.toString() ?: ""
+    val muscularMass = if (muscularMassStr.isBlank()) {
+        0
+    } else {
+        try {
+            muscularMassStr.toInt()
+        } catch (e: NumberFormatException) {
+            0
+        }
+    }
+
+    val bodyFatStr = firstData["_bodyFat"]?.toString() ?: ""
+    val bodyFat = if (bodyFatStr.isBlank()) {
+        0f
+    } else {
+        try {
+            bodyFatStr.toFloat()
+        } catch (e: NumberFormatException) {
+            0f
+        }
+    }
+
+    val cholesterolStr = firstData["_cholesterol"]?.toString() ?: ""
+    val cholesterol = if (cholesterolStr.isBlank()) {
+        0
+    } else {
+        try {
+            cholesterolStr.toInt()
+        } catch (e: NumberFormatException) {
+            0
+        }
+    }
+
+    val bloodGlucoseStr = firstData["_bloodGlucose"]?.toString() ?: ""
+    val bloodGlucose = if (bloodGlucoseStr.isBlank()) {
+        0f
+    } else {
+        try {
+            bloodGlucoseStr.toFloat()
+        } catch (e: NumberFormatException) {
+            0f
+        }
+    }
+
+    val bloodPressureStr = firstData["_bloodPressure"]?.toString() ?: ""
+
+    val bloodPressureValues = if (bloodPressureStr.isBlank()) {
+        listOf("0", "0")
+    } else {
+        bloodPressureStr.split("/")
+    }
+
+    val bloodPressureSystolic = try {
+        bloodPressureValues.getOrNull(0)?.toInt() ?: 0
+    } catch (e: NumberFormatException) {
+        0
+    }
+
+    val bloodPressureDiastolic = try {
+        bloodPressureValues.getOrNull(1)?.toInt() ?: 0
+    } catch (e: NumberFormatException) {
+        0
+    }
+
     DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
         Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(

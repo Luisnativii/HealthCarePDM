@@ -39,7 +39,10 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height quedaria:
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Muscular Mass  */ },
 @Composable
-fun MuscularMassCard(navController: NavController, muscularMass: Int){
+fun MuscularMassCard(navController: NavController, muscularMass: Comparable<*>){
+    val numericMuscularMass = (muscularMass as? Number)?.toFloat() ?: 0f
+    val progress = numericMuscularMass / 100f
+
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -134,7 +137,7 @@ fun MuscularMassCard(navController: NavController, muscularMass: Int){
                     .clip(RoundedCornerShape(8.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = muscularMass/100f, // Cambiar esto por el valor para hacer el calculo del porcentaje
+                    progress = progress,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),

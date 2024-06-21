@@ -41,7 +41,10 @@ import com.micharlie.healthcare.ui.theme.white
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Weight */ },
 
 @Composable
-fun WeightCard(navController: NavController, weight: Int) {
+fun WeightCard(navController: NavController, weight: Comparable<*>) {
+    val numericWeight = (weight as? Number)?.toFloat() ?: 0f
+    val progress = numericWeight / 100f
+
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -135,7 +138,7 @@ fun WeightCard(navController: NavController, weight: Int) {
                     .clip(RoundedCornerShape(10.dp))
             ) {
                 LinearProgressIndicator(
-                    progress = weight / 100f, // Cambiar esto por el calculo del porcentaje
+                    progress = progress,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp),

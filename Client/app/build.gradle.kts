@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.core)
     implementation(libs.glide)
     implementation(libs.coil.compose)
+    implementation(libs.androidx.runtime.livedata)
     //versions
     val lifecycle_version = "2.8.1"
     val retrofit_vercion = "2.11.0"

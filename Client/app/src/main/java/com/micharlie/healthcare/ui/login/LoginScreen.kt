@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.data.api.NetworkUtils
 import com.micharlie.healthcare.data.api.UserApi
 import com.micharlie.healthcare.data.api.UserApiService
+import com.micharlie.healthcare.data.api.dataApi
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.components.ViewModel.authViewModel
 import com.micharlie.healthcare.ui.navigation.ScreenRoute
@@ -156,26 +157,11 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                                         //usando data Store en X
                                         //Sin usar data Store T
 
-                                        val callGetUsers = service.getUsers("Bearer $x")
+                                        val callGetUsers = service.getUsers("Bearer $t")
                                         println("Bearer $x")
                                         println("Token data Store: ${viewModel.token.value}")
 
-                                        callGetUsers.enqueue(object : Callback<List<UserApi>> {
-                                            override fun onResponse(call: retrofit2.Call<List<UserApi>>, response: Response<List<UserApi>>) {
-                                                if (response.isSuccessful) {
-                                                    val users = response.body()
-                                                    // Haz algo con la lista de usuarios aquí
-                                                    println("Get users successful: $users")
-                                                    println("Get users successful: ${users?.size} users found")
-                                                } else {
-                                                    println("Get users failed: ${response.errorBody()?.string()}")
-                                                }
-                                            }
-
-                                            override fun onFailure(call: retrofit2.Call<List<UserApi>>, t: Throwable) {
-                                                println("Get users failed: ${t.message}")
-                                            }
-                                        })
+                                        getVideoViewModel.getUsersData(t)
 
                                         //navController.navigate(ScreenRoute.HomeSession.route)
                                     } else {

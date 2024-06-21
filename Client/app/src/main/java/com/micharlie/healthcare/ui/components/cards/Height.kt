@@ -37,7 +37,7 @@ import com.micharlie.healthcare.ui.theme.seeMore
 // Para agregar el onClick colocar esto en el modifier despues de height
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Height */ }
 @Composable
-fun HeightCard(navController: NavController, height: Int){
+fun HeightCard(navController: NavController, height: Comparable<*>){
     ElevatedCard (
         modifier = Modifier
             .fillMaxWidth()

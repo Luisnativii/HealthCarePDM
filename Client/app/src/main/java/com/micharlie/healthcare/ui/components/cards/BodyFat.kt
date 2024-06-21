@@ -39,7 +39,7 @@ import com.micharlie.healthcare.ui.theme.white
 // Para agregar el onClick colocar esto en el modifier despues de height
 // .clickable { /* la direccion para ir en este caso seria a la pantalla de Body Fat */ }
 @Composable
-fun BodyFatCard(navController: NavController, bodyFat: Int) {
+fun BodyFatCard(navController: NavController, bodyFat: Number) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
