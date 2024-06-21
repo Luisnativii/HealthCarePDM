@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -44,15 +45,20 @@ fun VideoCard(
     imageChannel: String,
     videoTitle: String,
     userChannel: String,
-    navController: NavController
+    navController: NavController,
+
 ) {
 
     ElevatedCard(
+        onClick = {
+            val videoIde = extractYoutubeVideoId(videoId)
+            navController.navigate(ScreenRoute.VideoScreen.route +
+                    "/${videoIde}/${videoTitle}/${videoCategory}")
+            println(videoIde)},
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .height(350.dp), colors = CardDefaults.cardColors(containerColor = secondary),
-        onClick = { navController.navigate(ScreenRoute.VideoScreen.route + "/${videoId}") }
+            .fillMaxHeight(), colors = CardDefaults.cardColors(containerColor = secondary),
     ) {
         Box(modifier = Modifier) {
             AsyncImage(
@@ -68,6 +74,7 @@ fun VideoCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(80.dp)
                     .padding(8.dp)
                     .clip(RoundedCornerShape(10.dp))
                     .background(contrast2)
@@ -88,7 +95,12 @@ fun VideoCard(
                     color = white, fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = videoCategory,
+                    text = when(videoCategory){
+                        "1" -> "HIIT"
+                        "2" -> "INTERMEDIO"
+                        "3" -> "FACIL"
+                        else -> "noFacil"
+                    },
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center,
                     color = white,
@@ -97,23 +109,16 @@ fun VideoCard(
             }
             Text(
                 text = videoTitle, modifier = Modifier.padding(8.dp), fontSize =
-                25.sp, fontWeight = FontWeight.Light, color = white
+                20.sp, fontWeight = FontWeight.Light, color = white, lineHeight = 30.sp
             )
         }
     }
 
 
 }
-
-@Composable
-@Preview
-fun VideoCardPreview() {
-    VideoCard(
-        userChannel = "MicharlieFit",
-        videoCategory = "HIIT",
-        videoTitle = "Video Title",
-        videoImageUrl = "https://i.ytimg.com/vi/1y6smkh6c-0/maxresdefault.jpg",
-        imageChannel = "https://yt3.ggpht.com/ytc/AKedOLQ2J9z1z1Z9Z9z1z1Z9Z9z1z1Z9Z9z1z1Z9z1z1Z9",
-        navController = rememberNavController(), videoId = "1y6smkh6c-0"
-    )
+fun extractYoutubeVideoId(url: String): String? {
+    val regex =
+        "(?<=v=|/videos/|embed/|youtu.be/|/v/|/e/|watch\\?v=|watch\\?vi=|watch\\?v%3D|watch\\?vi%3D|youtu.be/|%2Fvideos%2F|embed%2F|youtu.be%2F|youtu.be%2F|/v%2F|/e%2F|youtu.be%2F|youtu.be%2F|youtu.be%2F|youtu.be%2F|%3Fv%3D|&v=|/v=|/videos=|embed|youtu.be=|%2Fvideos|embed|youtu.be|%2Fv=|%2Fe=|youtu.be|youtu.be|youtu.be)([\\w-]{11})".toRegex()
+    val matchResult = regex.find(url)
+    return matchResult?.value
 }
