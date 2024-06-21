@@ -157,7 +157,12 @@ fun HeightScreen(
                                 }
                                 Spacer(modifier = Modifier.height(16.dp))
                                 Button(
-                                    onClick = { /* Handle update logic */ },
+                                    onClick = onClick@{
+
+                                        val heightInt = heightInput.toIntOrNull() ?: return@onClick
+                                        getVideoViewModel.updateHeight(t, heightInt)
+
+                                    },
                                     colors = ButtonDefaults.buttonColors(containerColor = contrast2),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {

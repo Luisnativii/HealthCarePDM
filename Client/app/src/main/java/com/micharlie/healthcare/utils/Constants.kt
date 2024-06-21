@@ -31,6 +31,11 @@ object Constants {
     const val BLOODPRESSURE = "bloodPressure"
     const val DATE = "date"
 
+    const val UPDATE_HEIGHT_URL = "http://192.168.31.58:3500/api/auth/data/"
+
+
+
+
     const val VIDEOBACEURLGET = "http://192.168.31.58:3500/api/"
     const val VIDEOGET = "video"
     const val VIDEOBANER = "videoBanner"

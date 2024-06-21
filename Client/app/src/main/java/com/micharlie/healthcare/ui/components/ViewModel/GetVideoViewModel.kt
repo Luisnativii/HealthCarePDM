@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.await
@@ -81,4 +82,28 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
             }
         })
     }
+
+    fun updateHeight(token: String, newHeight: Int) {
+        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+        val service = retrofit.create(UserApiService::class.java)
+        val call = service.updateHeight("Bearer $token", mapOf("_height" to newHeight))
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Height updated successfully")
+                } else {
+                    println("Failed to update height: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to update height: ${t.message}")
+            }
+        })
+    }
+
+
+
+
 }

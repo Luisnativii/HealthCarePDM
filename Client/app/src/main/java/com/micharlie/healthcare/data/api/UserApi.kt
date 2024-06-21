@@ -7,6 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 
@@ -77,6 +78,10 @@ interface UserApiService {
     @Headers("Content-Type: application/json")
     @GET(Constants.GETDATAUSER) // Reemplaza esto con la ruta correcta de tu API
     fun getUsers(@Header("Authorization") token: String): Call<List<dataApi>>
+
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_HEIGHT_URL) // Reemplaza esto con la ruta correcta de tu API
+    fun updateHeight(@Header("Authorization") token: String, @Body heightData: Map<String, Int>): Call<Void>
 }
 
 interface TokenCallback {
