@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,7 +31,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,6 +67,7 @@ import com.micharlie.healthcare.ui.theme.cholesterolProgressBackground
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -76,6 +80,27 @@ fun CholesterolScreen(
     val context = LocalContext.current
     val sharedPreferencesManager = SharedPreferencesManager(context)
     val token = sharedPreferencesManager.getToken()
+
+    if (token != null) {
+        LaunchedEffect(key1 = token) {
+            while (true) {
+                getVideoViewModel.getUsersData(token)
+                delay(5000) // Actualiza cada 5 segundos
+            }
+        }
+    }
+
+    val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
+
+    val cholesterolDateList = mutableListOf<Pair<Int, String>>()
+    for (user in userData) {
+        val cholesterol = user.cholesterol?.toIntOrNull()
+        val date = user.date ?: "No date" // Usa "No date" si user.date es null
+        if (cholesterol != null && cholesterol != 0) {
+            cholesterolDateList.add(Pair(cholesterol, date))
+        }
+    }
+    println("CholesterolDateList: $cholesterolDateList")
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var cholesterol by remember { mutableIntStateOf(90) }
@@ -430,26 +455,13 @@ fun CholesterolScreen(
                             }
                         }
 
-                        // History Cards luego se cambiara por una lista de la Api
+
+                    }
+                    items(cholesterolDateList) { (cholesterol, date) ->
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            HistoryCholesterolCard(cholesterol, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryCholesterolCard(cholesterol, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryCholesterolCard(cholesterol, date)
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryCholesterolCard(cholesterol, date)
+                            HistoryCholesterolCard(cholesterol, date) // Asegúrate de tener un componente HistoryCholesterolCard
                         }
                     }
                 }

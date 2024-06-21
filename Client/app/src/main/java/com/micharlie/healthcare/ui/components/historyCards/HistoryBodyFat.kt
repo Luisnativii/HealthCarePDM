@@ -33,7 +33,7 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 
 
 @Composable
-fun HistoryBodyFatCard(bodyFat: Int, date: String){
+fun HistoryBodyFatCard(bodyFat: Float, date: String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -103,8 +103,3 @@ fun HistoryBodyFatCard(bodyFat: Int, date: String){
     }
 }
 
-@Preview
-@Composable
-fun HistoryBodyFatCardPreview(){
-    HistoryBodyFatCard(bodyFat = 10, date = "10/10/2024")
-}

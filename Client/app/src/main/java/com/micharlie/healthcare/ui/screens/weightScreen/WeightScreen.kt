@@ -92,12 +92,15 @@ fun WeightScreen(
 
     val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
 
-    val weightList = mutableListOf<Int>()
+    val weightDateList = mutableListOf<Pair<Int, String>>()
     for (user in userData) {
-        user.weight?.toIntOrNull()?.let { weightList.add(it) }
-        println("Weight: $weightList")
+        val weight = user.weight?.toIntOrNull()
+        val date = user.date ?: "No date" // Usa "No date" si user.date es null
+        if (weight != null && weight != 0) {
+            weightDateList.add(Pair(weight, date))
+        }
     }
-    println("Weight: $weightList")
+    println("WeightDateList: $weightDateList")
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var weight by remember { mutableIntStateOf(65) }
@@ -451,7 +454,7 @@ fun WeightScreen(
 
 //asddasd
                     }
-                    items(weightList) { weight ->
+                    items(weightDateList) { (weight, date) ->
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {

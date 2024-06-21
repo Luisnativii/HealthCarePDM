@@ -79,12 +79,15 @@ fun HeightScreen(
 
     val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
 
-    val heightList = mutableListOf<Int>()
+    val heightDateList = mutableListOf<Pair<Int, String>>()
     for (user in userData) {
-        user.height?.toIntOrNull()?.let { heightList.add(it) }
-        println("Height: $heightList")
+        val height = user.height?.toIntOrNull()
+        val date = user.date ?: "No date" // Usa "No date" si user.date es null
+        if (height != null && height != 0) {
+            heightDateList.add(Pair(height, date))
+        }
     }
-    println("Height: $heightList")
+    println("HeightDateList: $heightDateList")
 
 
 
@@ -296,11 +299,11 @@ fun HeightScreen(
 
 
                     }
-                    items(heightList) { height ->
+                    items(heightDateList) { (height, date) ->
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            HistoryHeightCard(height, date)
+                            HistoryHeightCard(height, date) // Asegúrate de tener un componente HistoryHeightCard
                         }
                     }
                 }

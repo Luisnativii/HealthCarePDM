@@ -94,11 +94,15 @@ fun BodyFatScreen(
 
     val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
 
-    val bodyFatList = mutableListOf<Float>()
+    val bodyFatDateList = mutableListOf<Pair<Float, String>>()
     for (user in userData) {
-        user.bodyFat?.toFloat()?.let { bodyFatList.add(it) }
-        println("Body Fat: $bodyFatList")
+        val bodyFat = user.bodyFat?.toFloat()
+        val date = user.date ?: "No date" // Usa "No date" si user.date es null
+        if (bodyFat != null && bodyFat != 0f) {
+            bodyFatDateList.add(Pair(bodyFat, date))
+        }
     }
+    println("BodyFatDateList: $bodyFatDateList")
 
     var bodyFat: Int = 10 // Se tiene que cambiar con VM
     var date: String = "10/10/2021" // Se tiene que cambiar con VM
@@ -457,11 +461,11 @@ fun BodyFatScreen(
 
                     }
 
-                    items(bodyFatList) { bodyFat ->
+                    items(bodyFatDateList) { (bodyFat, date) ->
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            HistoryBodyFatCard(bodyFat.toInt(), date) // Convertir bodyFat a Int antes de pasarlo a HistoryBodyFatCard
+                            HistoryBodyFatCard(bodyFat, date) // Asegúrate de tener un componente HistoryBodyFatCard
                         }
                     }
 

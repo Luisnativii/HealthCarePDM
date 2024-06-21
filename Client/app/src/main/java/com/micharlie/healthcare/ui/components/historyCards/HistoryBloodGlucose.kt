@@ -33,7 +33,7 @@ import com.micharlie.healthcare.ui.theme.cardsBackgroud
 
 
 @Composable
-fun HistoryBloodGlucoseCard(bloodGlucose: Int, date: String){
+fun HistoryBloodGlucoseCard(bloodGlucose: Float, date: String){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -101,10 +101,4 @@ fun HistoryBloodGlucoseCard(bloodGlucose: Int, date: String){
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun HistoryBloodGlucoseCardPreview(){
-    HistoryBloodGlucoseCard(bloodGlucose = 80, date = "11/02/2024")
 }

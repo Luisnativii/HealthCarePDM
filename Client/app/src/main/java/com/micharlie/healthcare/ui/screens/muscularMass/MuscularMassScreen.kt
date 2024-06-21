@@ -90,12 +90,15 @@ fun MuscularMassScreen(
 
     val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
 
-    val muscularMassList = mutableListOf<Int>()
+    val muscularMassDateList = mutableListOf<Pair<Int, String>>()
     for (user in userData) {
-        user.muscularMass?.toIntOrNull()?.let { muscularMassList.add(it) }
-        println("Muscular Mass: $muscularMassList")
+        val muscularMass = user.muscularMass?.toIntOrNull()
+        val date = user.date ?: "No date" // Usa "No date" si user.date es null
+        if (muscularMass != null && muscularMass != 0) {
+            muscularMassDateList.add(Pair(muscularMass, date))
+        }
     }
-    println("Muscular Mass: $muscularMassList")
+    println("MuscularMassDateList: $muscularMassDateList")
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var muscularMass by remember { mutableIntStateOf(20) }
@@ -453,7 +456,7 @@ fun MuscularMassScreen(
                         // History Cards se van a cambiar luego
 
                     }
-                    items(muscularMassList) { muscularMass ->
+                    items(muscularMassDateList) { (muscularMass, date) ->
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {
