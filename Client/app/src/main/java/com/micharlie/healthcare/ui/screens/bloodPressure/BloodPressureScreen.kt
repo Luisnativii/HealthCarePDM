@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,7 +28,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,12 +50,14 @@ import com.micharlie.healthcare.ui.components.DrawerBar
 import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.historyCards.HistoryBloodPressureCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.theme.PressurecolorBackground
 import com.micharlie.healthcare.ui.theme.bloodPressureColor
 import com.micharlie.healthcare.ui.theme.cardsBackgroud
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -61,6 +67,31 @@ fun BloodPressureScreen(
     getVideoViewModel: GetVideoViewModel,
 
 ) {
+    val context = LocalContext.current
+    val sharedPreferencesManager = SharedPreferencesManager(context)
+    val token = sharedPreferencesManager.getToken()
+
+    if (token != null) {
+        LaunchedEffect(key1 = token) {
+            while (true) {
+                getVideoViewModel.getUsersData(token)
+                delay(5000) // Actualiza cada 5 segundos
+            }
+        }
+    }
+
+    val userData by getVideoViewModel.userData.observeAsState(initial = emptyList())
+
+    val bloodPressureDateList = mutableListOf<Pair<String, String>>()
+    for (user in userData) {
+        val bloodPressure = user.bloodPressure
+        val date = user.date ?: "No date" // Usa "No date" si user.date es null
+        if (bloodPressure != null && bloodPressure != "0/0") {
+            bloodPressureDateList.add(Pair(bloodPressure, date))
+        }
+    }
+    println("BloodPressureDateList: $bloodPressureDateList")
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var bloodPressureSystolic by remember {
         mutableIntStateOf(110)//cambiar por vm
@@ -220,7 +251,15 @@ fun BloodPressureScreen(
 
 
                                 Button(
-                                    onClick = { /* Handle update logic */ },
+                                    onClick = {
+                                        val bloodPressure = listOf(bloodPressureSystolicInput, bloodPressureDiastolicInput).joinToString("/")
+                                        val token = sharedPreferencesManager.getToken()
+                                        if (token != null) {
+                                            getVideoViewModel.updateBloodPressure(token, bloodPressure)
+                                        } else {
+                                            println("Error: Token is null")
+                                        }
+                                    },
                                     colors = ButtonDefaults.buttonColors(containerColor = contrast2),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
@@ -390,36 +429,27 @@ fun BloodPressureScreen(
                         }
 
                         // History Cards
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBloodPressureCard(
-                                bloodPressureSystolic, bloodPressureDiastolic, date
-                            )
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBloodPressureCard(
-                                bloodPressureSystolic, bloodPressureDiastolic, date
-                            )
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBloodPressureCard(
-                                bloodPressureSystolic, bloodPressureDiastolic, date
-                            )
-                        }
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBloodPressureCard(
-                                bloodPressureSystolic, bloodPressureDiastolic, date
-                            )
-                        }
+
 
                     }
+
+                    items(bloodPressureDateList) { (bloodPressure, date) ->
+                        if (bloodPressure.isNotEmpty()) {
+                            val bloodPressureValues = bloodPressure.split("/")
+                            if (bloodPressureValues.size >= 2) {
+                                val systolic = bloodPressureValues[0].toInt()
+                                val diastolic = bloodPressureValues[1].toInt()
+                                Box(
+                                    modifier = Modifier.padding(10.dp)
+                                ) {
+                                    HistoryBloodPressureCard(
+                                        systolic, diastolic, date
+                                    )
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
         }

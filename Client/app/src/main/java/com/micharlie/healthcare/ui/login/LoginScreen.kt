@@ -129,7 +129,7 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                 }
                 Button(
                     onClick = {
-                        navController.navigate(ScreenRoute.HomeSession.route)
+
                         val login = UserApi(
                             email = email,
                             password = password
@@ -148,6 +148,8 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                                         val t = token ?: "$token"
                                         sharedPreferencesManager.saveToken(t)
                                         println("Login successful: $token")
+
+                                        navController.navigate(ScreenRoute.HomeSession.route)
 
                                         val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
                                         val service = retrofit.create(UserApiService::class.java)

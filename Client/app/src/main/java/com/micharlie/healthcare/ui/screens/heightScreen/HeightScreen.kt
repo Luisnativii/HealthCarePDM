@@ -139,7 +139,7 @@ fun HeightScreen(
                                 Spacer(modifier = Modifier.width(16.dp))
 
                                 Text(
-                                    text = "Weight",
+                                    text = "Height",
                                     style = MaterialTheme.typography.bodyLarge,
                                     fontSize = 20.sp,
                                     color = white,
@@ -303,7 +303,7 @@ fun HeightScreen(
                         Box(
                             modifier = Modifier.padding(10.dp)
                         ) {
-                            HistoryHeightCard(height, date) // Asegúrate de tener un componente HistoryHeightCard
+                            HistoryHeightCard(height, date)
                         }
                     }
                 }
