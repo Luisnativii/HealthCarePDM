@@ -1,6 +1,10 @@
 package com.micharlie.healthcare.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -12,6 +16,7 @@ import com.micharlie.healthcare.data.api.ApiService
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.components.ViewModel.authViewModel
 import com.micharlie.healthcare.ui.login.LoginScreen
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.screens.ExerciseScreen.ExerciseScreen
 import com.micharlie.healthcare.ui.screens.VideoScreen.VideoScreen
 import com.micharlie.healthcare.ui.screens.bloodGlucose.BloodGlucoseScreen
@@ -40,9 +45,23 @@ fun Navigation(viewModel: authViewModel) {
         retrofit.create(ApiService::class.java) // Replace this with the actual initialization of your ApiService
     val getVideoViewModel = GetVideoViewModel(apiService)
     //val viewmodel: MainViewModel = viewModel()
+
+    val context = LocalContext.current
+    val sharedPreferencesManager = SharedPreferencesManager(context)
+    val token = sharedPreferencesManager.getToken()
+
+    val result = remember { mutableStateOf(false) }
+
+    if (token != null) {
+        LaunchedEffect(key1 = token) {
+            getVideoViewModel.getUsersData(token)
+            result.value = getVideoViewModel.getUsersDataWithResult(token)
+        }
+    }
+
     NavHost(
         navController = navController,
-        startDestination = if (sessionState) ScreenRoute.HomeSession.route else ScreenRoute.HomeNoSession.route
+        startDestination = if (result.value) ScreenRoute.HomeSession.route else ScreenRoute.HomeNoSession.route
     ) {
         //Se crean las rutas para cada pantalla y tambien aqui se pasan los argumentos
         /*
@@ -54,6 +73,10 @@ fun Navigation(viewModel: authViewModel) {
 
             PersonalScreen(viewModel,navController, personList, Argumento)
         }*/
+
+
+
+
         composable(route = ScreenRoute.HomeNoSession.route) {
             HomeScreen(navController, true, getVideoViewModel)
         }

@@ -104,6 +104,10 @@ interface UserApiService {
     @PATCH(Constants.UPDATE_DATA_USER)
     fun updateBloodGlucose(@Header("Authorization") token: String, @Body bloodGlucoseData: Map<String, Float>): Call<Void>
 
+    @Headers("Content-Type: application/json")
+    @PATCH(Constants.UPDATE_DATA_USER)
+    fun updateBloodPressure(@Header("Authorization") token: String, @Body bloodPressureData: Map<String, String>): Call<Void>
+
 
 }
 

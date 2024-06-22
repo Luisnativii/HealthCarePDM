@@ -1,10 +1,6 @@
 package com.micharlie.healthcare.ui.components.ViewModel
 
 
-import android.app.Application
-import android.view.WindowInsetsAnimation
-import androidx.datastore.dataStore
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,7 +17,6 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.await
 
 sealed class GetVideoState {
     object Idle : GetVideoState()
@@ -40,7 +35,8 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             _getVideoState.value = GetVideoState.Loading
             try {
-                val response = apiService.getVideos().await() // Ejecuta la llamada y obtén una Response
+                val response =
+                    apiService.getVideos().await() // Ejecuta la llamada y obtén una Response
 
                 if (response.isSuccessful) {
                     val body = response.body()
@@ -48,18 +44,20 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
                         _getVideoState.value = GetVideoState.Success(body)
                         println("Videos obtenidos: $body") // Imprime los videos obtenidos
                     } else {
-                        _getVideoState.value = GetVideoState.Error("El cuerpo de la respuesta es nulo")
+                        _getVideoState.value =
+                            GetVideoState.Error("El cuerpo de la respuesta es nulo")
                     }
                 } else {
-                    _getVideoState.value = GetVideoState.Error("Error al obtener los videos: ${response.message()}")
+                    _getVideoState.value =
+                        GetVideoState.Error("Error al obtener los videos: ${response.message()}")
                 }
             } catch (e: Exception) {
-                _getVideoState.value = GetVideoState.Error("Excepción al obtener los videos: ${e.message}")
+                _getVideoState.value =
+                    GetVideoState.Error("Excepción al obtener los videos: ${e.message}")
                 e.printStackTrace() // Imprime la pila de llamadas
             }
         }
     }
-
 
 
     fun getUsersData(token: String) {
@@ -68,7 +66,10 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
         val callGetUsers = service.getUsers("Bearer $token")
 
         callGetUsers.enqueue(object : Callback<List<dataApi>> {
-            override fun onResponse(call: retrofit2.Call<List<dataApi>>, response: Response<List<dataApi>>) {
+            override fun onResponse(
+                call: retrofit2.Call<List<dataApi>>,
+                response: Response<List<dataApi>>
+            ) {
                 if (response.isSuccessful) {
                     userData.value = response.body()
                     println("Get users successful: ${response.body()}")
@@ -82,6 +83,16 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
             }
         })
     }
+
+    suspend fun getUsersDataWithResult(token: String): Boolean {
+        return try {
+            getUsersData(token)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
 
     fun updateHeight(token: String, newHeight: Int) {
         val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
@@ -127,7 +138,8 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
     fun updateMuscularMass(token: String, newMuscularMass: Int) {
         val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
         val service = retrofit.create(UserApiService::class.java)
-        val call = service.updateMuscularMass("Bearer $token", mapOf("_muscularMass" to newMuscularMass))
+        val call =
+            service.updateMuscularMass("Bearer $token", mapOf("_muscularMass" to newMuscularMass))
 
         call.enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
@@ -169,7 +181,8 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
     fun updateCholesterol(token: String, newCholesterol: Int) {
         val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
         val service = retrofit.create(UserApiService::class.java)
-        val call = service.updateCholesterol("Bearer $token", mapOf("_cholesterol" to newCholesterol))
+        val call =
+            service.updateCholesterol("Bearer $token", mapOf("_cholesterol" to newCholesterol))
 
         call.enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
@@ -189,7 +202,8 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
     fun updateBloodGlucose(token: String, newBloodGlucose: Float) {
         val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
         val service = retrofit.create(UserApiService::class.java)
-        val call = service.updateBloodGlucose("Bearer $token", mapOf("_bloodGlucose" to newBloodGlucose))
+        val call =
+            service.updateBloodGlucose("Bearer $token", mapOf("_bloodGlucose" to newBloodGlucose))
 
         call.enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
@@ -206,6 +220,25 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
         })
     }
 
+    fun updateBloodPressure(token: String, bloodPressure: String) {
+        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+        val service = retrofit.create(UserApiService::class.java)
+        val call = service.updateBloodPressure("Bearer $token", mapOf("_bloodPressure" to bloodPressure))
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Blood pressure updated successfully")
+                } else {
+                    println("Failed to update blood pressure: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to update blood pressure: ${t.message}")
+            }
+        })
+    }
 
 
 

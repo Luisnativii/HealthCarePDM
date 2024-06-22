@@ -106,7 +106,7 @@ fun HeightCard(navController: NavController, height: Comparable<*>){
                 color = Color.White
             )
             Text(
-                text = " kg",
+                text = " Cm",
                 style = MaterialTheme.typography.bodyMedium,
                 fontSize = 16.sp,
                 color = Color.White
