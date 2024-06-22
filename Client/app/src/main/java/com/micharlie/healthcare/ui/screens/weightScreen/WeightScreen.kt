@@ -68,6 +68,8 @@ import com.micharlie.healthcare.ui.theme.weightProgress
 import com.micharlie.healthcare.ui.theme.weightProgressBackground
 import com.micharlie.healthcare.ui.theme.white
 import kotlinx.coroutines.delay
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -292,9 +294,8 @@ fun WeightScreen(
                             }
                         }
 
-                        val pointsData = listOf(
-                            70f, 68f, 69f, 67f, 65f, 66f, 68f, 70f, 72f, 71f, 70f, 69f
-                        )
+                        val pointsData = weightDateList.map { it.first.toFloat() }
+                        println(pointsData)
                         val months = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
                         Card(
@@ -385,6 +386,8 @@ fun WeightScreen(
                                         )
                                     }
                                 }
+
+
 
                                 // Draw the month labels
                                 Row(
