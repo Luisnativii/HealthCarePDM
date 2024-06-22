@@ -82,7 +82,7 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
     //Data store
     implementation("androidx.datastore:datastore-preferences:1.1.1")
-
+    implementation ("com.google.android.material:material:1.5.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
