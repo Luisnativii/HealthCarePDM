@@ -3,7 +3,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -87,7 +86,7 @@ fun RecipeCard(recipe: Recipe) {
             recipe.instructions.split("\n").forEach { instruction ->
                 Text(
                     text = instruction,
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     color = white,
                     modifier = Modifier.padding(bottom = 2.dp)
                 )
@@ -101,11 +100,12 @@ fun PreviewRecipeCard() {
     val recipe = Recipe(
         title = "Tostadas con Aguacate",
         ingredients = listOf("Pan integral", "Aguacate", "Sal"),
-        instructions = """
-            1. Tostar las rebanadas de pan integral.
-            2. Aplastar el aguacate y esparcirlo sobre el pan tostado.
-            3. Añadir una pizca de sal al gusto.
-        """
+        instructions =
+        "1. Tostar las rebanadas de pan integral.\n" +
+                "2. Aplastar el aguacate y esparcirlo sobre el pan tostado.\n" +
+                "3. Añadir una pizca de sal al gusto."
+
+
     )
     RecipeCard(recipe)
 }
