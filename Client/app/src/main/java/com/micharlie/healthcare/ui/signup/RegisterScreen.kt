@@ -1,19 +1,24 @@
 package com.micharlie.healthcare.ui.signup
+
+import android.app.DatePickerDialog
+import android.widget.DatePicker
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -34,7 +39,7 @@ import com.micharlie.healthcare.utils.Constants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+import java.util.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoViewModel, viewModel: authViewModel) {
@@ -45,11 +50,27 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
     var dateBirth by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+            val monthFormatted = (month + 1).toString().padStart(2, '0')
+            val dayFormatted = dayOfMonth.toString().padStart(2, '0')
+            dateBirth = "$year-$monthFormatted-$dayFormatted"
+        },
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    )
+
     Surface(
         color = primary,
         modifier = Modifier
             .fillMaxSize()
-            .clickable { keyboardController?.hide() }) {
+            .clickable { keyboardController?.hide() }
+    ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -61,7 +82,7 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp), // Ajusta el padding según sea necesario
+                            .padding(bottom = 16.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -69,7 +90,7 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                                 withStyle(style = SpanStyle(color = Color.White, fontSize = 30.sp)) {
                                     append("Sign ")
                                 }
-                                withStyle(style = SpanStyle(color = contrasPrimary,fontSize = 30.sp)) {
+                                withStyle(style = SpanStyle(color = contrasPrimary, fontSize = 30.sp)) {
                                     append("Up")
                                 }
                             }
@@ -80,8 +101,8 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                                         append("You have an account already? Click here")
                                     }
                                 },
-                                onClick = { offset ->
-                                    navController.navigate(ScreenRoute.Login.route) // Asegúrate de que este es el nombre correcto de la ruta de la pantalla de inicio de sesión
+                                onClick = {
+                                    navController.navigate(ScreenRoute.Login.route)
                                 },
                                 style = MaterialTheme.typography.bodyLarge
                             )
@@ -100,7 +121,7 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                             unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
                             cursorColor = MaterialTheme.colorScheme.primary
                         ),
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     TextField(
@@ -157,6 +178,15 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                         onValueChange = { dateBirth = it },
                         label = { Text("Date of Birth (YYYY-MM-DD)") },
                         singleLine = true,
+                        readOnly = true,
+                        trailingIcon = {
+                            IconButton(onClick = { datePickerDialog.show() }) {
+                                Icon(
+                                    imageVector = Icons.Default.CalendarToday,
+                                    contentDescription = "Select Date"
+                                )
+                            }
+                        },
                         colors = TextFieldDefaults.textFieldColors(
                             unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                             focusedTextColor = MaterialTheme.colorScheme.onSurface,
@@ -174,8 +204,6 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                     }
                     Button(
                         onClick = {
-
-
 
                             val user = UserApi(
                                 name = "luis",
@@ -200,11 +228,15 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                                         if (response.isSuccessful) {
                                             val token = response.body()
                                             println("Post successful, token: $token")
-                                            val t = token?: "$token"
+                                            val t = token ?: "$token"
                                             println("Post successful, token: $t")
+
+                                            viewModel.saveToken(t)
+
                                             navController.navigate(ScreenRoute.HomeSession.route)
 
-                                            viewModel.saveToken(t);
+                                            
+
                                             //por fines educativos se comento para no iniciar secion para los qu eno tiene la bace
                                             //navController.navigate(ScreenRoute.HomeSession.route)
 
@@ -237,4 +269,3 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
         }
     }
 }
-
