@@ -79,6 +79,7 @@ fun WeightScreen(
     getVideoViewModel: GetVideoViewModel,
 
 ) {
+
     val context = LocalContext.current
     val sharedPreferencesManager = SharedPreferencesManager(context)
     val token = sharedPreferencesManager.getToken()
@@ -104,10 +105,24 @@ fun WeightScreen(
     }
     println("WeightDateList: $weightDateList")
 
+    if (userData.isNotEmpty()) {
+        for (user in userData) {
+            val weight = user.weight?.toIntOrNull()
+            val date = user.date ?: "No date" // Usa "No date" si user.date es null
+            if (weight != null && weight != 0) {
+                weightDateList.add(Pair(weight, date))
+            }
+        }
+    } else {
+        // Maneja el caso en que userData está vacío
+    }
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var weight by remember { mutableIntStateOf(65) }
     var date by remember { mutableStateOf("2023-06-01") }
+
     DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
+
         Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(
                 modifier = Modifier
@@ -294,7 +309,14 @@ fun WeightScreen(
                             }
                         }
 
-                        val pointsData = weightDateList.map { it.first.toFloat() }
+
+                        val pointsData = if (weightDateList.isNotEmpty()) {
+                            weightDateList.map { it.first.toFloat() }
+                        } else {
+                            listOf(65f) // Valor por defecto
+                        }
+
+
                         println(pointsData)
                         val months = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
