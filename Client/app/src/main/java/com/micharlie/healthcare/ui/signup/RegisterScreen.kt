@@ -175,28 +175,35 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                     Button(
                         onClick = {
 
-                            navController.navigate(ScreenRoute.HomeSession.route)
+
 
                             val user = UserApi(
-                                name = name,
-                                email = email,
-                                gender = gender,
-                                dateBirth = dateBirth,
-                                password = password
+                                name = "luis",
+                                email = "luis@gmail.com",
+                                gender = "male",
+                                dateBirth = "1999-12-12",
+                                password = "le260206N$"
                             )
 
                             val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
                             val service = retrofit.create(UserApiService::class.java)
                             val call = service.postUser(user)
 
+                            // Imprimir la URL completa
+                            println("URL completa: ${call.request().url}")
+
                             call.enqueue(object : Callback<String> {
                                 override fun onResponse(call: Call<String>, response: Response<String>) {
                                     try {
+
+
                                         if (response.isSuccessful) {
                                             val token = response.body()
                                             println("Post successful, token: $token")
                                             val t = token?: "$token"
                                             println("Post successful, token: $t")
+                                            navController.navigate(ScreenRoute.HomeSession.route)
+
                                             viewModel.saveToken(t);
                                             //por fines educativos se comento para no iniciar secion para los qu eno tiene la bace
                                             //navController.navigate(ScreenRoute.HomeSession.route)
