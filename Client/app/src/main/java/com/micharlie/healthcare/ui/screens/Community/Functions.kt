@@ -1,13 +1,13 @@
 package com.micharlie.healthcare.ui.screens.Community
 
 
-fun createPost(authorId: String, content: String): Post {
+/*fun createPost(authorId: String, content: String): Post {
     val postId = generatePostId()
     val timestamp = System.currentTimeMillis()
     val newPost = Post(postId, authorId, content, timestamp, isApproved = false)
     savePostToDatabase(newPost)
     return newPost
-}
+}*/ //Esta comentada porque da error por el generatePostId() y savePostToDatabase(newPost), no esta creada
 
 // Función para obtener publicaciones pendientes
 fun getPendingPosts(): List<Post> {

@@ -5,7 +5,7 @@ data class Post(
     val authorId: String,
     val content: String,
     val timestamp: Long,
-    val isApproved: Boolean
+    var isApproved: Boolean // Cambia 'val' a 'var'
 )
 
 data class Comment(
