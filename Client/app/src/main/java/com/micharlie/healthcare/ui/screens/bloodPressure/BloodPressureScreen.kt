@@ -59,7 +59,6 @@ fun BloodPressureScreen(
     navController: NavController,
     sessionState: Boolean = true,
     getVideoViewModel: GetVideoViewModel,
-
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var bloodPressureSystolic by remember {

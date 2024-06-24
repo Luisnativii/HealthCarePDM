@@ -139,7 +139,7 @@ fun HeightScreen(
                                 Spacer(modifier = Modifier.width(16.dp))
 
                                 Text(
-                                    text = "Weight",
+                                    text = "Height",
                                     style = MaterialTheme.typography.bodyLarge,
                                     fontSize = 20.sp,
                                     color = white,
@@ -294,10 +294,10 @@ fun HeightScreen(
                             }
                         }
 
-                        // History Cards despues se cambiara por una lista de cosas que traera de la API
 
 
 
+                    // History Cards
                     }
                     items(heightDateList) { (height, date) ->
                         Box(
