@@ -121,7 +121,7 @@ fun WeightScreen(
     var weight by remember { mutableIntStateOf(65) }
     var date by remember { mutableStateOf("2023-06-01") }
 
-    DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
+    DrawerBar(drawerState = drawerState, sessionState = remember { mutableStateOf(true) }, content = {
 
         Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(

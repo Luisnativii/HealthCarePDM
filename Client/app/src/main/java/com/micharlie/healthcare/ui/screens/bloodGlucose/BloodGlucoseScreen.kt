@@ -108,7 +108,7 @@ fun BloodGlucoseScreen(
     var date by remember { mutableStateOf("") }
     bloodGlucose = 65 //meter el valor del vm
     date = "2021-10-10" //meter el valor del vm
-    DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
+    DrawerBar(drawerState = drawerState, sessionState = remember { mutableStateOf(true) }, content = {
         Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(
                 modifier = Modifier

@@ -104,7 +104,7 @@ fun BloodPressureScreen(
     }
 
 
-    DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
+    DrawerBar(drawerState = drawerState, sessionState = remember { mutableStateOf(true) }, content = {
         Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(
                 modifier = Modifier

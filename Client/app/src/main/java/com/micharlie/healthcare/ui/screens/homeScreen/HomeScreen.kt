@@ -10,6 +10,8 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -31,7 +33,7 @@ fun HomeScreen(navController: NavController, sessionState: Boolean = true, getVi
     // state es si esta iniciada la funcion para mostrar los diferentes apartados para la
     // navegaciond e la app, dentro de el drawerBar se crea el scaffold
     DrawerBar(drawerState = drawerState,
-        sessionState = true,
+        sessionState = remember { mutableStateOf(false) },
         navController = navController,
         getVideoViewModel = getVideoViewModel,
         sharedPreferencesManager = sharedPreferencesManager,

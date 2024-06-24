@@ -30,6 +30,7 @@ import com.micharlie.healthcare.data.api.UserApiService
 import com.micharlie.healthcare.data.model.RegisterRequest
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.components.ViewModel.authViewModel
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.HealthCareTheme
 import com.micharlie.healthcare.ui.theme.black
@@ -44,7 +45,7 @@ import java.util.regex.Pattern
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoViewModel, viewModel: authViewModel) {
+fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoViewModel, viewModel: authViewModel, sharedPreferencesManager: SharedPreferencesManager) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -239,6 +240,7 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                                     if (response.isSuccessful) {
                                         val token = response.body()
                                         viewModel.saveToken(token ?: "")
+                                        sharedPreferencesManager.saveEmail(email)  // Guarda el correo electrónico
                                         navController.navigate(ScreenRoute.HomeSession.route)
                                     } else {
                                         // Comprobar si el usuario ya existe

@@ -72,7 +72,7 @@ fun VideoScreen(
     }
     videos = videos.filter { it.category == category }
     DrawerBar(drawerState = drawerState,
-        sessionState = sessionState,
+        sessionState = remember { mutableStateOf(false) },
         navController = navController,
         getVideoViewModel = getVideoViewModel,
         sharedPreferencesManager = sharedPreferencesManager,
