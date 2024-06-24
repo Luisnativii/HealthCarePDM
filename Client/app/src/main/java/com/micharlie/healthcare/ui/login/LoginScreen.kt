@@ -154,6 +154,7 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                                         val token = response.body()
                                         val t = token ?: "$token"
                                         sharedPreferencesManager.saveToken(t)
+                                        sharedPreferencesManager.saveEmail(email)  // Guarda el correo electrónico
                                         println("Login successful: $token")
 
                                         navController.navigate(ScreenRoute.HomeSession.route)

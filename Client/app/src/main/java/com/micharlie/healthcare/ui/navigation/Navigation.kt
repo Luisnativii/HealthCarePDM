@@ -175,7 +175,7 @@ fun Navigation(viewModel: authViewModel) {
                 LoginScreen(navController = navController, getVideoViewModel, viewModel)
             }
             composable(route = ScreenRoute.Register.route) {
-                RegisterScreen(navController = navController, getVideoViewModel, viewModel)
+                RegisterScreen(navController = navController, getVideoViewModel, viewModel, sharedPreferencesManager)
             }
             composable(route = ScreenRoute.HomeSession.route) {
                 MainScreen(

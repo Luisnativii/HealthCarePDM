@@ -21,4 +21,14 @@ class SharedPreferencesManager(context: Context) {
         editor.remove("token")
         editor.apply()
     }
+
+    fun saveEmail(email: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("email", email)
+        editor.apply()
+    }
+
+    fun getEmail(): String {
+        return sharedPreferences.getString("email", "") ?: ""
+    }
 }

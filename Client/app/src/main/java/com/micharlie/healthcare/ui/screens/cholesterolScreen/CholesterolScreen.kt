@@ -106,7 +106,7 @@ fun CholesterolScreen(
     var cholesterol by remember { mutableIntStateOf(90) }
     var date by remember { mutableStateOf("2021-10-10") }
 
-    DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
+    DrawerBar(drawerState = drawerState, sessionState = remember { mutableStateOf(true) }, content = {
         Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(
                 modifier = Modifier

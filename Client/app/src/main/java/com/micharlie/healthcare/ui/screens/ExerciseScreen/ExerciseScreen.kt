@@ -72,7 +72,7 @@ fun ExerciseScreen(
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     DrawerBar(drawerState = drawerState,
-        sessionState = sessionState,
+        sessionState = remember { mutableStateOf(false) },
         navController = navController,
         getVideoViewModel = getVideoViewModel,
         sharedPreferencesManager = sharedPreferencesManager,

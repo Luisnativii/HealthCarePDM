@@ -36,6 +36,8 @@ import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.white
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import kotlinx.coroutines.delay
@@ -182,7 +184,7 @@ fun MainScreen(
         0
     }
 
-    DrawerBar(drawerState = drawerState, sessionState = sessionState, content = {
+    DrawerBar(drawerState = drawerState, sessionState = remember { mutableStateOf(true) }, content = {
         Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
             Column(
                 modifier = Modifier

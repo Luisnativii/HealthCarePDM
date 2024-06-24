@@ -14,6 +14,8 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +23,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,7 +43,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun DrawerBar(
     drawerState: DrawerState,
-    sessionState: Boolean,
+    sessionState: MutableState<Boolean>,
     content: @Composable () -> Unit,
     navController: NavController,
     getVideoViewModel: GetVideoViewModel,
@@ -51,6 +54,27 @@ fun DrawerBar(
  *   :Todo: la ruta se agrega en el list y agregar el onclick para cambiar de pantalla
  *     :todo: falta extreaer la informacion de usuari, actualmente esta con placeholder
  *   */
+    val context = LocalContext.current
+    val scope2 = rememberCoroutineScope()
+
+    suspend fun checkToken(token: String?): Boolean {
+        if (token != null) {
+            getVideoViewModel.getUsersData(token)
+            return getVideoViewModel.getUsersDataWithResult(token)
+        }
+        return false
+    }
+
+    LaunchedEffect(key1 = sharedPreferencesManager.getToken()) {
+        val token = sharedPreferencesManager.getToken()
+        val isValidToken = checkToken(token)
+        sessionState.value = isValidToken
+    }
+
+
+
+
+
     var selectedItemIndex by remember {
         mutableIntStateOf(5)
     }
@@ -62,11 +86,13 @@ fun DrawerBar(
                 Column {
                     //esta parte muestra la informacion del usuario // si no hay sesion muestra un mensaje
                     UserCardDrawer(
-                        firstText = if (sessionState) {
+                        firstText = if (sessionState.value) {
+
+                            sharedPreferencesManager.getEmail()
                             "UserName"
                         } else {
                             "Inicia Sesion"
-                        }, secondText = if (sessionState) {
+                        }, secondText = if (sessionState.value) {
                             "user.email"
                         } else {
                             " o Registrate"
@@ -75,7 +101,7 @@ fun DrawerBar(
 
                 }
                 // Content of the drawer
-                if (sessionState) {
+                if (sessionState.value) {
                     //si hay una sesion iniciada
                     SessionItems.forEachIndexed { index, item ->
                         NavigationDrawerItem(
