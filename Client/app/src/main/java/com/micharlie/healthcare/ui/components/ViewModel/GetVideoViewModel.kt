@@ -9,6 +9,7 @@ import com.micharlie.healthcare.data.api.NetworkUtils
 import com.micharlie.healthcare.data.api.UserApiService
 import com.micharlie.healthcare.data.api.VideoApi
 import com.micharlie.healthcare.data.api.dataApi
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 sealed class GetVideoState {
     object Idle : GetVideoState()
@@ -239,6 +241,12 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
             }
         })
     }
+
+
+
+
+
+
 
 
 

@@ -252,7 +252,7 @@ fun MainScreen(
                 }
             }
         }
-    }, navController = navController, getVideoViewModel)
+    }, navController = navController, getVideoViewModel, sharedPreferencesManager)
 }
 
 

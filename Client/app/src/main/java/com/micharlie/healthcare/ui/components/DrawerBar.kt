@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.secondary
 import com.micharlie.healthcare.ui.theme.tertiary
@@ -42,7 +43,8 @@ fun DrawerBar(
     sessionState: Boolean,
     content: @Composable () -> Unit,
     navController: NavController,
-    getVideoViewModel: GetVideoViewModel // Añade esto
+    getVideoViewModel: GetVideoViewModel,
+    sharedPreferencesManager: SharedPreferencesManager
 ) {/*
  * Drawer state maneja el estado de la barra lateral
  * sessioState define si esta cerrado o abierto
@@ -92,8 +94,15 @@ fun DrawerBar(
                                     2 -> {}
                                     3 -> {
 
-                                        println("cerrar sesion")
+
                                         getVideoViewModel.getVideos()
+
+                                    }
+                                    4 -> {
+
+
+                                        sharedPreferencesManager.clearToken()
+                                        println("Sesión cerrada")
 
                                     }
                                 }

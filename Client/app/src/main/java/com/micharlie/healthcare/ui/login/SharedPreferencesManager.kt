@@ -15,4 +15,10 @@ class SharedPreferencesManager(context: Context) {
     fun getToken(): String? {
         return sharedPreferences.getString("token", null)
     }
+
+    fun clearToken() {
+        val editor = sharedPreferences.edit()
+        editor.remove("token")
+        editor.apply()
+    }
 }

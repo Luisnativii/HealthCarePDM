@@ -40,6 +40,7 @@ import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.VideoCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoState
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.navigation.ScreenRoute
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
@@ -49,7 +50,7 @@ import com.micharlie.healthcare.ui.theme.white
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ExerciseScreen(
-    navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel
+    navController: NavController, sessionState: Boolean = true, getVideoViewModel: GetVideoViewModel, sharedPreferencesManager: SharedPreferencesManager
 ) {
     var cat by remember {
         mutableIntStateOf(0)
@@ -74,6 +75,7 @@ fun ExerciseScreen(
         sessionState = sessionState,
         navController = navController,
         getVideoViewModel = getVideoViewModel,
+        sharedPreferencesManager = sharedPreferencesManager,
         content = {
             // Content of the drawer
             Scaffold(
