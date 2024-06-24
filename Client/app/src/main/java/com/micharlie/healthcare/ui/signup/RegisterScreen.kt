@@ -40,6 +40,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import java.util.regex.Pattern
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoViewModel, viewModel: authViewModel) {
@@ -205,12 +207,24 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                     Button(
                         onClick = {
 
+                            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || gender.isEmpty() || dateBirth.isEmpty()) {
+                                errorMessage = "Por favor, llena todos los campos."
+                                return@Button
+                            }
+
+                            // Verificar que la contraseña cumpla con los requisitos
+                            val passwordPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{10,}$")
+                            if (!passwordPattern.matcher(password).matches()) {
+                                errorMessage = "La contraseña debe tener al menos 10 caracteres, una mayúscula, un número y un símbolo."
+                                return@Button
+                            }
+
                             val user = UserApi(
-                                name = "luis",
-                                email = "luis@gmail.com",
-                                gender = "male",
-                                dateBirth = "1999-12-12",
-                                password = "le260206N$"
+                                name = name,
+                                email = email,
+                                gender = gender,
+                                dateBirth = dateBirth,
+                                password = password
                             )
 
                             val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
@@ -222,37 +236,22 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
 
                             call.enqueue(object : Callback<String> {
                                 override fun onResponse(call: Call<String>, response: Response<String>) {
-                                    try {
-
-
-                                        if (response.isSuccessful) {
-                                            val token = response.body()
-                                            println("Post successful, token: $token")
-                                            val t = token ?: "$token"
-                                            println("Post successful, token: $t")
-
-                                            viewModel.saveToken(t)
-
-                                            navController.navigate(ScreenRoute.HomeSession.route)
-
-                                            
-
-                                            //por fines educativos se comento para no iniciar secion para los qu eno tiene la bace
-                                            //navController.navigate(ScreenRoute.HomeSession.route)
-
+                                    if (response.isSuccessful) {
+                                        val token = response.body()
+                                        viewModel.saveToken(token ?: "")
+                                        navController.navigate(ScreenRoute.HomeSession.route)
+                                    } else {
+                                        // Comprobar si el usuario ya existe
+                                        if (response.errorBody()?.string()?.contains("user already exists") == true) {
+                                            errorMessage = "El usuario ya existe."
                                         } else {
-                                            println("Post failed: ${response.errorBody()?.string()}")
-                                            println(errorMessage)
+                                            errorMessage = "Error desconocido."
                                         }
-                                    } catch (e: Exception) {
-                                        println("Error parsing response: ${e.message}")
-                                        println(errorMessage)
                                     }
                                 }
 
                                 override fun onFailure(call: Call<String>, t: Throwable) {
-                                    println("Post failed: ${t.message}")
-                                    println(errorMessage)
+                                    errorMessage = "Error de red: ${t.message}"
                                 }
                             })
                         },

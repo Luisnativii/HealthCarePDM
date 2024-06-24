@@ -46,6 +46,10 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    var showDialog by remember { mutableStateOf(false) }
+    var dialogMessage by remember { mutableStateOf("") }
+
     Surface(
         color = primary,
         modifier = Modifier
@@ -130,10 +134,13 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                 Button(
                     onClick = {
 
-                        val login = UserApi(
-                            email = email,
-                            password = password
-                        )
+                        if (email.isBlank() || password.isBlank()) {
+                            errorMessage = "Please fill in all fields."
+                        } else {
+                            val login = UserApi(
+                                email = email,
+                                password = password
+                            )
 
                         val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
                         val service = retrofit.create(UserApiService::class.java)
@@ -170,17 +177,24 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
 
                                         //navController.navigate(ScreenRoute.HomeSession.route)
                                     } else {
-                                        println("Login failed: ${response.errorBody()?.string()}")
+                                        if (response.errorBody()?.string()?.contains("No coincidences") == true) {
+                                            errorMessage = "No coincidences."
+                                        } else if (response.errorBody()?.string()?.contains("Incorrect password") == true) {
+                                            errorMessage = "Incorrect password."
+                                        } else {
+                                            errorMessage = "Login failed: ${response.errorBody()?.string()}"
+                                        }
                                     }
                                 } catch (e: Exception) {
-                                    println("Error parsing response: ${e.message}")
+                                    errorMessage = "Error parsing response: ${e.message}"
                                 }
                             }
 
                             override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                                println("Login failed: ${t.message}")
+                                errorMessage = "Login failed: ${t.message}"
                             }
                         })
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = contrasPrimary,
