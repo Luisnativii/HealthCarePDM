@@ -472,5 +472,5 @@ fun BodyFatScreen(
                 }
             }
         }
-    }, navController = navController, getVideoViewModel)
+    }, navController = navController, getVideoViewModel , sharedPreferencesManager)
 }

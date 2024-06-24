@@ -58,7 +58,7 @@ data object ExerciseItem: ItemsDrawer(
 data object LogOutItem: ItemsDrawer(
     icon = Icons.AutoMirrored.Rounded.Logout,
     title = "Log Out",
-    route = ""
+    route = "HomeNoSession"
 )
 val NoSessionItems = listOf(
     RegisterItem,

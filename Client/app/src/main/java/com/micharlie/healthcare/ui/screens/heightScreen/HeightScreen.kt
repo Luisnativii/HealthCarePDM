@@ -309,5 +309,5 @@ fun HeightScreen(
                 }
             }
         }
-    }, navController = navController, getVideoViewModel)
+    }, navController = navController, getVideoViewModel , sharedPreferencesManager)
 }

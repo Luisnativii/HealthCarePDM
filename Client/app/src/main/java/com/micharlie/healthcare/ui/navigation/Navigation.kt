@@ -103,10 +103,10 @@ fun Navigation(viewModel: authViewModel) {
 
 
             composable(route = ScreenRoute.HomeNoSession.route) {
-                HomeScreen(navController, true, getVideoViewModel)
+                HomeScreen(navController, true, getVideoViewModel, sharedPreferencesManager)
             }
             composable(route = ScreenRoute.ExerciseScreen.route) {
-                ExerciseScreen(navController, true, getVideoViewModel)
+                ExerciseScreen(navController, true, getVideoViewModel , sharedPreferencesManager)
             }
             composable(
                 route = ScreenRoute.VideoScreen.route + "/{videoUrl}/{name}/{category}",
@@ -128,7 +128,8 @@ fun Navigation(viewModel: authViewModel) {
                     name,
                     true,
                     getVideoViewModel = getVideoViewModel,
-                    category = category
+                    category = category,
+                    sharedPreferencesManager = sharedPreferencesManager
                 )
             }
             composable(route = ScreenRoute.HomeSession.route) {

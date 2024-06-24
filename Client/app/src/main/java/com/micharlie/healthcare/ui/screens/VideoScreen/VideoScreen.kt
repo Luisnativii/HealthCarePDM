@@ -40,6 +40,7 @@ import com.micharlie.healthcare.ui.components.VideoCard
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoState
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.components.YoutubePlayer
+import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.secondary
 import com.micharlie.healthcare.ui.theme.white
@@ -52,7 +53,8 @@ fun VideoScreen(
     name: String,
     sessionState: Boolean = true,
     category: String,
-    getVideoViewModel: GetVideoViewModel
+    getVideoViewModel: GetVideoViewModel,
+    sharedPreferencesManager: SharedPreferencesManager
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var videos by remember { mutableStateOf(listOf<VideoApi>()) }
@@ -73,6 +75,7 @@ fun VideoScreen(
         sessionState = sessionState,
         navController = navController,
         getVideoViewModel = getVideoViewModel,
+        sharedPreferencesManager = sharedPreferencesManager,
         content = {
             Scaffold(topBar = { TopBar(drawerState = drawerState) }, bottomBar = { BottomBar() }) {
 

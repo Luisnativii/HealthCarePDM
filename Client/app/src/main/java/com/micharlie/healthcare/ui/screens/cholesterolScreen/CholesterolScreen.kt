@@ -467,5 +467,5 @@ fun CholesterolScreen(
                 }
             }
         }
-    }, navController = navController, getVideoViewModel)
+    }, navController = navController, getVideoViewModel, sharedPreferencesManager)
 }

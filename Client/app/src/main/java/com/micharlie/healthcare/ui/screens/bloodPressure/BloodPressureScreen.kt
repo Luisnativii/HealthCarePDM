@@ -453,5 +453,5 @@ fun BloodPressureScreen(
                 }
             }
         }
-    }, navController = navController, getVideoViewModel)
+    }, navController = navController, getVideoViewModel , sharedPreferencesManager)
 }

@@ -468,5 +468,5 @@ fun MuscularMassScreen(
                 }
             }
         }
-    }, navController = navController, getVideoViewModel)
+    }, navController = navController, getVideoViewModel , sharedPreferencesManager)
 }

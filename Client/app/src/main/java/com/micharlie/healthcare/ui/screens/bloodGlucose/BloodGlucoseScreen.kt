@@ -468,5 +468,5 @@ fun BloodGlucoseScreen(
                 }
             }
         }
-    }, navController = navController, getVideoViewModel)
+    }, navController = navController, getVideoViewModel , sharedPreferencesManager)
 }
