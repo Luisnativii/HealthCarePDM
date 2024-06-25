@@ -38,7 +38,7 @@ fun HomeScreen(navController: NavController, sessionState: Boolean = true, getVi
         getVideoViewModel = getVideoViewModel,
         sharedPreferencesManager = sharedPreferencesManager,
         content = {
-            Scaffold(//topBar = { TopBar(drawerState = drawerState) },
+            Scaffold(topBar = { TopBar(drawerState = drawerState) },
                 bottomBar = { BottomBar() })
             {
                 Column(

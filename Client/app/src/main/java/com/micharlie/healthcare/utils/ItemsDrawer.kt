@@ -44,7 +44,7 @@ data object ComunityItem: ItemsDrawer(
 
     icon = Icons.Rounded.Groups,
     title = "Comunidad",
-    route = "createPost"
+    route = ""
 )
 data object ContactItem: ItemsDrawer(
     icon = Icons.Rounded.SupportAgent,
@@ -67,8 +67,8 @@ val NoSessionItems = listOf(
 )
 val SessionItems = listOf(
     HomeItem,
-    ExerciseItem,
     ComunityItem,
-    //alimentacion
+    ContactItem,
+    ExerciseItem,
     LogOutItem
 )
