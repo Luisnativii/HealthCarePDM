@@ -24,7 +24,7 @@ sealed class GetVideoState {
     object Idle : GetVideoState()
     object Loading : GetVideoState()
     data class Success(val videos: List<VideoApi>) : GetVideoState()
-    data class CommentsSuccess(val comments: List<CommentApi>) : GetVideoState() // Aquí es donde va
+    data class CommentsSuccess(val comments: List<CommentApi>) : GetVideoState() // Aquí es donde vaZZZZ
     data class Error(val message: String) : GetVideoState()
 }
 
@@ -264,6 +264,9 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
         })
     }
 
+    private val _comments = MutableStateFlow<List<CommentApi>>(emptyList())
+    val comments: StateFlow<List<CommentApi>> = _comments
+
     fun getComments() {
         viewModelScope.launch(Dispatchers.IO) {
             _getVideoState.value = GetVideoState.Loading
@@ -275,6 +278,7 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
                     if (body != null) {
                         _getVideoState.value = GetVideoState.CommentsSuccess(body)
                         println("Comentarios obtenidos: $body")
+                        _comments.value = body // Actualiza la lista de comentarios
                     } else {
                         _getVideoState.value = GetVideoState.Error("El cuerpo de la respuesta es nulo")
                     }
@@ -287,6 +291,7 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
             }
         }
     }
+
 
 
 

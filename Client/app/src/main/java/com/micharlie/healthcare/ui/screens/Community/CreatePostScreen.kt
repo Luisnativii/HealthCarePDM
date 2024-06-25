@@ -37,6 +37,10 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
     var comments by remember { mutableStateOf(listOf<getComment>()) }
     val state by getVideoViewModel.getVideoState.collectAsState()
 
+    LaunchedEffect(key1 = true) {
+        getVideoViewModel.getComments()
+    }
+
 
     Surface(color = primary) {
         Column(
@@ -76,9 +80,8 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
 
                             println("token: $token")
                             println("Post created successfully with comment: $comment")
+                            getVideoViewModel.postComment(token, comment)
                             getVideoViewModel.getComments()
-
-
 
 
                         } else {
@@ -109,14 +112,10 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
                 // Manejar otros estados si es necesario
                 else -> {}
             }
-            val comments = listOf(
-                CommentApi(id = "1", userName = "Usuario1", content = "Este es un comentario de prueba 1"),
-                CommentApi(id = "2", userName = "Usuario2", content = "Este es un comentario de prueba 2"),
-                CommentApi(id = "3", userName = "Usuario3", content = "Este es un comentario de prueba 3")
-            )
+
 
 // Pasar la lista de comentarios a CommentsList
-            CommentsList(comments = comments)
+
 
 
 
