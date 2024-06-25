@@ -2,6 +2,7 @@ package com.micharlie.healthcare.ui.screens.weightScreen
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -219,6 +220,7 @@ fun WeightScreen(
                                         if (token != null) {
                                             getVideoViewModel.updateWeight(token, weightInt)
                                             getVideoViewModel.getUsersData(token)
+                                            Toast.makeText(context, "Los datos han sido actualizados", Toast.LENGTH_SHORT).show()
                                         } else {
                                             println("Error: Token is null")
                                         }

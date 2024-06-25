@@ -2,6 +2,7 @@ package com.micharlie.healthcare.ui.screens.bloodGlucose
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -204,6 +205,7 @@ fun BloodGlucoseScreen(
                                         val token = sharedPreferencesManager.getToken()
                                         if (token != null) {
                                             getVideoViewModel.updateBloodGlucose(token, bloodGlucoseFloat)
+                                            Toast.makeText(context, "Los datos han sido actualizados", Toast.LENGTH_SHORT).show()
                                         } else {
                                             println("Error: Token is null")
                                         }
