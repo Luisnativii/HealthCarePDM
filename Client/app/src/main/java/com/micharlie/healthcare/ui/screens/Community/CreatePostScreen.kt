@@ -1,6 +1,9 @@
 package com.micharlie.healthcare.ui.screens.Community
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,6 +15,8 @@ import com.micharlie.healthcare.data.api.CommentApi
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoState
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.login.SharedPreferencesManager
+import com.micharlie.healthcare.ui.theme.black
+import com.micharlie.healthcare.ui.theme.contrasPrimary
 import com.micharlie.healthcare.ui.theme.contrast1
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
@@ -48,29 +53,35 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
             TextField(
                 value = content,
                 onValueChange = { content = it },
-                label = { Text("What's on your mind?", color = white) },
+                label = { Text("What's on your mind?", color = black) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.textFieldColors(
-                    unfocusedTextColor = white,
-                    focusedTextColor = white,
-                    cursorColor = contrast1,
-                    focusedIndicatorColor = contrast2,
-                    unfocusedIndicatorColor = tertiary
-                )
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                    unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                    cursorColor = MaterialTheme.colorScheme.primary
+                ),
 
-            )
+                )
             Spacer(modifier = Modifier.height(16.dp))
             if (errorMessage.isNotEmpty()) {
                 Text(errorMessage, color = MaterialTheme.colorScheme.error)
                 Spacer(modifier = Modifier.height(8.dp))
             }
             Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = contrasPrimary,
+                    contentColor = black
+                ),
                 onClick = {
                     println("asdasd")
                     println("token: $token")
@@ -84,6 +95,7 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
                             println("Post created successfully with comment: $comment")
                             getVideoViewModel.postComment(token, comment)
                             getVideoViewModel.getComments()
+                            content = ""
 
 
 
@@ -110,7 +122,9 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
             ) {
                 Text("Post", color = white)
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(24.dp))
+
+
             // Mostrar la lista de comentarios
 
             val currentState = state
@@ -138,12 +152,6 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
                 // Manejar otros estados si es necesario
                 else -> {}
             }
-
-
-
-
-
-
 
         }
     }
