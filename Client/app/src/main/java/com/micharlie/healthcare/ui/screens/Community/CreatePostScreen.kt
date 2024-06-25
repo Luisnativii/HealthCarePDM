@@ -70,11 +70,14 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
             Button(
                 onClick = {
                     println("asdasd")
+                    println("token: $token")
+                    println("coment$content")
                     try {
                         val token = sharedPreferencesManager.getToken()
                         val comment = content
                         if (token != null) {
-                            getVideoViewModel.postComment(token, comment)
+                            getVideoViewModel.postComment(token, content)
+                            println("token: $token")
                             println("Post created successfully with comment: $comment")
                         } else {
                             println("Error: Token is null")
@@ -82,6 +85,8 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
 
                     } catch (e: Exception) {
                         errorMessage = e.message ?: "Error creating post"
+                        println("token: $token")
+
                     }
                 },
                 modifier = Modifier

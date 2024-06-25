@@ -242,12 +242,11 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
         })
     }
 
-
-    fun postComment(token: String, comment: String) {
+    fun postComment(token: String, content: String) {
         val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
         val service = retrofit.create(UserApiService::class.java)
-        val commentData = mapOf("comment" to comment)
-        val call = service.postComment(token, commentData)
+
+        val call = service.postComment("Bearer $token", mapOf("content" to content))
 
         call.enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
@@ -263,8 +262,6 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
             }
         })
     }
-
-
 
 
 
