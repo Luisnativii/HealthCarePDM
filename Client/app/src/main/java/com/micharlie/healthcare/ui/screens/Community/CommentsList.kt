@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 fun CommentsList(comments: List<String>) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(0.7f) // Limita el tamaño de la LazyColumn al 70% del espacio disponible
             .padding(horizontal = 16.dp)
     ) {
         items(comments) { comment ->

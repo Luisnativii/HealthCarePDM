@@ -3,12 +3,11 @@ package com.micharlie.healthcare.ui.screens.Community
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -18,6 +17,8 @@ import com.micharlie.healthcare.ui.components.TopBar
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.ui.navigation.ScreenRoute
+import com.micharlie.healthcare.ui.theme.black
+import com.micharlie.healthcare.ui.theme.contrasPrimary
 import com.micharlie.healthcare.ui.theme.contrasPrimaryButtons
 import com.micharlie.healthcare.ui.theme.contrast1
 import com.micharlie.healthcare.ui.theme.contrast2
@@ -52,30 +53,30 @@ fun CreatePostScreen(navController: NavController,sessionState: Boolean = true, 
 
     DrawerBar(drawerState = drawerState, sessionState = remember { mutableStateOf(true) } , content = {
             Scaffold(
-                bottomBar = { BottomBar() },
                 topBar = { TopBar(drawerState = drawerState) }
             ) {
                 Surface (color = primary) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp)
-                            .verticalScroll(rememberScrollState()),
+                            .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
+                        Spacer(modifier = Modifier.weight(1f))
                         TextField(
                             value = content,
                             onValueChange = { content = it },
-                            label = { Text("What's on your mind?", color = white) },
+                            label = { Text("What's on your mind?", color = black) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = TextFieldDefaults.textFieldColors(
-                                unfocusedTextColor = white,
-                                focusedTextColor = white,
-                                cursorColor = contrast1,
-                                focusedIndicatorColor = contrast2,
-                                unfocusedIndicatorColor = tertiary
-                            )
+                                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                                unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                                cursorColor = MaterialTheme.colorScheme.primary
+                            ),
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         if (errorMessage.isNotEmpty()) {
@@ -83,6 +84,10 @@ fun CreatePostScreen(navController: NavController,sessionState: Boolean = true, 
                             Spacer(modifier = Modifier.height(8.dp))
                         }
                         Button(
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = contrasPrimary,
+                                contentColor = black
+                            ),
                             onClick = {
                                 println("asdasd")
                                 println("token: $token")
@@ -104,10 +109,11 @@ fun CreatePostScreen(navController: NavController,sessionState: Boolean = true, 
 
                                 }
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
 
                         ) {
-                            Text("Post", color = white)
+                            Text("Post", color = black)
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         // Mostrar la lista de comentarios
