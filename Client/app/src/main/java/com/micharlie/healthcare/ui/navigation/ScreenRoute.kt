@@ -14,5 +14,4 @@ sealed class ScreenRoute(var route: String) {
     data object HeightScreen : ScreenRoute("heightScreen")
     data object Register: ScreenRoute("register")
     data object Login: ScreenRoute("login")
-    data object CommunityScreen: ScreenRoute("createPost")
 }
