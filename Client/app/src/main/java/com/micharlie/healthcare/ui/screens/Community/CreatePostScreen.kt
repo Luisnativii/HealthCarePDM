@@ -36,6 +36,7 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
     val token = sharedPreferencesManager.getToken()
     var comments by remember { mutableStateOf(listOf<getComment>()) }
     val state by getVideoViewModel.getVideoState.collectAsState()
+    val isAdmin = true // Ajusta esto nato segun lo que hagas de autenticación
 
     LaunchedEffect(key1 = true) {
         getVideoViewModel.getComments()
@@ -62,6 +63,7 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
                     focusedIndicatorColor = contrast2,
                     unfocusedIndicatorColor = tertiary
                 )
+
             )
             Spacer(modifier = Modifier.height(16.dp))
             if (errorMessage.isNotEmpty()) {
@@ -107,14 +109,18 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
             when (currentState) {
                 is GetVideoState.CommentsSuccess -> {
                     // Pasar los comentarios a CommentsList
-                    CommentsList(comments = currentState.comments)
+                    CommentsList(comments = currentState.comments, isAdmin = isAdmin, onDelete = { comment ->
+                        // Lógica para eliminar el comentario
+                        println("Deleting comment with ID: ${comment.id}")
+                        // Aquí puedes llamar a tu ViewModel para eliminar el comentario
+                    })
                 }
                 // Manejar otros estados si es necesario
                 else -> {}
             }
 
 
-// Pasar la lista de comentarios a CommentsList
+
 
 
 
