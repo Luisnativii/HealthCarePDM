@@ -16,6 +16,8 @@ core = "12.1.0"
 glide = "5.0.0-rc01"
 coilCompose = "2.6.0"
 runtimeLivedata = "1.6.8"
+materialIconsCore = "1.7.0-beta03"
+materialIconsCoreVersion = "1.6.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +42,8 @@ core = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
+androidx-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "materialIconsCore" }
+material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "materialIconsCoreVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
