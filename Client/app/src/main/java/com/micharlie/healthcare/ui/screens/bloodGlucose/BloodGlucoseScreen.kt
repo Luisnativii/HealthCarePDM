@@ -109,332 +109,38 @@ fun BloodGlucoseScreen(
     var date by remember { mutableStateOf("") }
     bloodGlucose = 65 //meter el valor del vm
     date = "2021-10-10" //meter el valor del vm
-    DrawerBar(drawerState = drawerState, sessionState = remember { mutableStateOf(true) }, content = {
-        Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
-            Column(
-                modifier = Modifier
-                    .padding(it)
-                    .background(primary)
-            ) {
-                // Content of the screen
-                LazyColumn {
-                    item {
-                        // Card Icon and Tittle Blood Glucose
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp, horizontal = 16.dp)
-                                .height(100.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = cardsBackgroud
-                            )
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(20.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.materialsymbolsglucoseoutlinerounded),
-                                    contentDescription = "Blood Glucose Icon",
-                                    modifier = Modifier
-                                        .size(60.dp)
-                                        .background(
-                                            color = bloodGlucoseProgressBackground,
-                                            shape = RoundedCornerShape(10.dp)
-                                        )
-                                        .clip(RoundedCornerShape(15.dp))
-                                )
-
-                                Spacer(modifier = Modifier.width(16.dp))
-
-                                Text(
-                                    text = "Blood Glucose",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    fontSize = 20.sp,
-                                    color = white,
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(all = 16.dp)
-                                )
-                            }
-                        }
-
-
-                        // Card input Weight
-                        var bloodGlucoseInput by remember { mutableStateOf("65") }
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp, horizontal = 16.dp)
-                                .height(150.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = cardsBackgroud
-                            )
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(20.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
-                            ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    TextField(
-                                        value = bloodGlucoseInput, // Mandando a llamar la BloodGlucose
-                                        onValueChange = { bloodGlucoseInput = it },
-                                        shape = RoundedCornerShape(8.dp),
-                                        modifier = Modifier.size(width = 150.dp, height = 50.dp)
-                                    )
-                                    Text(
-                                        text = "mg/dL",
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        fontSize = 16.sp,
-                                        color = white,
-                                        modifier = Modifier.padding(16.dp)
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(16.dp))
-                                Button(
-                                    onClick = onClick@{
-                                        val bloodGlucoseFloat = bloodGlucoseInput.toFloatOrNull() ?: return@onClick
-                                        val token = sharedPreferencesManager.getToken()
-                                        if (token != null) {
-                                            getVideoViewModel.updateBloodGlucose(token, bloodGlucoseFloat)
-                                            Toast.makeText(context, "Los datos han sido actualizados", Toast.LENGTH_SHORT).show()
-                                        } else {
-                                            println("Error: Token is null")
-                                        }
-                                    },
-                                    colors = ButtonDefaults.buttonColors(containerColor = contrast2),
-                                    shape = RoundedCornerShape(8.dp)
-                                ) {
-                                    Text("Update")
-                                }
-                            }
-                        }
-
-                        // Card
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp, horizontal = 16.dp)
-                        ) {
+    DrawerBar(
+        drawerState = drawerState,
+        sessionState = remember { mutableStateOf(true) },
+        content = {
+            Scaffold(bottomBar = { BottomBar() }, topBar = { TopBar(drawerState = drawerState) }) {
+                Column(
+                    modifier = Modifier
+                        .padding(it)
+                        .background(primary)
+                ) {
+                    // Content of the screen
+                    LazyColumn {
+                        item {
+                            // Card Icon and Tittle Blood Glucose
                             Card(
                                 modifier = Modifier
-                                    .width(75.dp)
-                                    .height(105.dp)
-                                    .padding(end = 8.dp), // Spacing between cards
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp, horizontal = 16.dp)
+                                    .height(100.dp),
                                 colors = CardDefaults.cardColors(
                                     containerColor = cardsBackgroud
                                 )
-                            ) {
-                                Box(
-                                    contentAlignment = Alignment.Center,
-                                    modifier = Modifier.fillMaxSize()
-                                ) {
-                                    Column(
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        Text(
-                                            text = "65", // Cambiar por una variable de usuario o db
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            color = white
-                                        )
-                                        Text(
-                                            text = "mg/dL",
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            color = Color.Gray
-                                        )
-                                    }
-                                }
-                            }
-
-                            // Card Normal and LinerProgressIndicator
-                            Card(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(105.dp)
-                                    .padding(start = 8.dp), // Spacing between cards
-                                colors = CardDefaults.cardColors(
-                                    containerColor = cardsBackgroud
-                                )
-                            ) {
-                                Box(
-                                    contentAlignment = Alignment.Center,
-                                    modifier = Modifier.fillMaxSize()
-                                ) {
-                                    Column(
-                                        modifier = Modifier.fillMaxSize(),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        Text(
-                                            text = "Normal", // Se tiene que validar para ver que le vamos a poner
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            color = white
-                                        )
-
-                                        Spacer(modifier = Modifier.height(8.dp))
-
-                                        LinearProgressIndicator(
-                                            progress = 0.7f,
-                                            color = bloodGlucoseProgress,
-                                            trackColor = bloodGlucoseProgressBackground,
-                                            modifier = Modifier
-                                                .height(16.dp)
-                                                .clip(RoundedCornerShape(10.dp))
-                                        )
-                                    }
-                                }
-                            }
-                        }
-
-                        // Graphics Card
-                        val pointsData = listOf(
-                            70f, 68f, 69f, 67f, 65f, 66f, 68f, 70f, 72f, 71f, 70f, 69f
-                        )
-
-                        val months = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
-                                .height(300.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = cardsBackgroud
-                            ),
-                            shape = RoundedCornerShape(16.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(16.dp)
-                            ) {
-                                Canvas(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .fillMaxWidth()
-                                ) {
-                                    val maxWeight = pointsData.maxOrNull() ?: 100f
-                                    val minWeight = pointsData.minOrNull() ?: 0f
-                                    val range = maxWeight - minWeight
-                                    val spacePerMonth = size.width / (pointsData.size - 1)
-                                    val heightRatio = size.height / range
-                                    val numberOfLines = 6
-
-                                    // Draw horizontal lines
-                                    for (i in 0..numberOfLines) {
-                                        val y = size.height / numberOfLines * i
-                                        drawLine(
-                                            color = Color.Gray,
-                                            start = Offset(0f, y),
-                                            end = Offset(size.width, y),
-                                            strokeWidth = 1.dp.toPx()
-                                        )
-                                    }
-
-                                    // Draw the weight line
-                                    val path = Path().apply {
-                                        moveTo(0f, size.height - (pointsData[0] - minWeight) * heightRatio)
-                                        pointsData.forEachIndexed { index, weight ->
-                                            val x = index * spacePerMonth
-                                            val y = size.height - (weight - minWeight) * heightRatio
-                                            lineTo(x, y)
-                                        }
-                                    }
-
-                                    drawPath(
-                                        path = path,
-                                        color = bloodGlucoseProgress,
-                                        style = Stroke(width = 4.dp.toPx())
-                                    )
-
-                                    pointsData.forEachIndexed { index, weight ->
-                                        val x = index * spacePerMonth
-                                        val y = size.height - (weight - minWeight) * heightRatio
-                                        drawCircle(
-                                            color = bloodGlucoseProgress,
-                                            radius = 4.dp.toPx(),
-                                            center = Offset(x, y)
-                                        )
-                                    }
-
-                                    // Draw the selected weight circle
-                                    val selectedWeight = pointsData[8]
-                                    val selectedX = 8 * spacePerMonth
-                                    val selectedY = size.height - (selectedWeight - minWeight) * heightRatio
-
-                                    drawCircle(
-                                        color = Color.Gray,
-                                        radius = 6.dp.toPx(),
-                                        center = Offset(selectedX, selectedY)
-                                    )
-
-                                    // Draw the text for the selected weight
-                                    drawContext.canvas.nativeCanvas.apply {
-                                        drawText(
-                                            selectedWeight.toInt().toString(),
-                                            selectedX,
-                                            selectedY - 20.dp.toPx(),
-                                            Paint().apply {
-                                                color = android.graphics.Color.GRAY
-                                                textSize = 32f
-                                            }
-                                        )
-                                    }
-                                }
-
-                                // Draw the month labels
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 8.dp),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    months.forEach { month ->
-                                        Text(
-                                            text = month,
-                                            color = Color.White,
-                                            textAlign = TextAlign.Center,
-                                            style = androidx.compose.ui.text.TextStyle(fontSize = 12.sp)
-                                        )
-                                    }
-                                }
-                            }
-                        }
-
-                        // History Card
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp, horizontal = 16.dp)
-                                .height(100.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = primary
-                            ),
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center // Centrar el contenido del Box
                             ) {
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(20.dp),
-                                    horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Image(
-                                        painter = painterResource(id = R.drawable.materialsymbolshistory__2_),
-                                        contentDescription = "History Icon",
+                                        painter = painterResource(id = R.drawable.materialsymbolsglucoseoutlinerounded),
+                                        contentDescription = "Blood Glucose Icon",
                                         modifier = Modifier
                                             .size(60.dp)
                                             .background(
@@ -447,28 +153,363 @@ fun BloodGlucoseScreen(
                                     Spacer(modifier = Modifier.width(16.dp))
 
                                     Text(
-                                        text = "History",
+                                        text = "Blood Glucose",
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 20.sp,
                                         color = white,
-                                        modifier = Modifier.padding(all = 16.dp)
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .padding(all = 16.dp)
                                     )
                                 }
                             }
+
+
+                            // Card input Weight
+                            var bloodGlucoseInput by remember { mutableStateOf("65") }
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp, horizontal = 16.dp)
+                                    .height(150.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = cardsBackgroud
+                                )
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(20.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.Center
+                                    ) {
+                                        TextField(
+                                            value = bloodGlucoseInput, // Mandando a llamar la BloodGlucose
+                                            onValueChange = { bloodGlucoseInput = it },
+                                            shape = RoundedCornerShape(8.dp),
+                                            modifier = Modifier.size(width = 150.dp, height = 50.dp)
+                                        )
+                                        Text(
+                                            text = "mg/dL",
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            fontSize = 16.sp,
+                                            color = white,
+                                            modifier = Modifier.padding(16.dp)
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                    Button(
+                                        onClick = onClick@{
+                                            val bloodGlucoseFloat =
+                                                bloodGlucoseInput.toFloatOrNull() ?: return@onClick
+                                            val token = sharedPreferencesManager.getToken()
+                                            if (token != null) {
+                                                getVideoViewModel.updateBloodGlucose(
+                                                    token,
+                                                    bloodGlucoseFloat
+                                                )
+                                                Toast.makeText(
+                                                    context,
+                                                    "Los datos han sido actualizados",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            } else {
+                                                println("Error: Token is null")
+                                            }
+                                        },
+                                        colors = ButtonDefaults.buttonColors(containerColor = contrast2),
+                                        shape = RoundedCornerShape(8.dp)
+                                    ) {
+                                        Text("Update")
+                                    }
+                                }
+                            }
+
+                            // Card
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp, horizontal = 16.dp)
+                            ) {
+                                Card(
+                                    modifier = Modifier
+                                        .width(75.dp)
+                                        .height(105.dp)
+                                        .padding(end = 8.dp), // Spacing between cards
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = cardsBackgroud
+                                    )
+                                ) {
+                                    Box(
+                                        contentAlignment = Alignment.Center,
+                                        modifier = Modifier.fillMaxSize()
+                                    ) {
+                                        Column(
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            Text(
+                                                text = "65", // Cambiar por una variable de usuario o db
+                                                style = MaterialTheme.typography.bodyLarge,
+                                                color = white
+                                            )
+                                            Text(
+                                                text = "mg/dL",
+                                                style = MaterialTheme.typography.bodyLarge,
+                                                color = Color.Gray
+                                            )
+                                        }
+                                    }
+                                }
+
+                                // Card Normal and LinerProgressIndicator
+                                Card(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(105.dp)
+                                        .padding(start = 8.dp), // Spacing between cards
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = cardsBackgroud
+                                    )
+                                ) {
+                                    Box(
+                                        contentAlignment = Alignment.Center,
+                                        modifier = Modifier.fillMaxSize()
+                                    ) {
+                                        Column(
+                                            modifier = Modifier.fillMaxSize(),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            Text(
+                                                text = "Normal", // Se tiene que validar para ver que le vamos a poner
+                                                style = MaterialTheme.typography.bodyLarge,
+                                                color = white
+                                            )
+
+                                            Spacer(modifier = Modifier.height(8.dp))
+
+                                            LinearProgressIndicator(
+                                                progress = 0.7f,
+                                                color = bloodGlucoseProgress,
+                                                trackColor = bloodGlucoseProgressBackground,
+                                                modifier = Modifier
+                                                    .height(16.dp)
+                                                    .clip(RoundedCornerShape(10.dp))
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+
+                            // Graphics Card
+                            val pointsData = if (bloodGlucoseDateList.isNotEmpty()) {
+                                bloodGlucoseDateList.map { it.first }
+                            } else {
+                                listOf() // Lista vacía por defecto
+                            }
+
+                            val months = listOf(
+                                "Jan",
+                                "Feb",
+                                "Mar",
+                                "Apr",
+                                "May",
+                                "Jun",
+                                "Jul",
+                                "Aug",
+                                "Sep",
+                                "Oct",
+                                "Nov",
+                                "Dec"
+                            )
+                            if (pointsData.isNotEmpty()) {
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp)
+                                        .height(300.dp),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = cardsBackgroud
+                                    ),
+                                    shape = RoundedCornerShape(16.dp)
+                                ) {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(16.dp)
+                                    ) {
+                                        Canvas(
+                                            modifier = Modifier
+                                                .weight(1f)
+                                                .fillMaxWidth()
+                                        ) {
+                                            val maxWeight = pointsData.maxOrNull() ?: 100f
+                                            val minWeight = pointsData.minOrNull() ?: 0f
+                                            val range = maxWeight - minWeight
+                                            val spacePerMonth = size.width / (pointsData.size - 1)
+                                            val heightRatio = size.height / range
+                                            val numberOfLines = 6
+
+                                            // Draw horizontal lines
+                                            for (i in 0..numberOfLines) {
+                                                val y = size.height / numberOfLines * i
+                                                drawLine(
+                                                    color = Color.Gray,
+                                                    start = Offset(0f, y),
+                                                    end = Offset(size.width, y),
+                                                    strokeWidth = 1.dp.toPx()
+                                                )
+                                            }
+
+                                            // Draw the weight line
+                                            val path = Path().apply {
+                                                moveTo(
+                                                    0f,
+                                                    size.height - (pointsData[0] - minWeight) * heightRatio
+                                                )
+                                                pointsData.forEachIndexed { index, weight ->
+                                                    val x = index * spacePerMonth
+                                                    val y =
+                                                        size.height - (weight - minWeight) * heightRatio
+                                                    lineTo(x, y)
+                                                }
+                                            }
+
+                                            drawPath(
+                                                path = path,
+                                                color = bloodGlucoseProgress,
+                                                style = Stroke(width = 4.dp.toPx())
+                                            )
+
+                                            pointsData.forEachIndexed { index, weight ->
+                                                val x = index * spacePerMonth
+                                                val y =
+                                                    size.height - (weight - minWeight) * heightRatio
+                                                drawCircle(
+                                                    color = bloodGlucoseProgress,
+                                                    radius = 4.dp.toPx(),
+                                                    center = Offset(x, y)
+                                                )
+                                            }
+
+                                            // Draw the selected weight circle
+                                            val selectedWeight = if (pointsData.size > 8) pointsData[8] else pointsData.last()
+                                            val selectedX = if (pointsData.size > 8) 8 * spacePerMonth else (pointsData.size - 1) * spacePerMonth
+                                            val selectedY = size.height - (selectedWeight - minWeight) * heightRatio
+
+                                            drawCircle(
+                                                color = Color.Gray,
+                                                radius = 6.dp.toPx(),
+                                                center = Offset(selectedX, selectedY)
+                                            )
+
+                                            // Draw the text for the selected weight
+                                            drawContext.canvas.nativeCanvas.apply {
+                                                drawText(
+                                                    selectedWeight.toInt().toString(),
+                                                    selectedX,
+                                                    selectedY - 20.dp.toPx(),
+                                                    Paint().apply {
+                                                        color = android.graphics.Color.GRAY
+                                                        textSize = 32f
+                                                    }
+                                                )
+                                            }
+                                        }
+
+                                        // Draw the month labels
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(top = 8.dp),
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            months.forEach { month ->
+                                                Text(
+                                                    text = month,
+                                                    color = Color.White,
+                                                    textAlign = TextAlign.Center,
+                                                    style = androidx.compose.ui.text.TextStyle(
+                                                        fontSize = 12.sp
+                                                    )
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            // History Card
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp, horizontal = 16.dp)
+                                    .height(100.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = primary
+                                ),
+                                shape = RoundedCornerShape(10.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center // Centrar el contenido del Box
+                                ) {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(20.dp),
+                                        horizontalArrangement = Arrangement.Center,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.materialsymbolshistory__2_),
+                                            contentDescription = "History Icon",
+                                            modifier = Modifier
+                                                .size(60.dp)
+                                                .background(
+                                                    color = bloodGlucoseProgressBackground,
+                                                    shape = RoundedCornerShape(10.dp)
+                                                )
+                                                .clip(RoundedCornerShape(15.dp))
+                                        )
+
+                                        Spacer(modifier = Modifier.width(16.dp))
+
+                                        Text(
+                                            text = "History",
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            fontSize = 20.sp,
+                                            color = white,
+                                            modifier = Modifier.padding(all = 16.dp)
+                                        )
+                                    }
+                                }
+                            }
+
+                            // History Cards
+                        }
+                        items(bloodGlucoseDateList) { (bloodGlucose, date) ->
+                            Box(
+                                modifier = Modifier.padding(10.dp)
+                            ) {
+                                HistoryBloodGlucoseCard(
+                                    bloodGlucose,
+                                    date
+                                ) // Asegúrate de tener un componente HistoryBloodGlucoseCard
+                            }
                         }
 
-                        // History Cards
                     }
-                    items(bloodGlucoseDateList) { (bloodGlucose, date) ->
-                        Box(
-                            modifier = Modifier.padding(10.dp)
-                        ) {
-                            HistoryBloodGlucoseCard(bloodGlucose, date) // Asegúrate de tener un componente HistoryBloodGlucoseCard
-                        }
-                    }
-
                 }
             }
-        }
-    }, navController = navController, getVideoViewModel , sharedPreferencesManager)
+        },
+        navController = navController,
+        getVideoViewModel,
+        sharedPreferencesManager
+    )
 }
