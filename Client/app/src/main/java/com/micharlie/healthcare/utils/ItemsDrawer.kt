@@ -67,8 +67,8 @@ val NoSessionItems = listOf(
 )
 val SessionItems = listOf(
     HomeItem,
-    ComunityItem,
-    ContactItem,
     ExerciseItem,
+    ComunityItem,
+    //alimentacion
     LogOutItem
 )
