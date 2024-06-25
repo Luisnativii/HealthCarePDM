@@ -80,7 +80,10 @@ fun LoginScreen(navController: NavController, getVideoViewModel: GetVideoViewMod
                 ClickableText(
                     text = buildAnnotatedString {
                         withStyle(style = SpanStyle(color = Color.White)) {
-                            append("First time here? Click here")
+                            append("First time here? ")
+                        }
+                        withStyle(style = SpanStyle(color = contrasPrimary)) {
+                            append("Click here")
                         }
                     },
                     onClick = { offset ->
