@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.micharlie.healthcare.data.api.ApiService
+import com.micharlie.healthcare.data.api.CommentApi
 import com.micharlie.healthcare.data.api.NetworkUtils
 import com.micharlie.healthcare.data.api.UserApiService
 import com.micharlie.healthcare.data.api.VideoApi
 import com.micharlie.healthcare.data.api.dataApi
-import com.micharlie.healthcare.ui.login.SharedPreferencesManager
 import com.micharlie.healthcare.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +24,7 @@ sealed class GetVideoState {
     object Idle : GetVideoState()
     object Loading : GetVideoState()
     data class Success(val videos: List<VideoApi>) : GetVideoState()
+    data class CommentsSuccess(val comments: List<CommentApi>) : GetVideoState() // Aquí es donde vaZZZZ
     data class Error(val message: String) : GetVideoState()
 }
 
@@ -261,6 +262,34 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
                 println("Failed to post comment: ${t.message}")
             }
         })
+    }
+
+    private val _comments = MutableStateFlow<List<CommentApi>>(emptyList())
+    val comments: StateFlow<List<CommentApi>> = _comments
+
+    fun getComments() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _getVideoState.value = GetVideoState.Loading
+            try {
+                val response = apiService.getComments().await()
+
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body != null) {
+                        _getVideoState.value = GetVideoState.CommentsSuccess(body)
+                        println("Comentarios obtenidos: $body")
+                        _comments.value = body // Actualiza la lista de comentarios
+                    } else {
+                        _getVideoState.value = GetVideoState.Error("El cuerpo de la respuesta es nulo")
+                    }
+                } else {
+                    _getVideoState.value = GetVideoState.Error("Error al obtener los comentarios: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                _getVideoState.value = GetVideoState.Error("Excepción al obtener los comentarios: ${e.message}")
+                e.printStackTrace()
+            }
+        }
     }
 
 

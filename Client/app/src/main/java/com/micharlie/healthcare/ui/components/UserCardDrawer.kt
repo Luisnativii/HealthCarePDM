@@ -37,13 +37,7 @@ fun UserCardDrawer(firstText: String, secondText: String) {
         ) {
             //se usan las vcariables en los argumentos para mostrar el nombre y el correo del usuario
 
-            Text(
-                text = firstText,
-                modifier = Modifier.padding(5.dp),
-                color = white,
-                fontSize = 25.sp,
-                fontWeight = FontWeight.Bold
-            )
+
             Text(
                 text = secondText, color = white, fontSize = 15.sp, fontWeight = FontWeight.Light
             )

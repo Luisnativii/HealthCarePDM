@@ -89,11 +89,12 @@ fun DrawerBar(
                         firstText = if (sessionState.value) {
 
                             sharedPreferencesManager.getEmail()
-                            "UserName"
+
                         } else {
                             "Inicia Sesion"
                         }, secondText = if (sessionState.value) {
-                            "user.email"
+                            sharedPreferencesManager.getEmail()
+
                         } else {
                             " o Registrate"
                         }
