@@ -1,15 +1,15 @@
 package com.micharlie.healthcare.utils
 
 object Constants {
-
+//T https://healthcare-api-production-60ea.up.railway.app
     // IP
-    private const val IP_PORT = "192.168.31.58"
+    private const val IP_PORT = "healthcare-api-production-60ea.up.railway.app"
     //HTTP
     const val HTTP = "http://"
     //PORT
     const val PORT = "3500"
     //URL
-    const val URL = "$HTTP$IP_PORT:$PORT"
+    const val URL = "$HTTP$IP_PORT"
     //api service(remplazar con la IP para local)
     const val BASE_URL = "$URL/api/"
     //Treaer data

@@ -36,7 +36,7 @@ fun CreatePostScreen(navController: NavController) {
         Button(
             onClick = {
                 try {
-                    val newPost = createPost(authorId, content)
+
                     // Navega a la pantalla principal después de crear la publicación
                     navController.navigate(ScreenRoute.HomeSession.route)
                 } catch (e: Exception) {
