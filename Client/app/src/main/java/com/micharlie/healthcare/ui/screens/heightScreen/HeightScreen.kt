@@ -1,6 +1,7 @@
 package com.micharlie.healthcare.ui.screens.heightScreen
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -197,6 +198,7 @@ fun HeightScreen(
                                         val token = sharedPreferencesManager.getToken()
                                         if (token != null) {
                                             getVideoViewModel.updateHeight(token, heightInt)
+                                            Toast.makeText(context, "Los datos han sido actualizados", Toast.LENGTH_SHORT).show()
                                         } else {
                                             println("Error: Token is null")
                                         }

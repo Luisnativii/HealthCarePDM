@@ -2,6 +2,7 @@ package com.micharlie.healthcare.ui.screens.muscularMass
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -202,6 +203,7 @@ fun MuscularMassScreen(
                                         val token = sharedPreferencesManager.getToken()
                                         if (token != null) {
                                             getVideoViewModel.updateMuscularMass(token, muscularMassInt)
+                                            Toast.makeText(context, "Los datos han sido actualizados", Toast.LENGTH_SHORT).show()
                                         } else {
                                             println("Error: Token is null")
                                         }
