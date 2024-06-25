@@ -299,20 +299,20 @@ fun RegisterScreen(
                         val service = retrofit.create(UserApiService::class.java)
                         val call = service.postUser(user)
 
-                        // Imprimir la URL completa
-                        println("URL completa: ${call.request().url}")
+                            call.enqueue(object : Callback<String> {
+                                override fun onResponse(call: Call<String>, response: Response<String>) {
+                                    if (response.isSuccessful) {
+                                        val token = response.body()
+                                        val t = token ?: "$token"
 
-                        call.enqueue(object : Callback<String> {
-                            override fun onResponse(call: Call<String>, response: Response<String>) {
-                                if (response.isSuccessful) {
-                                    val token = response.body()
-                                    viewModel.saveToken(token ?: "")
-                                    sharedPreferencesManager.saveEmail(email)  // Guarda el correo electrónico
-                                    navController.navigate(ScreenRoute.HomeSession.route)
-                                } else {
-                                    // Comprobar si el usuario ya existe
-                                    if (response.errorBody()?.string()?.contains("user already exists") == true) {
-                                        errorMessage = "El usuario ya existe."
+                                        val sharedPreferencesManager = SharedPreferencesManager(context)
+
+
+                                        sharedPreferencesManager.saveToken(t)
+                                        sharedPreferencesManager.saveEmail(email)
+                                        sharedPreferencesManager.saveEmail(email)  // Guarda el correo electrónico
+                                        navController.navigate(ScreenRoute.HomeSession.route)
+
                                     } else {
                                         errorMessage = "Error desconocido."
                                     }

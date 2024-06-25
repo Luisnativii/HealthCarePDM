@@ -16,6 +16,7 @@ import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.components.ViewModel.authViewModel
 import com.micharlie.healthcare.ui.login.LoginScreen
 import com.micharlie.healthcare.ui.login.SharedPreferencesManager
+import com.micharlie.healthcare.ui.screens.Community.CreatePostScreen
 import com.micharlie.healthcare.ui.screens.ExerciseScreen.ExerciseScreen
 import com.micharlie.healthcare.ui.screens.SplashScreen.SplashScreen
 import com.micharlie.healthcare.ui.screens.VideoScreen.VideoScreen
@@ -183,6 +184,9 @@ fun Navigation(viewModel: authViewModel) {
                     getVideoViewModel = getVideoViewModel,
                     navController = navController
                 )
+            }
+            composable(route = ScreenRoute.CommunityScreen.route) {
+                CreatePostScreen(navController)
             }
         }
     }

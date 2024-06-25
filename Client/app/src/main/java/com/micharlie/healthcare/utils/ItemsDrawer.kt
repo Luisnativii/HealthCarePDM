@@ -6,6 +6,7 @@ import androidx.compose.material.icons.automirrored.rounded.Logout
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.FitnessCenter
+import androidx.compose.material.icons.rounded.Groups
 import androidx.compose.material.icons.rounded.HealthAndSafety
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Login
@@ -39,11 +40,11 @@ data object HomeItem: ItemsDrawer(
     title = "Home",
     route = "homeSession"
 )
-data object HealthItem: ItemsDrawer(
+data object ComunityItem: ItemsDrawer(
 
-    icon = Icons.Rounded.HealthAndSafety,
-    title = "Salud",
-    route = ""
+    icon = Icons.Rounded.Groups,
+    title = "Comunidad",
+    route = "createPost"
 )
 data object ContactItem: ItemsDrawer(
     icon = Icons.Rounded.SupportAgent,
@@ -66,8 +67,8 @@ val NoSessionItems = listOf(
 )
 val SessionItems = listOf(
     HomeItem,
-    HealthItem,
-    ContactItem,
     ExerciseItem,
+    ComunityItem,
+    //alimentacion
     LogOutItem
 )
