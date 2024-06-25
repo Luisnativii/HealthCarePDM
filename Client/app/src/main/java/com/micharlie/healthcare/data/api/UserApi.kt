@@ -5,12 +5,13 @@ import com.google.gson.annotations.SerializedName
 import com.micharlie.healthcare.utils.Constants
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.PATCH
 import retrofit2.http.POST
-
+import retrofit2.http.Path
 
 
 data class UserApi(
@@ -70,12 +71,7 @@ data class Comment(
 
 )
 
-data class getComment(
-    val _id: String,
-    val user: String,
-    val userName: String,
-    val content: String,
-)
+
 
 
 interface UserApiService {
@@ -128,6 +124,11 @@ interface UserApiService {
     @Headers("Content-Type: application/json")
     @POST(Constants.POST_COMMENT_PATH)
     fun postComment(@Header("Authorization") token: String, @Body commentData: Map<String, String>): Call<Void>
+
+    @Headers("Content-Type: application/json")
+    @DELETE("https://healthcare-api-production-46a3.up.railway.app/api/community/{id}")
+    fun deleteVideo(@Path("id") id: String): Call<Void>
+
 
 }
 

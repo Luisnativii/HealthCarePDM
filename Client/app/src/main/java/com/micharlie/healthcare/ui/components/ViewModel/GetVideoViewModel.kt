@@ -4,6 +4,7 @@ package com.micharlie.healthcare.ui.components.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.micharlie.healthcare.data.api.ApiClient
 import com.micharlie.healthcare.data.api.ApiService
 import com.micharlie.healthcare.data.api.CommentApi
 import com.micharlie.healthcare.data.api.NetworkUtils
@@ -290,6 +291,26 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
                 e.printStackTrace()
             }
         }
+    }
+
+
+    fun deleteVideo(id: String) {
+        val service = ApiClient.apiService
+        val call = service.deleteVideo(id)
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Video deleted successfully")
+                } else {
+                    println("Failed to delete video: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to delete video: ${t.message}")
+            }
+        })
     }
 
 
