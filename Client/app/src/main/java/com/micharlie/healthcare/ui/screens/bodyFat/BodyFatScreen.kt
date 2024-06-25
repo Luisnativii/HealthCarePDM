@@ -297,14 +297,17 @@ fun BodyFatScreen(
                             }
                         }
 
+
                         // Graphics Card
-                        val pointsData = listOf(
-                            70f, 68f, 69f, 67f, 65f, 66f, 68f, 70f, 72f, 71f, 70f, 69f
-                        )
+                        val pointsData = if (bodyFatDateList.isNotEmpty()) {
+                            bodyFatDateList.map { it.first }
+                        } else {
+                            listOf() // Lista vacía por defecto
+                        }
 
                         val months = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
-                        Card(
+                        if(bodyFatDateList.isNotEmpty()){Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp)
@@ -369,8 +372,8 @@ fun BodyFatScreen(
                                     }
 
                                     // Draw the selected weight circle
-                                    val selectedWeight = pointsData[8]
-                                    val selectedX = 8 * spacePerMonth
+                                    val selectedWeight = if (pointsData.size > 8) pointsData[8] else pointsData.last()
+                                    val selectedX = if (pointsData.size > 8) 8 * spacePerMonth else (pointsData.size - 1) * spacePerMonth
                                     val selectedY = size.height - (selectedWeight - minWeight) * heightRatio
 
                                     drawCircle(
@@ -410,7 +413,7 @@ fun BodyFatScreen(
                                     }
                                 }
                             }
-                        }
+                        }}
 
                         // History Card
                         Card(
