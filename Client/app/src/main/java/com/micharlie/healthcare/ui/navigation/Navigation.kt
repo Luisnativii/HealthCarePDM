@@ -186,9 +186,13 @@ fun Navigation(viewModel: authViewModel) {
                 )
             }
 
-
             composable(route = ScreenRoute.CommunityScreen.route) {
-                CreatePostScreen(navController,  sharedPreferencesManager , getVideoViewModel,)
+                CreatePostScreen(
+                    navController = navController,
+                    sessionState = true,
+                    sharedPreferencesManager ,
+                    getVideoViewModel
+                    )
             }
         }
     }

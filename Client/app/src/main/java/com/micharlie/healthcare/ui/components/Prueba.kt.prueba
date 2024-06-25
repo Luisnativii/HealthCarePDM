@@ -27,20 +27,65 @@ fun Prueba(navController: NavController) {
                                                                                 bottomBar = { BottomBar() },
                                                                                 topBar = { TopBar(drawerState = drawerState) }
                                                                           ) {
-                                                                              Column(modifier = Modifier.padding(it).background(
-                                                                                  primary)) {
-                                                                                    // Content of the screen
-                                                                                  Image(
-                                                                                      painter = painterResource(
-                                                                                          id = R.drawable.corazon
-                                                                                      ),
-                                                                                      contentDescription ="Corazon"
-                                                                                  )
+                                                                              Column(
+                                                                                          modifier = Modifier
+                                                                                              .fillMaxSize()
+                                                                                              .padding(16.dp),
+                                                                                          horizontalAlignment = Alignment.CenterHorizontally,
+                                                                                          verticalArrangement = Arrangement.Center
+                                                                                      ) {
+                                                                                          TextField(
+                                                                                              value = content,
+                                                                                              onValueChange = { content = it },
+                                                                                              label = { Text("What's on your mind?", color = white) },
+                                                                                              modifier = Modifier.fillMaxWidth(),
+                                                                                              colors = TextFieldDefaults.textFieldColors(
+                                                                                                  unfocusedTextColor = white,
+                                                                                                  focusedTextColor = white,
+                                                                                                  cursorColor = contrast1,
+                                                                                                  focusedIndicatorColor = contrast2,
+                                                                                                  unfocusedIndicatorColor = tertiary
+                                                                                              )
+                                                                                          )
+                                                                                          Spacer(modifier = Modifier.height(16.dp))
+                                                                                          if (errorMessage.isNotEmpty()) {
+                                                                                              Text(errorMessage, color = MaterialTheme.colorScheme.error)
+                                                                                              Spacer(modifier = Modifier.height(8.dp))
+                                                                                          }
+                                                                                          Button(
+                                                                                              onClick = {
+                                                                                                  println("asdasd")
+                                                                                                  println("token: $token")
+                                                                                                  println("coment$content")
+                                                                                                  try {
+                                                                                                      val token = sharedPreferencesManager.getToken()
+                                                                                                      val comment = content
+                                                                                                      if (token != null) {
+                                                                                                          getVideoViewModel.postComment(token, content)
+                                                                                                          println("token: $token")
+                                                                                                          println("Post created successfully with comment: $comment")
+                                                                                                      } else {
+                                                                                                          println("Error: Token is null")
+                                                                                                      }
 
-                                                                              }
+                                                                                                  } catch (e: Exception) {
+                                                                                                      errorMessage = e.message ?: "Error creating post"
+                                                                                                      println("token: $token")
 
+                                                                                                  }
+                                                                                              },
+                                                                                              modifier = Modifier
+                                                                                                  .fillMaxWidth()
+
+                                                                                          ) {
+                                                                                              Text("Post", color = white)
+                                                                                          }
+                                                                                          Spacer(modifier = Modifier.height(16.dp))
+                                                                                          // Mostrar la lista de comentarios
+                                                                                          CommentsList(comments = comments)
+                                                                                      }
                                                                           }
-    }, navController = navController  )
+    }, navController = navController, getVideoViewModel , sharedPreferencesManager)
 }
 @Composable
 @Preview
