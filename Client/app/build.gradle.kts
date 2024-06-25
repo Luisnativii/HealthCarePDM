@@ -51,6 +51,42 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.webkit)
+    implementation(libs.core)
+    implementation(libs.glide)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.material.icons.core)
+    //versions
+    val lifecycle_version = "2.8.1"
+    val retrofit_vercion = "2.11.0"
+
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+
+    implementation ("com.google.code.gson:gson:2.8.9")
+
+    implementation ("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
+
+    implementation ("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
+    //Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:$retrofit_vercion")
+    //Gson
+    implementation ("com.squareup.retrofit2:converter-gson:$retrofit_vercion")
+    //Lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    // para la funcion china de imprimir el Gson despues de convertirlo en logcat
+    implementation ("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    //Data store
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    implementation ("com.google.android.material:material:1.5.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -59,6 +95,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
