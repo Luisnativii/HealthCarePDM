@@ -30,7 +30,8 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
     val context = LocalContext.current
     val sharedPreferencesManager = SharedPreferencesManager(context)
     val token = sharedPreferencesManager.getToken()
-
+    // Lista mutable para almacenar los comentarios
+    val comments = remember { mutableStateListOf<String>() }
     if (token != null) {
         LaunchedEffect(key1 = token) {
             while (true) {
@@ -95,6 +96,9 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
             ) {
                 Text("Post", color = white)
             }
+            Spacer(modifier = Modifier.height(16.dp))
+            // Mostrar la lista de comentarios
+            CommentsList(comments = comments)
         }
     }
 }
