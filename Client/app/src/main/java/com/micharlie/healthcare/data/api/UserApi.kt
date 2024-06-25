@@ -62,6 +62,14 @@ data class dataApi(
     val date: String? = "",
 )
 
+data class Comment(
+
+    @SerializedName(value = Constants.CONTENT)
+    val content: String,
+
+)
+
+
 interface UserApiService {
     @Headers("Content-Type: application/json")
     @POST(Constants.POSTUSERBACEURL)
@@ -108,6 +116,10 @@ interface UserApiService {
     @PATCH(Constants.UPDATE_DATA_USER)
     fun updateBloodPressure(@Header("Authorization") token: String, @Body bloodPressureData: Map<String, String>): Call<Void>
 
+
+    @Headers("Content-Type: application/json")
+    @POST(Constants.POST_COMMENT_PATH)
+    fun postComment(@Header("Authorization") token: String, @Body commentData: Map<String, String>): Call<Void>
 
 }
 
