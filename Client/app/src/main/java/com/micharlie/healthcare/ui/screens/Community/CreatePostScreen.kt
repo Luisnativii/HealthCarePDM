@@ -1,26 +1,20 @@
-package com.micharlie.healthcare.ui.screens.Community
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.micharlie.healthcare.ui.navigation.ScreenRoute
-import com.micharlie.healthcare.ui.theme.contrasPrimaryButtons
-import com.micharlie.healthcare.ui.theme.contrast1
-import com.micharlie.healthcare.ui.theme.contrast2
-import com.micharlie.healthcare.ui.theme.primary
-import com.micharlie.healthcare.ui.theme.tertiary
-import com.micharlie.healthcare.ui.theme.white
-
+import com.micharlie.healthcare.ui.screens.Community.getCurrentUserId
+import com.micharlie.healthcare.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreatePostScreen(navController: NavController) {
     var content by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
+    var comments by remember { mutableStateOf(listOf<String>()) } // Lista de comentarios
     val authorId = getCurrentUserId() // Obtén el ID del usuario actual
 
     Surface(color = primary) {
@@ -52,18 +46,43 @@ fun CreatePostScreen(navController: NavController) {
             Button(
                 onClick = {
                     try {
-                        // Navigate to the main screen after creating the post
-                        navController.navigate(ScreenRoute.HomeSession.route)
+                        if (content.isNotEmpty()) {
+                            // Add the comment to the list
+                            comments = comments + content
+                            // Clear the text field
+                            content = ""
+                            errorMessage = ""
+                        } else {
+                            errorMessage = "Content cannot be empty"
+                        }
                     } catch (e: Exception) {
                         errorMessage = e.message ?: "Error creating post"
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(contrasPrimaryButtons),
+                    .background(contrasPrimaryButtons)
             ) {
                 Text("Post", color = white)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Mostrar los comentarios
+            comments.forEach { comment ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .background(cardsBackgroud)
+                ) {
+                    Text(
+                        text = comment,
+                        color = white, // O cambia a color que se vea mejor sobre cardsBackgroud
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
             }
         }
     }
 }
+
