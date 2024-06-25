@@ -25,7 +25,9 @@ object Constants {
     //post
     const val POST_USER_PATH = "/"
 
-
+    //coment
+    //https://healthcare-api-production-46a3.up.railway.app/api/community/
+    const val POST_COMMENT_PATH = "$URL/api/community/"
     //User
     const val NAME = "name"
     const val EMAIL = "email"
@@ -57,4 +59,10 @@ object Constants {
     //API response
     const val RESPONSE_SUCCESSFUL = "result"
     const val RESPONSE_ERROR = "message"
+
+
+
+    //comets
+
+    const val CONTENT = "content"
 }

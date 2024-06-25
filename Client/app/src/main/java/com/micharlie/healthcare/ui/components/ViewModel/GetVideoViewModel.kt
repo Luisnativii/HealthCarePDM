@@ -243,6 +243,28 @@ class GetVideoViewModel(private val apiService: ApiService) : ViewModel() {
     }
 
 
+    fun postComment(token: String, comment: String) {
+        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+        val service = retrofit.create(UserApiService::class.java)
+        val commentData = mapOf("comment" to comment)
+        val call = service.postComment(token, commentData)
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    println("Comment posted successfully")
+                } else {
+                    println("Failed to post comment: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                println("Failed to post comment: ${t.message}")
+            }
+        })
+    }
+
+
 
 
 
