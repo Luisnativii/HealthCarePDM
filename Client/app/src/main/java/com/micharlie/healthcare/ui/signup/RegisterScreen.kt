@@ -239,7 +239,13 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                                 override fun onResponse(call: Call<String>, response: Response<String>) {
                                     if (response.isSuccessful) {
                                         val token = response.body()
-                                        viewModel.saveToken(token ?: "")
+                                        val t = token ?: "$token"
+
+                                        val sharedPreferencesManager = SharedPreferencesManager(context)
+
+
+                                        sharedPreferencesManager.saveToken(t)
+                                        sharedPreferencesManager.saveEmail(email)
                                         sharedPreferencesManager.saveEmail(email)  // Guarda el correo electrónico
                                         navController.navigate(ScreenRoute.HomeSession.route)
                                     } else {
