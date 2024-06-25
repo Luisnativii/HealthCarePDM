@@ -5,9 +5,13 @@ import android.widget.DatePicker
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,6 +22,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,16 +50,23 @@ import java.util.regex.Pattern
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoViewModel, viewModel: authViewModel, sharedPreferencesManager: SharedPreferencesManager) {
+fun RegisterScreen(
+    navController: NavController,
+    getVideoViewModel: GetVideoViewModel,
+    viewModel: authViewModel,
+    sharedPreferencesManager: SharedPreferencesManager
+) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
     var dateBirth by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
+    var passwordVisibility by remember { mutableStateOf(false) }
 
     val datePickerDialog = DatePickerDialog(
         context,
@@ -77,118 +89,119 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(16.dp)
+                .clickable { keyboardController?.hide() },
             verticalArrangement = Arrangement.Center
         ) {
             item {
-                Column {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            val text = buildAnnotatedString {
-                                withStyle(style = SpanStyle(color = Color.White, fontSize = 30.sp)) {
-                                    append("Sign ")
-                                }
-                                withStyle(style = SpanStyle(color = contrasPrimary, fontSize = 30.sp)) {
-                                    append("Up")
-                                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        val text = buildAnnotatedString {
+                            withStyle(style = SpanStyle(color = Color.White, fontSize = 30.sp)) {
+                                append("Sign ")
                             }
-                            Text(text, style = MaterialTheme.typography.titleLarge)
-                            ClickableText(
-                                text = buildAnnotatedString {
-                                    withStyle(style = SpanStyle(color = Color.White)) {
-                                        append("You have an account already? Click here")
-                                    }
-                                },
-                                onClick = {
-                                    navController.navigate(ScreenRoute.Login.route)
-                                },
-                                style = MaterialTheme.typography.bodyLarge
+                            withStyle(style = SpanStyle(color = contrasPrimary, fontSize = 30.sp)) {
+                                append("Up")
+                            }
+                        }
+                        Text(text, style = MaterialTheme.typography.titleLarge)
+                        ClickableText(
+                            text = buildAnnotatedString {
+                                withStyle(style = SpanStyle(color = Color.White)) {
+                                    append("You have an account already? ")
+                                }
+                                withStyle(style = SpanStyle(color = contrasPrimary)) {
+                                    append("Click here")
+                                }
+                            },
+                            onClick = {
+                                navController.navigate(ScreenRoute.Login.route)
+                            },
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
+                }
+            }
+            item {
+                TextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Name") },
+                    singleLine = true,
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+                TextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Email") },
+                    singleLine = true,
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+                TextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text("Password") },
+                    singleLine = true,
+                    visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                            Icon(
+                                imageVector = if (passwordVisibility) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                contentDescription = if (passwordVisibility) "Hide password" else "Show password"
                             )
                         }
-                    }
-                    TextField(
-                        value = name,
-                        onValueChange = { name = it },
-                        label = { Text("Name") },
-                        singleLine = true,
-                        colors = TextFieldDefaults.textFieldColors(
-                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            containerColor = MaterialTheme.colorScheme.surface,
-                            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                            unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-                            cursorColor = MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    TextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        label = { Text("Email") },
-                        singleLine = true,
-                        colors = TextFieldDefaults.textFieldColors(
-                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            containerColor = MaterialTheme.colorScheme.surface,
-                            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                            unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-                            cursorColor = MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    TextField(
-                        value = password,
-                        onValueChange = { password = it },
-                        label = { Text("Password") },
-                        singleLine = true,
-                        visualTransformation = PasswordVisualTransformation(),
-                        colors = TextFieldDefaults.textFieldColors(
-                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            containerColor = MaterialTheme.colorScheme.surface,
-                            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                            unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-                            cursorColor = MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+                ExposedDropdownMenuBox(
+                    expanded = expanded,
+                    onExpandedChange = { expanded = !expanded }
+                ) {
                     TextField(
                         value = gender,
                         onValueChange = { gender = it },
                         label = { Text("Gender") },
-                        singleLine = true,
-                        colors = TextFieldDefaults.textFieldColors(
-                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            containerColor = MaterialTheme.colorScheme.surface,
-                            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                            unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-                            cursorColor = MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    TextField(
-                        value = dateBirth,
-                        onValueChange = { dateBirth = it },
-                        label = { Text("Date of Birth (YYYY-MM-DD)") },
-                        singleLine = true,
                         readOnly = true,
                         trailingIcon = {
-                            IconButton(onClick = { datePickerDialog.show() }) {
-                                Icon(
-                                    imageVector = Icons.Default.CalendarToday,
-                                    contentDescription = "Select Date"
-                                )
-                            }
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                         },
                         colors = TextFieldDefaults.textFieldColors(
                             unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
@@ -198,42 +211,93 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                             unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
                             cursorColor = MaterialTheme.colorScheme.primary
                         ),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor()
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    if (errorMessage.isNotEmpty()) {
-                        Text(errorMessage, color = MaterialTheme.colorScheme.error)
-                        Spacer(modifier = Modifier.height(8.dp))
+                    ExposedDropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Male") },
+                            onClick = {
+                                gender = "Male"
+                                expanded = false
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Female") },
+                            onClick = {
+                                gender = "Female"
+                                expanded = false
+                            }
+                        )
                     }
-                    Button(
-                        onClick = {
-
-                            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || gender.isEmpty() || dateBirth.isEmpty()) {
-                                errorMessage = "Por favor, llena todos los campos."
-                                return@Button
-                            }
-
-                            // Verificar que la contraseña cumpla con los requisitos
-                            val passwordPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{10,}$")
-                            if (!passwordPattern.matcher(password).matches()) {
-                                errorMessage = "La contraseña debe tener al menos 10 caracteres, una mayúscula, un número y un símbolo."
-                                return@Button
-                            }
-
-                            val user = UserApi(
-                                name = name,
-                                email = email,
-                                gender = gender,
-                                dateBirth = dateBirth,
-                                password = password
+                }
+            }
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+                TextField(
+                    value = dateBirth,
+                    onValueChange = { dateBirth = it },
+                    label = { Text("Date of Birth (YYYY-MM-DD)") },
+                    singleLine = true,
+                    readOnly = true,
+                    trailingIcon = {
+                        IconButton(onClick = { datePickerDialog.show() }) {
+                            Icon(
+                                imageVector = Icons.Default.CalendarToday,
+                                contentDescription = "Select Date"
                             )
+                        }
+                    },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { datePickerDialog.show() }
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                if (errorMessage.isNotEmpty()) {
+                    Text(errorMessage, color = MaterialTheme.colorScheme.error)
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
+            item {
+                Button(
+                    onClick = {
+                        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || gender.isEmpty() || dateBirth.isEmpty()) {
+                            errorMessage = "Por favor, llena todos los campos."
+                            return@Button
+                        }
 
-                            val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
-                            val service = retrofit.create(UserApiService::class.java)
-                            val call = service.postUser(user)
+                        // Verificar que la contraseña cumpla con los requisitos
+                        val passwordPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{10,}$")
+                        if (!passwordPattern.matcher(password).matches()) {
+                            errorMessage = "La contraseña debe tener al menos 10 caracteres, una mayúscula, un número y un símbolo."
+                            return@Button
+                        }
 
-                            // Imprimir la URL completa
-                            println("URL completa: ${call.request().url}")
+                        val user = UserApi(
+                            name = name,
+                            email = email,
+                            gender = gender,
+                            dateBirth = dateBirth,
+                            password = password
+                        )
+
+                        val retrofit = NetworkUtils.getRetrofitInstance(Constants.BASE_URL)
+                        val service = retrofit.create(UserApiService::class.java)
+                        val call = service.postUser(user)
 
                             call.enqueue(object : Callback<String> {
                                 override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -248,29 +312,25 @@ fun RegisterScreen(navController: NavController, getVideoViewModel: GetVideoView
                                         sharedPreferencesManager.saveEmail(email)
                                         sharedPreferencesManager.saveEmail(email)  // Guarda el correo electrónico
                                         navController.navigate(ScreenRoute.HomeSession.route)
+
                                     } else {
-                                        // Comprobar si el usuario ya existe
-                                        if (response.errorBody()?.string()?.contains("user already exists") == true) {
-                                            errorMessage = "El usuario ya existe."
-                                        } else {
-                                            errorMessage = "Error desconocido."
-                                        }
+                                        errorMessage = "Error desconocido."
                                     }
                                 }
+                            }
 
-                                override fun onFailure(call: Call<String>, t: Throwable) {
-                                    errorMessage = "Error de red: ${t.message}"
-                                }
-                            })
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = contrasPrimary,
-                            contentColor = black
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("Register")
-                    }
+                            override fun onFailure(call: Call<String>, t: Throwable) {
+                                errorMessage = "Error de red: ${t.message}"
+                            }
+                        })
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = contrasPrimary,
+                        contentColor = black
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Register")
                 }
             }
         }
