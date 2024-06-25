@@ -63,6 +63,8 @@ fun ExerciseScreen(
             when (state) {
                 is GetVideoState.Success -> {
                     videos = state.videos
+                    println(videos)
+                    filteredVideos = videos
                 }
                 // Manejar otros estados si es necesario
                 else -> {}
