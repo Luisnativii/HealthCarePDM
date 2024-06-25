@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,25 +17,29 @@ import androidx.compose.ui.unit.dp
 import com.micharlie.healthcare.data.api.CommentApi
 
 @Composable
-fun CommentsList(comments: List<CommentApi>) {
+fun CommentsList(comments: List<CommentApi> ,isAdmin: Boolean, onDelete: (CommentApi) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
     ) {
         items(comments) { comment ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-                    .background(Color.White)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
+            if (isAdmin) {
+                AdminCard(comment = comment, onDelete = onDelete)
+            } else {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                        .background(MaterialTheme.colorScheme.background)
                 ) {
-                    Text(text = "ID: ${comment.id}")
-                    Text(text = "User Name: ${comment.userName}")
-                    Text(text = "Content: ${comment.content}")
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(text = "ID: ${comment.id}")
+                        Text(text = "User Name: ${comment.userName}")
+                        Text(text = "Content: ${comment.content}")
+                    }
                 }
             }
         }
