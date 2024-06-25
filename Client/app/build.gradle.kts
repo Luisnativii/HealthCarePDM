@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.coil.compose)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.material.icons.core)
     //versions
     val lifecycle_version = "2.8.1"
     val retrofit_vercion = "2.11.0"

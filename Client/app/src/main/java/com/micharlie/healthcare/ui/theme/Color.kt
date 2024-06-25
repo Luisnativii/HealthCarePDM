@@ -3,8 +3,8 @@ package com.micharlie.healthcare.ui.theme
 import androidx.compose.ui.graphics.Color
 
 
-val primary = Color(0xFF142D4C)
-val secondary = Color(0xff385170)
+val primary = Color(0xFF11161E)
+val secondary = Color(0xFF19212C)
 val tertiary = Color(0xff9FD3C7)
 val white = Color(0xffECECEC)
 val black = Color(0xff3F464A)
@@ -12,11 +12,11 @@ val black = Color(0xff3F464A)
 val contrast1 = Color(0xffD7DF71)
 val contrast2 = Color(0xffF9A828)
 //Principalmente para botones principales
-val contrasPrimaryButtons = Color(0xff85FF91)
+val contrasPrimaryButtons = Color(0xFF6FFF7D)
 
 
 // Cards Colors
-val cardsBackgroud = Color(0xff385170)
+val cardsBackgroud = Color(0xFF19212C)
 val seeMore = Color(0xff9FD3C7)
 
 // Height Card Colors
