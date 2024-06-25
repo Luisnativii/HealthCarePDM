@@ -12,12 +12,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.micharlie.healthcare.data.api.CommentApi
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 
 @Composable
-fun CommentsList(comments: List<CommentApi> ,isAdmin: Boolean, onDelete: (CommentApi) -> Unit) {
+fun CommentsList(comments: List<CommentApi>, isAdmin: Boolean, getVideoViewModel: GetVideoViewModel, onDelete: (CommentApi) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -25,7 +25,7 @@ fun CommentsList(comments: List<CommentApi> ,isAdmin: Boolean, onDelete: (Commen
     ) {
         items(comments) { comment ->
             if (isAdmin) {
-                AdminCard(comment = comment, onDelete = onDelete)
+                AdminCard(comment = comment, getVideoViewModel = getVideoViewModel)
             } else {
                 Card(
                     modifier = Modifier

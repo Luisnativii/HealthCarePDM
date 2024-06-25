@@ -1,7 +1,5 @@
 package com.micharlie.healthcare.ui.screens.Community
 
-import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -11,18 +9,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.micharlie.healthcare.data.api.CommentApi
-import com.micharlie.healthcare.data.api.getComment
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoState
 import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
 import com.micharlie.healthcare.ui.login.SharedPreferencesManager
-import com.micharlie.healthcare.ui.navigation.ScreenRoute
-import com.micharlie.healthcare.ui.theme.contrasPrimaryButtons
 import com.micharlie.healthcare.ui.theme.contrast1
 import com.micharlie.healthcare.ui.theme.contrast2
 import com.micharlie.healthcare.ui.theme.primary
 import com.micharlie.healthcare.ui.theme.tertiary
 import com.micharlie.healthcare.ui.theme.white
-import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,9 +28,15 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
     val context = LocalContext.current
     val sharedPreferencesManager = SharedPreferencesManager(context)
     val token = sharedPreferencesManager.getToken()
-    var comments by remember { mutableStateOf(listOf<getComment>()) }
+
+
+    var comments by remember { mutableStateOf(listOf<CommentApi>()) }
+
+
     val state by getVideoViewModel.getVideoState.collectAsState()
-    val isAdmin = true // Ajusta esto nato segun lo que hagas de autenticación
+
+    val email = sharedPreferencesManager.getEmail()
+    val isAdmin = email == "admin@gmail.com" || email == "root@gmail.com"
 
     LaunchedEffect(key1 = true) {
         getVideoViewModel.getComments()
@@ -86,6 +86,14 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
                             getVideoViewModel.getComments()
 
 
+
+                            println("email: $email")
+
+
+
+
+
+
                         } else {
                             println("Error: Token is null")
                         }
@@ -108,12 +116,24 @@ fun CreatePostScreen(navController: NavController, sharedPreferencesManager: Sha
             val currentState = state
             when (currentState) {
                 is GetVideoState.CommentsSuccess -> {
-                    // Pasar los comentarios a CommentsList
-                    CommentsList(comments = currentState.comments, isAdmin = isAdmin, onDelete = { comment ->
-                        // Lógica para eliminar el comentario
-                        println("Deleting comment with ID: ${comment.id}")
-                        // Aquí puedes llamar a tu ViewModel para eliminar el comentario
-                    })
+
+                    if (isAdmin) {
+                        println("comments: ${currentState.comments}")
+                        println("ADMIN")
+
+                        CommentsList(comments = currentState.comments, isAdmin = isAdmin, getVideoViewModel = getVideoViewModel, onDelete = { comment ->
+                            // Lógica para eliminar el comentario
+                            println("Deleting comment with ID: ${comment.id}")
+                            // Aquí puedes llamar a tu ViewModel para eliminar el comentario
+                        })
+
+                    }else {
+                        CommentsList(comments = currentState.comments, isAdmin = isAdmin, getVideoViewModel = getVideoViewModel, onDelete = { comment ->
+                            // Lógica para eliminar el comentario
+                            println("Deleting comment with ID: ${comment.id}")
+                            // Aquí puedes llamar a tu ViewModel para eliminar el comentario
+                        })
+                    }
                 }
                 // Manejar otros estados si es necesario
                 else -> {}

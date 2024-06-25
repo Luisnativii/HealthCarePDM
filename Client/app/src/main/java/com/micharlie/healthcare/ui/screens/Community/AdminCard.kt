@@ -12,12 +12,19 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.micharlie.healthcare.data.api.CommentApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
+import com.micharlie.healthcare.ui.components.ViewModel.GetVideoViewModel
+
+
 @Composable
-fun AdminCard(comment: CommentApi, onDelete: (CommentApi) -> Unit) {
+fun AdminCard(comment: CommentApi, getVideoViewModel: GetVideoViewModel) {
+
+
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,7 +41,12 @@ fun AdminCard(comment: CommentApi, onDelete: (CommentApi) -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { onDelete(comment) },
+                onClick = {
+                    println("Delete comment with id: ${comment.id}")
+                    getVideoViewModel.deleteVideo(comment.id ?: "defaultId")
+                    getVideoViewModel.getComments()
+
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Red,
                     contentColor = Color.White
