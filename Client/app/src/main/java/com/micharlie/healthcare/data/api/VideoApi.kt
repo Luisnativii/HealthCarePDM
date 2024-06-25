@@ -31,3 +31,15 @@ class VideoApi (
         return "VideoApi(videoBanner=$videoBanner, channelName=$channelName, channelPhoto=$channelPhoto, videoName=$videoName, link=$link, category=$category, createdAt=$createdAt, updatedAt=$updatedAt)"
     }
 }
+
+
+
+data class CommentApi(
+    @SerializedName("_id") val id: String? = "",
+    @SerializedName("user") val user: String? = "",
+    @SerializedName("userName") val userName: String? = "",
+    @SerializedName("content") val content: String? = "",
+    @SerializedName("date") val date: String? = "",
+    @SerializedName("createdAt") val createdAt: String? = "",
+    @SerializedName("updatedAt") val updatedAt: String? = "",
+)

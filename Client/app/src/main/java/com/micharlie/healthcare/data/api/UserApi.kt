@@ -3,6 +3,7 @@ package com.micharlie.healthcare.data.api
 import retrofit2.Call
 import com.google.gson.annotations.SerializedName
 import com.micharlie.healthcare.utils.Constants
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -67,6 +68,13 @@ data class Comment(
     @SerializedName(value = Constants.CONTENT)
     val content: String,
 
+)
+
+data class getComment(
+    val _id: String,
+    val user: String,
+    val userName: String,
+    val content: String,
 )
 
 
