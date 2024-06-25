@@ -158,38 +158,12 @@ fun DrawerBar(
                 }
                 //si no esta iniciada la session
                 else {
-                    NoSessionItems.forEachIndexed { index, item ->
-                        NavigationDrawerItem(
-                            label = { Text(item.title) },
-                            shape = RectangleShape,
-                            modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 4.dp),
-                            onClick = {
-                                selectedItemIndex = index
-                                scope.launch { drawerState.close() }
-                            },
-                            selected = index == selectedItemIndex,
-                            icon = {
-                                Icon(
-                                    imageVector = item.icon,
-                                    contentDescription = "$item",
-                                    Modifier.size(32.dp)
-                                )
-                            },
-                            colors = NavigationDrawerItemDefaults.colors(
-                                unselectedContainerColor = secondary,
-                                selectedContainerColor = tertiary,
-                                selectedIconColor = primary,
-                                unselectedIconColor = white,
-
-                                )
-                        )
-
 
                     }
                 }
 
 
-            }
+
         }, drawerState = drawerState
     ) {
         content()
